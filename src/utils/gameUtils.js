@@ -11,10 +11,11 @@ export const shuffleArray = (array) => {
 // Get category display name in both languages
 export const getCategoryDisplay = (category) => {
   const categoryMap = {
-    childhood: { en: 'Childhood', zh: '童年' },
-    school_work: { en: 'School & Work', zh: '学业 & 工作' },
-    belief: { en: 'Belief', zh: '信仰' },
-    relationship: { en: 'Relationship', zh: '关系' }
+    getting_to_know: { en: 'Getting to Know Me', zh: '很想了解你' },
+    ideals_reals: { en: 'Ideals and Reals', zh: '理想与现实' },
+    heart_to_heart: { en: 'Heart to Heart', zh: '再靠近一点点' },
+    memories: { en: 'Memories', zh: '回忆杀' },
+    matters_of_soul: { en: 'Matters of the Soul', zh: '想多一点点' }
   };
   return categoryMap[category] || { en: category, zh: category };
 };
@@ -22,10 +23,11 @@ export const getCategoryDisplay = (category) => {
 // Get category code for masked display
 export const getCategoryCode = (category) => {
   const codeMap = {
-    childhood: '童年',
-    school_work: '学业工作',
-    belief: '信仰',
-    relationship: '关系'
+    getting_to_know: '了解你',
+    ideals_reals: '理想现实',
+    heart_to_heart: '靠近',
+    memories: '回忆',
+    matters_of_soul: '灵魂'
   };
   return codeMap[category] || category;
 };
@@ -54,10 +56,11 @@ export const loadAllQuestions = (questionsData) => {
 // Group questions by category
 export const groupByCategory = (questions) => {
   const grouped = {
-    childhood: [],
-    school_work: [],
-    belief: [],
-    relationship: []
+    getting_to_know: [],
+    ideals_reals: [],
+    heart_to_heart: [],
+    memories: [],
+    matters_of_soul: []
   };
   
   questions.forEach(question => {

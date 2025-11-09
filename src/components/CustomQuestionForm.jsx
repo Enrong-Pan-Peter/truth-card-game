@@ -5,7 +5,7 @@ const CustomQuestionForm = ({ isOpen, onClose, onAddQuestion }) => {
   const [formData, setFormData] = useState({
     en: '',
     zh: '',
-    category: 'childhood'
+    category: 'getting_to_know'
   });
 
   const handleSubmit = (e) => {
@@ -70,17 +70,20 @@ const CustomQuestionForm = ({ isOpen, onClose, onAddQuestion }) => {
                 onChange={(e) => handleChange('category', e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border-2 border-warm-brown-light/30 bg-white focus:border-warm-coral focus:outline-none transition-colors duration-200 font-display"
               >
-                <option value="childhood">
-                  {getCategoryDisplay('childhood').en} / {getCategoryDisplay('childhood').zh}
+                <option value="getting_to_know">
+                  {getCategoryDisplay('getting_to_know').en} / {getCategoryDisplay('getting_to_know').zh}
                 </option>
-                <option value="school_work">
-                  {getCategoryDisplay('school_work').en} / {getCategoryDisplay('school_work').zh}
+                <option value="ideals_reals">
+                  {getCategoryDisplay('ideals_reals').en} / {getCategoryDisplay('ideals_reals').zh}
                 </option>
-                <option value="belief">
-                  {getCategoryDisplay('belief').en} / {getCategoryDisplay('belief').zh}
+                <option value="heart_to_heart">
+                  {getCategoryDisplay('heart_to_heart').en} / {getCategoryDisplay('heart_to_heart').zh}
                 </option>
-                <option value="relationship">
-                  {getCategoryDisplay('relationship').en} / {getCategoryDisplay('relationship').zh}
+                <option value="memories">
+                  {getCategoryDisplay('memories').en} / {getCategoryDisplay('memories').zh}
+                </option>
+                <option value="matters_of_soul">
+                  {getCategoryDisplay('matters_of_soul').en} / {getCategoryDisplay('matters_of_soul').zh}
                 </option>
               </select>
             </div>

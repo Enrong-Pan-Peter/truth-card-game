@@ -1,510 +1,137 @@
 {
-  "childhood": [
+  "getting_to_know": [
     {
-      "id": "c001",
+      "id": "gk001",
       "en": "What is your best childhood memory?",
       "zh": "你最美好的童年记忆是什么？"
     },
     {
-      "id": "c002",
+      "id": "gk002",
       "en": "Who was your spiritual role model growing up?",
       "zh": "在成长过程中，谁是你属灵的榜样？"
     },
     {
-      "id": "c003",
+      "id": "gk003",
       "en": "What Bible story captivated you as a child?",
       "zh": "小时候哪个圣经故事最吸引你？"
     },
     {
-      "id": "c004",
+      "id": "gk004",
       "en": "When did you first feel God's presence in your life?",
       "zh": "你第一次感受到神的同在是什么时候？"
     },
     {
-      "id": "c005",
+      "id": "gk005",
       "en": "What childhood experience taught you about God's love?",
       "zh": "哪个童年经历让你认识到神的爱？"
-    },
-    {
-      "id": "c006",
-      "en": "Who introduced you to faith and how?",
-      "zh": "谁把你带入信仰，是通过什么方式？"
-    },
-    {
-      "id": "c007",
-      "en": "What was your favorite church activity as a child?",
-      "zh": "小时候你最喜欢的教会活动是什么？"
-    },
-    {
-      "id": "c008",
-      "en": "What question about God did you have as a child?",
-      "zh": "小时候你对神有什么疑问？"
-    },
-    {
-      "id": "c009",
-      "en": "What family tradition helped shape your faith?",
-      "zh": "哪个家庭传统帮助塑造了你的信仰？"
-    },
-    {
-      "id": "c010",
-      "en": "When did you first pray on your own?",
-      "zh": "你第一次自己祷告是什么时候？"
-    },
-    {
-      "id": "c011",
-      "en": "What hymn or worship song do you remember from childhood?",
-      "zh": "你记得童年时的哪首赞美诗或敬拜歌曲？"
-    },
-    {
-      "id": "c012",
-      "en": "Who was the kindest person you knew growing up?",
-      "zh": "在成长过程中，你认识的最善良的人是谁？"
-    },
-    {
-      "id": "c013",
-      "en": "What childhood fear did faith help you overcome?",
-      "zh": "信仰帮助你克服了哪个童年的恐惧？"
-    },
-    {
-      "id": "c014",
-      "en": "What was your understanding of heaven as a child?",
-      "zh": "小时候你对天堂的理解是什么？"
-    },
-    {
-      "id": "c015",
-      "en": "What act of kindness from childhood still touches your heart?",
-      "zh": "哪个童年时期的善举至今仍触动你的心？"
-    },
-    {
-      "id": "c016",
-      "en": "What did church smell like to you as a child?",
-      "zh": "小时候教会给你什么样的气味记忆？"
-    },
-    {
-      "id": "c017",
-      "en": "What Bible verse did you memorize first?",
-      "zh": "你第一个背诵的圣经经文是什么？"
-    },
-    {
-      "id": "c018",
-      "en": "What made you feel closest to God as a child?",
-      "zh": "小时候什么让你感觉最接近神？"
-    },
-    {
-      "id": "c019",
-      "en": "What childhood prayer was answered in an unexpected way?",
-      "zh": "哪个童年的祷告以意想不到的方式得到了回应？"
-    },
-    {
-      "id": "c020",
-      "en": "What lesson from Sunday school stuck with you?",
-      "zh": "主日学的哪个教导一直伴随着你？"
-    },
-    {
-      "id": "c021",
-      "en": "Who showed you Christ's love through their actions?",
-      "zh": "谁通过他们的行为向你展示了基督的爱？"
-    },
-    {
-      "id": "c022",
-      "en": "What childhood moment made you grateful to God?",
-      "zh": "哪个童年时刻让你对神充满感恩？"
-    },
-    {
-      "id": "c023",
-      "en": "What did worship look like in your childhood home?",
-      "zh": "在你童年的家中，敬拜是什么样子的？"
-    },
-    {
-      "id": "c024",
-      "en": "What childhood experience challenged your understanding of God?",
-      "zh": "哪个童年经历挑战了你对神的理解？"
-    },
-    {
-      "id": "c025",
-      "en": "What is the most memorable memory that has shaped who you are?",
-      "zh": "哪个记忆最深刻地塑造了现在的你？"
     }
   ],
-  "school_work": [
+  "ideals_reals": [
     {
-      "id": "sw001",
+      "id": "ir001",
       "en": "How does your faith influence your work ethic?",
       "zh": "你的信仰如何影响你的工作态度？"
     },
     {
-      "id": "sw002",
+      "id": "ir002",
       "en": "What biblical principle guides your career decisions?",
       "zh": "什么圣经原则指导你的职业决定？"
     },
     {
-      "id": "sw003",
+      "id": "ir003",
       "en": "How do you share your faith in your workplace?",
       "zh": "你如何在工作场所分享你的信仰？"
     },
     {
-      "id": "sw004",
+      "id": "ir004",
       "en": "What professional challenge taught you to depend on God?",
       "zh": "哪个职业挑战教会你依靠神？"
     },
     {
-      "id": "sw005",
+      "id": "ir005",
       "en": "How do you balance ambition with humility?",
       "zh": "你如何平衡雄心与谦卑？"
-    },
-    {
-      "id": "sw006",
-      "en": "What does working 'as unto the Lord' mean to you?",
-      "zh": "对你来说，'像为主做工'意味着什么？"
-    },
-    {
-      "id": "sw007",
-      "en": "How has God opened unexpected doors in your career?",
-      "zh": "神如何在你的职业生涯中打开了意想不到的门？"
-    },
-    {
-      "id": "sw008",
-      "en": "What workplace situation tested your integrity?",
-      "zh": "哪个工作场合的情况考验了你的正直？"
-    },
-    {
-      "id": "sw009",
-      "en": "How do you handle workplace conflicts as a Christian?",
-      "zh": "作为基督徒，你如何处理工作中的冲突？"
-    },
-    {
-      "id": "sw010",
-      "en": "What are you studying or learning about God through right now?",
-      "zh": "你现在正在学习或研究关于神的什么？"
-    },
-    {
-      "id": "sw011",
-      "en": "How has failure taught you about God's grace?",
-      "zh": "失败如何教会你关于神的恩典？"
-    },
-    {
-      "id": "sw012",
-      "en": "What skills has God given you to serve others?",
-      "zh": "神赐给你什么技能来服侍他人？"
-    },
-    {
-      "id": "sw013",
-      "en": "How do you pray about your work decisions?",
-      "zh": "你如何为你的工作决定祷告？"
-    },
-    {
-      "id": "sw014",
-      "en": "What mentor has impacted your professional and spiritual growth?",
-      "zh": "哪位导师影响了你的职业和属灵成长？"
-    },
-    {
-      "id": "sw015",
-      "en": "How do you steward the resources God has given you?",
-      "zh": "你如何管理神赐给你的资源？"
-    },
-    {
-      "id": "sw016",
-      "en": "What does Sabbath rest look like in your busy life?",
-      "zh": "在你忙碌的生活中，安息日的休息是什么样子？"
-    },
-    {
-      "id": "sw017",
-      "en": "How do you serve God through your profession?",
-      "zh": "你如何通过你的职业服侍神？"
-    },
-    {
-      "id": "sw018",
-      "en": "What workplace success taught you about God's provision?",
-      "zh": "哪次工作上的成功让你认识到神的供应？"
-    },
-    {
-      "id": "sw019",
-      "en": "How do you maintain spiritual disciplines during busy seasons?",
-      "zh": "在忙碌的季节你如何保持属灵操练？"
-    },
-    {
-      "id": "sw020",
-      "en": "What compromise have you refused to make at work?",
-      "zh": "在工作中你拒绝做出什么妥协？"
-    },
-    {
-      "id": "sw021",
-      "en": "How has God used your education to shape your calling?",
-      "zh": "神如何使用你的教育塑造你的呼召？"
-    },
-    {
-      "id": "sw022",
-      "en": "What does it mean to work with excellence for God?",
-      "zh": "为神做出卓越的工作意味着什么？"
-    },
-    {
-      "id": "sw023",
-      "en": "How do you witness to colleagues without words?",
-      "zh": "你如何不用言语向同事作见证？"
-    },
-    {
-      "id": "sw024",
-      "en": "What professional setback redirected you toward God's plan?",
-      "zh": "哪次职业挫折将你重新引向神的计划？"
-    },
-    {
-      "id": "sw025",
-      "en": "How do you handle stress and pressure with faith?",
-      "zh": "你如何凭信心处理压力和重担？"
     }
   ],
-  "belief": [
+  "heart_to_heart": [
     {
-      "id": "b001",
+      "id": "hh001",
       "en": "When did your faith become your own, not just inherited?",
       "zh": "你的信仰何时成为你自己的，而不仅是继承的？"
     },
     {
-      "id": "b002",
+      "id": "hh002",
       "en": "What doubt has strengthened your faith?",
       "zh": "什么疑惑反而加强了你的信仰？"
     },
     {
-      "id": "b003",
+      "id": "hh003",
       "en": "How would you describe God in one word and why?",
       "zh": "你会用一个词来描述神，是什么？为什么？"
     },
     {
-      "id": "b004",
+      "id": "hh004",
       "en": "What Bible verse has changed your life?",
       "zh": "哪节圣经经文改变了你的生命？"
     },
     {
-      "id": "b005",
+      "id": "hh005",
       "en": "What miracle have you witnessed or experienced?",
       "zh": "你见证或经历过什么神迹？"
-    },
-    {
-      "id": "b006",
-      "en": "How do you hear God's voice?",
-      "zh": "你如何听到神的声音？"
-    },
-    {
-      "id": "b007",
-      "en": "What question would you ask God face to face?",
-      "zh": "如果能面对面，你会问神什么问题？"
-    },
-    {
-      "id": "b008",
-      "en": "What aspect of God's character do you find most comforting?",
-      "zh": "神的哪个特质让你感到最安慰？"
-    },
-    {
-      "id": "b009",
-      "en": "How has suffering shaped your faith?",
-      "zh": "苦难如何塑造了你的信仰？"
-    },
-    {
-      "id": "b010",
-      "en": "What do you believe about God that others might not understand?",
-      "zh": "你对神有什么信念是别人可能不理解的？"
-    },
-    {
-      "id": "b011",
-      "en": "What does grace mean to you personally?",
-      "zh": "恩典对你个人而言意味着什么？"
-    },
-    {
-      "id": "b012",
-      "en": "How do you explain your faith to non-believers?",
-      "zh": "你如何向非信徒解释你的信仰？"
-    },
-    {
-      "id": "b013",
-      "en": "What spiritual practice has deepened your relationship with God?",
-      "zh": "什么属灵操练加深了你与神的关系？"
-    },
-    {
-      "id": "b014",
-      "en": "When have you felt most distant from God, and what brought you back?",
-      "zh": "你何时感觉离神最远，是什么让你回来？"
-    },
-    {
-      "id": "b015",
-      "en": "What does it mean to you to be made in God's image?",
-      "zh": "按照神的形象被造对你意味着什么？"
-    },
-    {
-      "id": "b016",
-      "en": "How has your understanding of God evolved over time?",
-      "zh": "随着时间推移，你对神的理解如何演变？"
-    },
-    {
-      "id": "b017",
-      "en": "What do you believe is your spiritual gift?",
-      "zh": "你认为你的属灵恩赐是什么？"
-    },
-    {
-      "id": "b018",
-      "en": "How do you practice forgiveness as God forgives?",
-      "zh": "你如何像神饶恕那样实践饶恕？"
-    },
-    {
-      "id": "b019",
-      "en": "What does the cross mean to you personally?",
-      "zh": "十字架对你个人而言意味着什么？"
-    },
-    {
-      "id": "b020",
-      "en": "How do you experience God's presence in daily life?",
-      "zh": "你如何在日常生活中经历神的同在？"
-    },
-    {
-      "id": "b021",
-      "en": "What worship song or hymn moves you to tears and why?",
-      "zh": "哪首敬拜歌曲或赞美诗让你流泪？为什么？"
-    },
-    {
-      "id": "b022",
-      "en": "How do you reconcile faith with unanswered prayers?",
-      "zh": "你如何调和信仰与未得应答的祷告？"
-    },
-    {
-      "id": "b023",
-      "en": "What does being 'born again' mean in your life?",
-      "zh": "'重生'在你的生命中意味着什么？"
-    },
-    {
-      "id": "b024",
-      "en": "How do you pursue holiness in everyday choices?",
-      "zh": "你如何在日常选择中追求圣洁？"
-    },
-    {
-      "id": "b025",
-      "en": "What do you hope to hear God say when you meet Him?",
-      "zh": "当你见到神时，你希望听到祂说什么？"
     }
   ],
-  "relationship": [
+  "memories": [
     {
-      "id": "r001",
+      "id": "mem001",
+      "en": "What is the most memorable memory that has shaped who you are?",
+      "zh": "哪个记忆最深刻地塑造了现在的你？"
+    },
+    {
+      "id": "mem002",
+      "en": "Who showed you Christ's love through their actions?",
+      "zh": "谁通过他们的行为向你展示了基督的爱？"
+    },
+    {
+      "id": "mem003",
+      "en": "What childhood moment made you grateful to God?",
+      "zh": "哪个童年时刻让你对神充满感恩？"
+    },
+    {
+      "id": "mem004",
+      "en": "What did worship look like in your childhood home?",
+      "zh": "在你童年的家中，敬拜是什么样子的？"
+    },
+    {
+      "id": "mem005",
+      "en": "What childhood experience challenged your understanding of God?",
+      "zh": "哪个童年经历挑战了你对神的理解？"
+    }
+  ],
+  "matters_of_soul": [
+    {
+      "id": "ms001",
       "en": "When you feel down, how do you want brothers and sisters to help you?",
       "zh": "当你感到沮丧时，你希望弟兄姐妹如何帮助你？"
     },
     {
-      "id": "r002",
+      "id": "ms002",
       "en": "Who in your church family has impacted you most and how?",
       "zh": "教会中的谁对你影响最大？怎样影响的？"
     },
     {
-      "id": "r003",
+      "id": "ms003",
       "en": "How do you practice Christ-like love in difficult relationships?",
       "zh": "在困难的关系中，你如何实践基督般的爱？"
     },
     {
-      "id": "r004",
+      "id": "ms004",
       "en": "What does true Christian friendship mean to you?",
       "zh": "真正的基督徒友谊对你意味着什么？"
     },
     {
-      "id": "r005",
+      "id": "ms005",
       "en": "How has God used community to heal you?",
       "zh": "神如何使用团契来医治你？"
-    },
-    {
-      "id": "r006",
-      "en": "What makes you feel most loved by others?",
-      "zh": "什么让你感受到被别人爱？"
-    },
-    {
-      "id": "r007",
-      "en": "How do you show love in your family?",
-      "zh": "你如何在家庭中表达爱？"
-    },
-    {
-      "id": "r008",
-      "en": "What relationship has taught you most about God's love?",
-      "zh": "哪段关系最能教导你神的爱？"
-    },
-    {
-      "id": "r009",
-      "en": "How do you handle conflict in Christian relationships?",
-      "zh": "你如何处理基督徒关系中的冲突？"
-    },
-    {
-      "id": "r010",
-      "en": "What act of service has deeply touched your heart?",
-      "zh": "哪个服侍的行为深深触动了你的心？"
-    },
-    {
-      "id": "r011",
-      "en": "How do you support others who are struggling spiritually?",
-      "zh": "你如何支持在属灵上挣扎的人？"
-    },
-    {
-      "id": "r012",
-      "en": "What does biblical hospitality look like to you?",
-      "zh": "圣经中的款待对你来说是什么样子？"
-    },
-    {
-      "id": "r013",
-      "en": "How has someone's prayer for you made a difference?",
-      "zh": "别人为你的祷告如何带来了改变？"
-    },
-    {
-      "id": "r014",
-      "en": "What boundary have you had to set in relationships for spiritual health?",
-      "zh": "为了属灵健康，你在关系中设定了什么界限？"
-    },
-    {
-      "id": "r015",
-      "en": "How do you encourage others in their faith?",
-      "zh": "你如何在信仰上鼓励他人？"
-    },
-    {
-      "id": "r016",
-      "en": "What does it mean to 'bear one another's burdens'?",
-      "zh": "'彼此担当重担'意味着什么？"
-    },
-    {
-      "id": "r017",
-      "en": "How has God brought healing to a broken relationship?",
-      "zh": "神如何医治一段破裂的关系？"
-    },
-    {
-      "id": "r018",
-      "en": "What makes you feel safe to be vulnerable with someone?",
-      "zh": "什么让你觉得可以向某人敞开心扉？"
-    },
-    {
-      "id": "r019",
-      "en": "How do you show Christ's love to those who hurt you?",
-      "zh": "你如何向伤害你的人展示基督的爱？"
-    },
-    {
-      "id": "r020",
-      "en": "What tradition brings your community together?",
-      "zh": "什么传统把你的团契聚在一起？"
-    },
-    {
-      "id": "r021",
-      "en": "How do you celebrate others' victories in faith?",
-      "zh": "你如何庆祝他人在信仰上的胜利？"
-    },
-    {
-      "id": "r022",
-      "en": "What does 'iron sharpens iron' look like in your life?",
-      "zh": "'铁磨铁'在你的生命中是什么样子？"
-    },
-    {
-      "id": "r023",
-      "en": "How has someone's faithfulness inspired you?",
-      "zh": "谁的忠心激励了你？"
-    },
-    {
-      "id": "r024",
-      "en": "What would you like your church family to know about you?",
-      "zh": "你希望你的教会家人了解你什么？"
-    },
-    {
-      "id": "r025",
-      "en": "How do you practice reconciliation as Christ teaches?",
-      "zh": "你如何按照基督的教导实践和解？"
     }
   ]
 }

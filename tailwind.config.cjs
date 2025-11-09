@@ -8,20 +8,20 @@ module.exports = {
     extend: {
       colors: {
         warm: {
-          cream: '#F5E6D3',
-          sand: '#E8D5C4',
-          peach: '#FFD7BA',
-          coral: '#FF9E80',
+          cream: '#CEA0AE',
+          sand: '#D5B0AC',
+          peach: '#684551',
+          coral: '#402E2A',
           brown: {
             light: '#8D6E63',
             DEFAULT: '#6D4C41',
-            dark: '#5D4037',
+            dark: '#402E2A',
           },
         },
       },
       fontFamily: {
-        sans: ['Nunito', 'system-ui', 'sans-serif'],
-        display: ['Quicksand', 'system-ui', 'sans-serif'],
+        sans: ['Crimson Text', 'Georgia', 'serif'],
+        display: ['Merriweather', 'Georgia', 'serif'],
       },
     },
   },
