@@ -48,34 +48,34 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
   const categories = ['getting_to_know', 'ideals_reals', 'heart_to_heart', 'memories', 'matters_of_soul'];
 
   return (
-    <div className="flex gap-6">
-      {/* Category Filter Sidebar */}
-      <div className="w-64 flex-shrink-0">
-        <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-md border-2 border-warm-brown-light/20 sticky top-24">
-          <h3 className="text-lg font-display text-warm-brown-dark mb-4">
+    <div className="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
+      {/* Category Filter Sidebar - shifts to top on mobile */}
+      <div className="w-full lg:w-64 flex-shrink-0 order-2 lg:order-1 lg:-ml-4">
+        <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 lg:p-6 shadow-md border-2 border-warm-brown-light/20 lg:sticky lg:top-14">
+          <h3 className="text-base lg:text-lg font-display text-warm-brown-dark mb-3 lg:mb-4">
             Filter Categories
           </h3>
-          <p className="text-xs text-warm-brown/60 mb-4">选择类别</p>
+          <p className="text-xs text-warm-brown/60 mb-3 lg:mb-4">选择类别</p>
           
-          <div className="space-y-3">
+          <div className="space-y-2 lg:space-y-3">
             {categories.map(category => {
               const display = getCategoryDisplay(category);
               return (
                 <label
                   key={category}
-                  className="flex items-center gap-3 cursor-pointer group"
+                  className="flex items-center gap-2 lg:gap-3 cursor-pointer group"
                 >
                   <input
                     type="checkbox"
                     checked={selectedCategories[category]}
                     onChange={() => toggleCategory(category)}
-                    className="w-5 h-5 rounded border-2 border-warm-brown-light/40 text-warm-coral focus:ring-warm-coral focus:ring-2"
+                    className="w-5 h-5 rounded border-2 border-warm-brown-light/40 checked:bg-warm-peach checked:border-warm-peach focus:ring-warm-peach focus:ring-2 accent-warm-peach flex-shrink-0"
                   />
-                  <div className="flex-1">
-                    <p className="text-sm font-display text-warm-brown-dark group-hover:text-warm-coral transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs lg:text-sm font-display text-warm-brown-dark group-hover:text-warm-peach transition-colors truncate">
                       {display.en}
                     </p>
-                    <p className="text-xs text-warm-brown/70">
+                    <p className="text-xs text-warm-brown/70 truncate">
                       {display.zh}
                     </p>
                   </div>
@@ -86,15 +86,15 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 space-y-8">
+      {/* Main Content - centered */}
+      <div className="flex-1 space-y-6 lg:space-y-8 order-1 lg:order-2">
         {/* Shuffle Button */}
         <div className="text-center">
           <button
             onClick={handleShuffle}
             disabled={allUsed || isDrawing}
             className={`
-              px-10 py-4 rounded-full text-lg font-display font-semibold
+              px-8 lg:px-10 py-3 lg:py-4 rounded-full text-base lg:text-lg font-display font-semibold
               transition-all duration-300 transform
               ${allUsed || isDrawing
                 ? 'bg-warm-brown-light/30 text-warm-brown-light cursor-not-allowed'
@@ -114,20 +114,20 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
             )}
           </button>
 
-          <p className="mt-3 text-sm text-warm-brown/70">
+          <p className="mt-3 text-xs lg:text-sm text-warm-brown/70">
             {filteredDeck.length} cards in selected categories
           </p>
         </div>
 
-        {/* Current Card Display */}
-        <div className="min-h-[400px] flex items-center justify-center">
+        {/* Current Card Display - centered */}
+        <div className="min-h-[300px] lg:min-h-[400px] flex items-center justify-center px-4 lg:px-0">
           {currentCard ? (
             <Card question={currentCard} />
           ) : (
-            <div className="text-center space-y-4 text-warm-brown/60">
+            <div className="text-center space-y-4 text-warm-brown/60 px-4">
               {allUsed ? (
                 <>
-                  <p className="text-xl font-display">All cards have been used!</p>
+                  <p className="text-lg lg:text-xl font-display">All cards have been used!</p>
                   <button
                     onClick={onReset}
                     className="px-6 py-3 bg-warm-peach text-white rounded-full font-display hover:bg-warm-peach/80 transition-colors duration-200"
@@ -138,7 +138,7 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
               ) : (
                 <>
                   <svg
-                    className="w-20 h-20 mx-auto opacity-30"
+                    className="w-16 lg:w-20 h-16 lg:h-20 mx-auto opacity-30"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -150,7 +150,7 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
                       d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                     />
                   </svg>
-                  <p className="text-lg font-display">Click "Shuffle" to draw a card</p>
+                  <p className="text-base lg:text-lg font-display">Click "Shuffle" to draw a card</p>
                   <p className="text-sm">点击"抽卡"开始</p>
                 </>
               )}

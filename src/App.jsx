@@ -112,7 +112,7 @@ function App() {
               {/* Add Question Button */}
               <button
                 onClick={() => setIsCustomFormOpen(true)}
-                className="p-3 bg-warm-peach rounded-full hover:bg-warm-peach/80 transition-colors duration-200 shadow-md"
+                className="p-3 bg-[#F5EDE8] rounded-full hover:bg-[#F5EDE8]/80 transition-colors duration-200 shadow-md border-2 border-warm-brown-light/20"
                 title="Add custom question"
               >
                 <svg className="w-5 h-5 text-warm-brown-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">

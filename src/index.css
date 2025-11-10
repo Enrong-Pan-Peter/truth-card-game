@@ -40,6 +40,45 @@
   background: rgba(109, 76, 65, 0.5);
 }
 
+/* Custom checkbox styling with eggplant color */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(141, 110, 99, 0.4);
+  border-radius: 0.25rem;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #684551;
+  border-color: #684551;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="checkbox"]:hover {
+  border-color: #684551;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(104, 69, 81, 0.2);
+}
+
 /* Smooth transitions */
 * {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
