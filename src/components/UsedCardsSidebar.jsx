@@ -104,7 +104,7 @@ const UsedCardsSidebar = ({ usedCards, onReturnCard }) => {
         {usedCards.length > 0 && (
           <div className="p-4 border-t-2 border-warm-brown-light/20 bg-warm-sand/30">
             <p className="text-xs text-warm-brown/60 text-center">
-              Click ↩️ to return a card to the active deck
+              Click 🔙 to return a card to the active deck
             </p>
           </div>
         )}

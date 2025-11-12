@@ -23,35 +23,35 @@ const Card = ({ question, onClose }) => {
         isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       }`}
     >
-      <div className="bg-[#F5EDE8] rounded-2xl lg:rounded-3xl shadow-lg overflow-hidden w-full max-w-3xl mx-auto border-2 border-warm-brown-light/20">
+      <div className="bg-[#F5EDE8] rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl mx-auto border-2 border-warm-brown-light/20">
         <div className="flex flex-col md:flex-row">
           {/* Question Text Section - 75% */}
-          <div className="flex-[3] p-6 md:p-8 lg:p-10 space-y-4 md:space-y-6">
+          <div className="flex-[3] p-8 md:p-10 lg:p-14 space-y-6 md:space-y-8">
             {/* Category Badge */}
             <div className="inline-block">
-              <span className="text-xs font-display bg-warm-coral/20 text-warm-brown-dark px-3 py-1 rounded-full">
+              <span className="text-sm font-display bg-warm-coral/20 text-warm-brown-dark px-4 py-2 rounded-full">
                 {categoryDisplay.en} / {categoryDisplay.zh}
               </span>
             </div>
 
             {/* English Question */}
-            <div className="space-y-2">
-              <p className="text-xl md:text-2xl lg:text-3xl font-display text-warm-brown-dark leading-relaxed">
+            <div className="space-y-3">
+              <p className="text-2xl md:text-3xl lg:text-4xl font-display text-warm-brown-dark leading-relaxed">
                 {question.en}
               </p>
             </div>
 
             {/* Chinese Question */}
-            <div className="space-y-2">
-              <p className="text-lg md:text-xl lg:text-2xl font-sans text-warm-brown leading-relaxed">
+            <div className="space-y-3">
+              <p className="text-xl md:text-2xl lg:text-3xl font-sans text-warm-brown leading-relaxed">
                 {question.zh}
               </p>
             </div>
           </div>
 
           {/* Sketch Section - 25% */}
-          <div className="flex-[1] bg-warm-sand/30 p-4 md:p-6 flex items-center justify-center min-h-[150px] md:min-h-[200px] lg:min-h-0">
-            <div className="w-full max-w-[100px] md:max-w-[120px] lg:max-w-[140px] opacity-70">
+          <div className="flex-[1] bg-warm-sand/30 p-6 md:p-8 flex items-center justify-center min-h-[180px] md:min-h-[250px] lg:min-h-0">
+            <div className="w-full max-w-[120px] md:max-w-[160px] lg:max-w-[200px] opacity-70">
               {SketchComponent && <SketchComponent />}
             </div>
           </div>
