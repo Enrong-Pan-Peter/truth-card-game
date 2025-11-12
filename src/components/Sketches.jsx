@@ -8,7 +8,7 @@
 export const CardPicture = () => (
   <div className="w-full h-full flex items-center justify-center">
     <img 
-      src="/totoro.png" 
+      src="totoro.png" 
       alt="Card picture" 
       className="w-full h-full object-contain"
       style={{ maxWidth: '100%', maxHeight: '100%' }}
