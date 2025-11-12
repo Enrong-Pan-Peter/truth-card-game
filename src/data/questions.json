@@ -2,82 +2,262 @@
   "getting_to_know": [
     {
       "id": "gk001",
-      "en": "What is your best childhood memory?",
-      "zh": "你最美好的童年记忆是什么？"
+      "en": "Do you like yourself?",
+      "zh": "你喜欢自己吗？"
     },
     {
       "id": "gk002",
-      "en": "Who was your spiritual role model growing up?",
-      "zh": "在成长过程中，谁是你属灵的榜样？"
+      "en": "Are you satisfied with your own appearance?",
+      "zh": "你对自己的容貌满意吗？？"
     },
     {
       "id": "gk003",
-      "en": "What Bible story captivated you as a child?",
-      "zh": "小时候哪个圣经故事最吸引你？"
+      "en": "What are the must-have essentials when you go out?",
+      "zh": "你出门时必备的物品有哪些？"
     },
     {
       "id": "gk004",
-      "en": "When did you first feel God's presence in your life?",
-      "zh": "你第一次感受到神的同在是什么时候？"
+      "en": "What are your social boundaries?",
+      "zh": "你的社交界限有哪些？"
     },
     {
       "id": "gk005",
-      "en": "What childhood experience taught you about God's love?",
-      "zh": "哪个童年经历让你认识到神的爱？"
+      "en": "Are you someone who will actively seek help?",
+      "zh": "你是会主动寻求帮助的人吗？"
+    },
+    {
+      "id": "gk006",
+      "en": "Do you think you are real and honest?",
+      "zh": "你觉得自己是一个真实的人吗？？"
+    },
+    {
+      "id": "gk007",
+      "en": "Tell us three things you feel grateful for.",
+      "zh": "说出你生命中值得感恩的三件事情。"
+    },
+    {
+      "id": "gk008",
+      "en": "What kind of people do you hold bias to?",
+      "zh": "你对哪类人会有潜意识的偏见？"
+    },
+    {
+      "id": "gk009",
+      "en": "When will you feel embarrassed?",
+      "zh": "什么场景会让你感到尴尬？"
+    },
+    {
+      "id": "gk010",
+      "en": "Is there any difference between how you view yourself and how others view you?",
+      "zh": "别人眼中的你，和你眼中的自己有区别吗？"
+    },
+    {
+      "id": "gk011",
+      "en": "Tell us five merits of yours. (You surely do have them!)",
+      "zh": "说出自己的五个优点。（你一定有的！）"
+    },
+    {
+      "id": "gk012",
+      "en": "Do you have any hidden burden deep inside?",
+      "zh": "你心中有隐藏的重担吗？"
+    },
+    {
+      "id": "gk013",
+      "en": "When people praise you, what would you like to hear?",
+      "zh": "你最喜欢别人夸奖你什么？"
+    },
+    {
+      "id": "gk014",
+      "en": "What irritates you?",
+      "zh": "什么事情会让你感到很生气？"
+    },
+    {
+      "id": "gk015",
+      "en": "How would you rank love, career, hobbies, family?",
+      "zh": "你会怎么排序爱情，事业，爱好，家人？"
+    },
+    {
+      "id": "gk016",
+      "en": "What moment makes you feel your life is bright?",
+      "zh": "什么时候会让你感觉生活充满光亮？"
+    },
+    {
+      "id": "gk017",
+      "en": "Speak out your three shortcomings bravely.",
+      "zh": "你能勇敢地说出自己三个缺点吗？"
+    },
+    {
+      "id": "gk018",
+      "en": "What role do you play in a group?",
+      "zh": "你觉得你在人群中是什么角色？"
+    },
+    {
+      "id": "gk019",
+      "en": "Do you act differently with people than alone?",
+      "zh": "在人群中的你和私底下的你一样吗？"
+    },
+    {
+      "id": "gk020",
+      "en": "What are the characteristics of the people you admire?",
+      "zh": "你欣赏的人普遍有什么特点呢？"
     }
   ],
   "ideals_reals": [
     {
       "id": "ir001",
-      "en": "How does your faith influence your work ethic?",
-      "zh": "你的信仰如何影响你的工作态度？"
+      "en": "What is your most ideal, comfortable day like?",
+      "zh": "你觉得最舒服的一天应该是怎么样的？"
     },
     {
       "id": "ir002",
-      "en": "What biblical principle guides your career decisions?",
-      "zh": "什么圣经原则指导你的职业决定？"
+      "en": "What is your biggest dream?",
+      "zh": "你最大的梦想是什么？"
     },
     {
       "id": "ir003",
-      "en": "How do you share your faith in your workplace?",
-      "zh": "你如何在工作场所分享你的信仰？"
+      "en": "What makes you studying/working here?",
+      "zh": "你为什么会来到这里上学/工作？"
     },
     {
       "id": "ir004",
-      "en": "What professional challenge taught you to depend on God?",
-      "zh": "哪个职业挑战教会你依靠神？"
+      "en": "Do you like your area of studies?",
+      "zh": "你喜欢自己的专业吗？"
     },
     {
       "id": "ir005",
-      "en": "How do you balance ambition with humility?",
-      "zh": "你如何平衡雄心与谦卑？"
+      "en": "If you can choose to live in another city, where would you want to go?",
+      "zh": "如果不在现在的城市居住，你想去哪里？"
+    },
+    {
+      "id": "ir006",
+      "en": "What are your short-term goals?",
+      "zh": "你近期的小目标是什么？"
+    },
+    {
+      "id": "ir007",
+      "en": "What do you plan to study recently?",
+      "zh": "你最近有打算学些什么呢？"
+    },
+    {
+      "id": "ir008",
+      "en": "What is it like when you are 70 years old?",
+      "zh": "你70岁的时会是怎么样的？"
+    },
+    {
+      "id": "ir009",
+      "en": "What would you do if you have unlimited money?",
+      "zh": "如果你有花不完的钱，你会做什么？"
+    },
+    {
+      "id": "ir010",
+      "en": "Where and how would you like to be when you die?",
+      "zh": "你希望自己离世的时候是什么场景？"
     }
   ],
   "heart_to_heart": [
     {
       "id": "hh001",
-      "en": "When did your faith become your own, not just inherited?",
-      "zh": "你的信仰何时成为你自己的，而不仅是继承的？"
+      "en": "Describe the person on your right with three words.",
+      "zh": "用三个词形容你右边的人。"
     },
     {
       "id": "hh002",
-      "en": "What doubt has strengthened your faith?",
-      "zh": "什么疑惑反而加强了你的信仰？"
+      "en": "Of those who have passed away, whom do you miss? What would you like to say to them?",
+      "zh": "你最想念哪位过世的人？如果还能见到他/她，会想说什么？"
     },
     {
       "id": "hh003",
-      "en": "How would you describe God in one word and why?",
-      "zh": "你会用一个词来描述神，是什么？为什么？"
+      "en": "Between you and your (future) partner, whom can you accept to die first?",
+      "zh": "你和你的（未来）伴侣，你能接受谁先去世？"
     },
     {
       "id": "hh004",
-      "en": "What Bible verse has changed your life?",
-      "zh": "哪节圣经经文改变了你的生命？"
+      "en": "What is the impact of your family of origin on you?",
+      "zh": "原生家庭对你的影响有哪些？"
     },
     {
       "id": "hh005",
-      "en": "What miracle have you witnessed or experienced?",
-      "zh": "你见证或经历过什么神迹？"
+      "en": "Whom do you feel grateful to the most?",
+      "zh": "你最想感激的对象是谁？"
+    },
+    {
+      "id": "hh006",
+      "en": "Are you the proactive one in a relationship? Why?",
+      "zh": "你在一段感情中是主动的一方吗？为什么？"
+    },
+    {
+      "id": "hh007",
+      "en": "What is your biggest fear/insecurity in a relationship?",
+      "zh": "你在一段感情中最大的恐惧是什么？"
+    },
+    {
+      "id": "hh008",
+      "en": "What is your father like?",
+      "zh": "你的父亲是怎样的人？"
+    },
+    {
+      "id": "hh009",
+      "en": "What is the most important thing you have learned from past relationships?",
+      "zh": "你从过去的感情中学到了什么最重要的事？"
+    },
+    {
+      "id": "hh010",
+      "en": "How do you handle conflicts in a relationship?",
+      "zh": "你如何处理感情中的冲突？"
+    },
+    {
+      "id": "hh011",
+      "en": "What is your mother like?",
+      "zh": "你的母亲是怎样的人？"
+    },
+    {
+      "id": "hh012",
+      "en": "Do you have siblings? How does it make who you are?",
+      "zh": "你有兄弟姐妹吗？这对你有什么影响？"
+    },
+    {
+      "id": "hh013",
+      "en": "Whom do you love the most?",
+      "zh": "你最爱的人是谁？"
+    },
+    {
+      "id": "hh014",
+      "en": "What behaviors do you dislike among friends?",
+      "zh": "朋友之间，什么行为会让你反感？"
+    },
+    {
+      "id": "hh015",
+      "en": "Do you have anyone that you owe an apology to? What do you want to say to him/her?",
+      "zh": "你有对不起的人吗？想对他/她说什么？"
+    },
+    {
+      "id": "hh016",
+      "en": "What is the most important value you look for in a friend?",
+      "zh": "你在朋友身上最看重的特质是什么？"
+    },
+    {
+      "id": "hh017",
+      "en": "How would you order the following five love languages: Words of affirmation, Quality time, Receiving gifts, Physical touch, Acts of service?",
+      "zh": "你会怎么排序以下五种爱的语言：赞美鼓励，高质量的陪伴，礼物，肢体接触，实际行动上的帮助？"
+    },
+    {
+      "id": "hh018",
+      "en": "What is the best advice you have ever received about relationships?",
+      "zh": "你收到过的关于感情的最好建议是什么？"
+    },
+    {
+      "id": "hh019",
+      "en": "How do you show love to others?",
+      "zh": "你通常如何向别人表达爱意？"
+    },
+    {
+      "id": "hh020",
+      "en": "What is your biggest relationship deal-breaker?",
+      "zh": "在感情中，什么是你无法接受的底线？"
+    },
+    {
+      "id": "hh021",
+      "en": "Can you live with long-distance relationship?",
+      "zh": "你能接受异地恋吗？"
     }
   ],
   "memories": [
@@ -88,8 +268,8 @@
     },
     {
       "id": "mem002",
-      "en": "Who showed you Christ's love through their actions?",
-      "zh": "谁通过他们的行为向你展示了基督的爱？"
+      "en": "Can you rate your childhood out of 10?",
+      "zh": "你会给你的童年打几分（满分10分）？"
     },
     {
       "id": "mem003",
@@ -98,14 +278,89 @@
     },
     {
       "id": "mem004",
-      "en": "What did worship look like in your childhood home?",
-      "zh": "在你童年的家中，敬拜是什么样子的？"
+      "en": "What is your favorite tv show as a child?",
+      "zh": "你小时候最喜欢的电视节目是什么？"
     },
     {
       "id": "mem005",
-      "en": "What childhood experience challenged your understanding of God?",
-      "zh": "哪个童年经历挑战了你对神的理解？"
-    }
+      "en": "Describe your favorite trip.",
+      "zh": "你最喜欢的旅行是哪一次呢？"
+    },
+    {
+      "id": "mem006",
+      "en": "Describe something that has made you feel ashamed.",
+      "zh": "描述一件让你感到羞愧的事情吧。"
+    },
+    {
+      "id": "mem007",
+      "en": "What is your happiest memory?",
+      "zh": "你最开心的记忆是什么？"
+    },
+    {
+      "id": "mem008",
+      "en": "What is your most adventurous experience?",
+      "zh": "你最冒险的经历是什么？"
+    },
+    {
+      "id": "mem009",
+      "en": "Describe something that made you feel most regretful.",
+      "zh": "描述一件你最后悔的事情吧。"
+    },
+    {
+      "id": "mem010",
+      "en": "When was the last time you cried and why?",
+      "zh": "你最近一次哭是什么时候，因为什么事情？"
+    },
+    {
+      "id": "mem011",
+      "en": "What is the best thing you have ever done?",
+      "zh": "你做过最棒的一件事是什么？"
+    },
+    {
+      "id": "mem012",
+      "en": "Describe your most memorable experience.",
+      "zh": "你最忘不掉的经历是什么？"
+    },
+    {
+      "id": "mem013",
+      "en": "If you can reset for just one thing, what do you hope to change?",
+      "zh": "如果有一件事可以重来，你最想要改变什么？？"
+    },
+    {
+      "id": "mem014",
+      "en": "What had made your week?",
+      "zh": "这个星期有什么令你开心的事情？"
+    },
+    {
+      "id": "mem015",
+      "en": "What is the happiest moment for you so far?",
+      "zh": "迄今为止，你最幸福的时刻是什么？"
+    },
+    {
+      "id": "mem016",
+      "en": "What is the most spontaneous thing you have ever done?",
+      "zh": "你做过最冲动的事情是什么？"
+    },
+    {
+      "id": "mem017",
+      "en": "What is your favorite family tradition?",
+      "zh": "你最喜欢的家庭传统是什么？"
+    },
+    {
+      "id": "mem018",
+      "en": "Describe a time when you overcame a significant challenge.",
+      "zh": "描述一个你克服重大挑战的时刻吧。"
+    },
+    {
+      "id": "mem019",
+      "en": "What is the most rebellious experience you have ever had",
+      "zh": "你做过最叛逆的事情是什么？"
+    },
+    {
+      "id": "mem020",
+      "en": "What is your most treasured memory?",
+      "zh": "你最珍惜的记忆是什么？"
+    }  
   ],
   "matters_of_soul": [
     {
@@ -115,13 +370,13 @@
     },
     {
       "id": "ms002",
-      "en": "Who in your church family has impacted you most and how?",
-      "zh": "教会中的谁对你影响最大？怎样影响的？"
+      "en": "If your partner chooses to commit his/her full life to God in service, how would you respond?",
+      "zh": "如果你的伴侣选择将他/她的一生奉献给神，你会有何反应？"
     },
     {
       "id": "ms003",
-      "en": "How do you practice Christ-like love in difficult relationships?",
-      "zh": "在困难的关系中，你如何实践基督般的爱？"
+      "en": "What doubt has strengthened your faith?",
+      "zh": "什么疑惑反而加深了你的信仰？"
     },
     {
       "id": "ms004",
@@ -132,6 +387,71 @@
       "id": "ms005",
       "en": "How has God used community to heal you?",
       "zh": "神如何使用团契来医治你？"
+    },
+    {
+      "id": "ms006",
+      "en": "How would you describe God in one word and why?",
+      "zh": "如果要用一个词来形容神，你会用什么词汇？为什么？"
+    },
+    {
+      "id": "ms007",
+      "en": "What Bible verse has changed your life?",
+      "zh": "哪节经文对你影响最大？"
+    },
+    {
+      "id": "ms008",
+      "en": "What miracle have you witnessed or experienced?",
+      "zh": "你见证或经历过什么神迹？"
+    },
+    {
+      "id": "ms009",
+      "en": "What kind of person do you think can go to heaven?",
+      "zh": "你认为什么样的人可以去天堂？"
+    },
+    {
+      "id": "ms010",
+      "en": "Are you willing to live forever?",
+      "zh": "你愿意长生不老吗？"
+    },
+    {
+      "id": "ms011",
+      "en": "What is freedom like to you?",
+      "zh": "你心中的自由是什么样子的？"
+    },
+    {
+      "id": "ms012",
+      "en": "What would you say to God if He stands in front of you?",
+      "zh": "如果上帝站在你面前，你会对祂说什么？"
+    },
+    {
+      "id": "ms013",
+      "en": "What would you ask God if you have one question to ask Him?",
+      "zh": "如果你可以问上帝一个问题，你会问什么问题？"
+    },
+    {
+      "id": "ms014",
+      "en": "Are you afraid of death?",
+      "zh": "你惧怕死亡吗？"
+    },
+    {
+      "id": "ms015",
+      "en": "Do you believe in divine power? Why?",
+      "zh": "你相信有神吗？为什么？"
+    },
+    {
+      "id": "ms016",
+      "en": "What provides you your spiritual support?",
+      "zh": "什么是你的精神支柱？"
+    },
+    {
+      "id": "ms017",
+      "en": "Life is short. If we are meant to vanish someday, why should we live this life?",
+      "zh": "既然人生注定是短暂的，你为什么还要活这一生？"
+    },
+    {
+      "id": "ms018",
+      "en": "How has your faith been challenged and how did you overcome it?",
+      "zh": "你的信仰经历过哪些挑战，你是如何克服的？"
     }
   ]
 }
