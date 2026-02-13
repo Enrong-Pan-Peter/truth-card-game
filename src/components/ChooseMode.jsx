@@ -7,29 +7,49 @@ const CategoryDropdown = ({ category, questions, onQuestionSelect, usedCardIds }
   const categoryDisplay = getCategoryDisplay(category);
 
   return (
-    <div className="border-2 border-warm-brown-light/20 rounded-2xl overflow-hidden bg-white/50 backdrop-blur-sm">
+    <div 
+      className="rounded-2xl overflow-hidden"
+      style={{
+        border: '2px solid rgba(208, 183, 176, 0.3)',
+        background: 'rgba(255, 255, 255, 0.7)'
+      }}
+    >
       {/* Category Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-warm-peach/20 transition-colors duration-200"
+        className="w-full px-6 py-4 flex items-center justify-between transition-colors duration-200"
+        style={{
+          background: isExpanded ? 'rgba(236, 182, 140, 0.1)' : 'transparent'
+        }}
       >
         <div className="flex items-center gap-3">
           <span className="text-2xl">{isExpanded ? '▼' : '▶'}</span>
           <div className="text-left">
-            <h3 className="text-xl font-display text-warm-brown-dark">
+            <h3 
+              className="text-xl"
+              style={{
+                fontFamily: "'Caveat', cursive",
+                color: '#282828'
+              }}
+            >
               {categoryDisplay.en}
             </h3>
-            <p className="text-sm text-warm-brown/70">{categoryDisplay.zh}</p>
+            <p className="text-sm" style={{ color: '#656565', fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>
+              {categoryDisplay.zh}
+            </p>
           </div>
         </div>
-        <span className="text-sm text-warm-brown/60">
+        <span className="text-sm" style={{ color: '#656565' }}>
           {questions.length} questions
         </span>
       </button>
 
       {/* Questions List */}
       {isExpanded && (
-        <div className="px-6 py-4 space-y-2 bg-warm-cream/30 max-h-96 overflow-y-auto">
+        <div 
+          className="px-6 py-4 space-y-2 max-h-96 overflow-y-auto"
+          style={{ background: 'rgba(255, 248, 235, 0.5)' }}
+        >
           {questions.map((question) => {
             const isUsed = usedCardIds.includes(question.id);
             return (
@@ -39,13 +59,17 @@ const CategoryDropdown = ({ category, questions, onQuestionSelect, usedCardIds }
                 disabled={isUsed}
                 className={`
                   w-full px-4 py-3 rounded-xl text-left transition-all duration-200
-                  ${isUsed
-                    ? 'bg-warm-brown-light/10 text-warm-brown/40 cursor-not-allowed'
-                    : 'bg-white hover:bg-warm-peach/30 text-warm-brown-dark hover:shadow-md'
-                  }
+                  ${isUsed ? 'cursor-not-allowed' : ''}
                 `}
+                style={{
+                  background: isUsed ? 'rgba(208, 183, 176, 0.2)' : '#FFFFFF',
+                  color: isUsed ? '#656565' : '#282828',
+                  border: `1px solid ${isUsed ? 'rgba(208, 183, 176, 0.3)' : 'rgba(236, 182, 140, 0.2)'}`,
+                  opacity: isUsed ? 0.5 : 1,
+                  fontFamily: "'Caveat', cursive"
+                }}
               >
-                <span className="font-display">
+                <span>
                   {formatQuestionId(question.id, category)}
                 </span>
                 {isUsed && (
@@ -60,7 +84,7 @@ const CategoryDropdown = ({ category, questions, onQuestionSelect, usedCardIds }
   );
 };
 
-const ChooseMode = ({ questionsByCategory, onCardSelected, usedCardIds }) => {
+const ChooseMode = ({ questionsByCategory, onCardSelected, usedCardIds, currentImageIndex, cardImages }) => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleQuestionSelect = (question) => {
@@ -78,10 +102,22 @@ const ChooseMode = ({ questionsByCategory, onCardSelected, usedCardIds }) => {
         <>
           {/* Instructions */}
           <div className="text-center mb-8 space-y-2">
-            <p className="text-warm-brown-dark font-display text-lg">
+            <p 
+              className="text-lg"
+              style={{
+                fontFamily: "'Caveat', cursive",
+                color: '#282828'
+              }}
+            >
               Choose a category and select a question
             </p>
-            <p className="text-warm-brown/70 text-sm">
+            <p 
+              className="text-sm"
+              style={{
+                color: '#656565',
+                fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif"
+              }}
+            >
               选择类别并挑选问题
             </p>
           </div>
@@ -101,7 +137,11 @@ const ChooseMode = ({ questionsByCategory, onCardSelected, usedCardIds }) => {
         </>
       ) : (
         <div className="min-h-[400px] flex items-center justify-center">
-          <Card question={selectedCard} onClose={handleCloseCard} />
+          <Card 
+            question={selectedCard} 
+            onClose={handleCloseCard} 
+            currentImage={cardImages[currentImageIndex]}
+          />
         </div>
       )}
     </div>

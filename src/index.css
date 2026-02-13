@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Merriweather:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Ma+Shan+Zheng&family=Crimson+Text:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,10 @@
 
 @layer base {
   body {
-    @apply font-sans text-warm-brown antialiased;
-    background: linear-gradient(to bottom right, #F5E6D3, #E8D5C4, #FFD7BA);
+    @apply antialiased;
+    background: #FFF8EB;
+    font-family: 'Caveat', cursive;
+    color: #282828;
   }
 }
 
@@ -18,6 +20,14 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  
+  .font-handwritten {
+    font-family: 'Caveat', cursive;
+  }
+  
+  .font-chinese {
+    font-family: 'Ma Shan Zheng', 'Crimson Text', serif;
+  }
 }
 
 /* Custom scrollbar styles */
@@ -27,26 +37,26 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(245, 230, 211, 0.3);
+  background: rgba(255, 248, 235, 0.3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(109, 76, 65, 0.3);
+  background: rgba(236, 182, 140, 0.4);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(109, 76, 65, 0.5);
+  background: rgba(236, 182, 140, 0.6);
 }
 
-/* Custom checkbox styling with eggplant color */
+/* Custom checkbox styling with new orange color */
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid rgba(141, 110, 99, 0.4);
+  border: 2px solid rgba(77, 116, 145, 0.4);
   border-radius: 0.25rem;
   background-color: white;
   cursor: pointer;
@@ -55,8 +65,8 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  background-color: #684551;
-  border-color: #684551;
+  background-color: #4D7491; /* Blue */
+  border-color: #4D7491;
 }
 
 input[type="checkbox"]:checked::after {
@@ -71,12 +81,12 @@ input[type="checkbox"]:checked::after {
 }
 
 input[type="checkbox"]:hover {
-  border-color: #684551;
+  border-color: #4D7491;
 }
 
 input[type="checkbox"]:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(104, 69, 81, 0.2);
+  box-shadow: 0 0 0 3px rgba(77, 116, 145, 0.2);
 }
 
 /* Smooth transitions */
@@ -100,3 +110,32 @@ input[type="checkbox"]:focus {
 .animate-fade-in-scale {
   animation: fadeInScale 0.5s ease-out;
 }
+
+/* Card shuffle animation - plays when drawing new card */
+@keyframes cardShuffle {
+  0% {
+    transform: rotate(-2deg) translateX(0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(-2deg) translateX(-20px) scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: rotate(-2deg) translateX(20px) scale(0.95);
+    opacity: 0.5;
+  }
+  75% {
+    transform: rotate(-2deg) translateX(-10px) scale(0.98);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(-2deg) translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.card-shuffle-animation {
+  animation: cardShuffle 0.6s ease-in-out;
+}
+

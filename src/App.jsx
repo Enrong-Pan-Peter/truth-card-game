@@ -7,45 +7,87 @@ import questionsData from './data/questions.json';
 import { loadAllQuestions, groupByCategory } from './utils/gameUtils';
 
 function App() {
-  const [mode, setMode] = useState('shuffle'); // 'shuffle' or 'choose'
+  const [mode, setMode] = useState('shuffle');
   const [allQuestions, setAllQuestions] = useState([]);
   const [activeDeck, setActiveDeck] = useState([]);
   const [usedCards, setUsedCards] = useState([]);
   const [isCustomFormOpen, setIsCustomFormOpen] = useState(false);
   const [customIdCounter, setCustomIdCounter] = useState(1);
+  
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Put your 10 images in /public/images/ folder
+  const cardImages = [
+    '/images/card-image-1.png',
+    '/images/card-image-2.png',
+    '/images/card-image-3.png',
+    '/images/card-image-4.png',
+    '/images/card-image-5.png',
+    '/images/card-image-6.png',
+    '/images/card-image-7.png',
+    '/images/card-image-8.png',
+    '/images/card-image-9.png',
+    '/images/card-image-10.png',
+  ];
 
-  // Initialize questions on mount
   useEffect(() => {
     const questions = loadAllQuestions(questionsData);
     setAllQuestions(questions);
     setActiveDeck(questions);
   }, []);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (window.innerWidth <= 768) {
+        if (currentScrollY < lastScrollY || currentScrollY < 50) {
+          setHeaderVisible(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setHeaderVisible(false);
+        }
+      } else {
+        setHeaderVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
 
-  // Handle card drawn in shuffle mode
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+  
+  const getRandomImage = () => {
+    const randomIndex = Math.floor(Math.random() * cardImages.length);
+    setCurrentImageIndex(randomIndex);
+    return cardImages[randomIndex];
+  };
+
   const handleCardDrawn = (card) => {
     setActiveDeck(prev => prev.filter(q => q.id !== card.id));
     setUsedCards(prev => [...prev, card]);
+    getRandomImage();
   };
 
-  // Handle card selected in choose mode
   const handleCardSelected = (card) => {
     setActiveDeck(prev => prev.filter(q => q.id !== card.id));
     setUsedCards(prev => [...prev, card]);
+    getRandomImage();
   };
 
-  // Handle returning card to active deck
   const handleReturnCard = (card) => {
     setUsedCards(prev => prev.filter(q => q.id !== card.id));
     setActiveDeck(prev => [...prev, card]);
   };
 
-  // Reset deck
   const handleResetDeck = () => {
     setActiveDeck(allQuestions);
     setUsedCards([]);
   };
 
-  // Add custom question
   const handleAddCustomQuestion = (formData) => {
     const newQuestion = {
       id: `custom${customIdCounter}`,
@@ -64,58 +106,89 @@ function App() {
   const usedCardIds = usedCards.map(card => card.id);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-warm-cream via-warm-sand to-warm-peach/30">
-      {/* Header */}
-      <header className="bg-white/70 backdrop-blur-sm border-b-2 border-warm-brown-light/20 sticky top-0 z-20">
+    <div className="min-h-screen" style={{ background: '#FFF8EB' }}>
+      <header 
+        className={`sticky top-0 z-20 transition-transform duration-300 ${!headerVisible ? '-translate-y-full' : 'translate-y-0'}`}
+        style={{ 
+          background: '#FFFFFF',
+          borderBottom: '2px solid rgba(208, 183, 176, 0.3)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Title */}
             <div className="text-center md:text-left">
-              <h1 className="text-3xl md:text-4xl font-display text-warm-brown-dark">
+              <h1 
+                className="text-3xl md:text-4xl"
+                style={{ 
+                  fontFamily: "'Patrick Hand', cursive",
+                  color: '#282828'
+                }}
+              >
                 Truth Cards
               </h1>
-              <p className="text-sm text-warm-brown/70 mt-1">
+              <p 
+                className="text-sm mt-1"
+                style={{ 
+                  color: '#656565',
+                  fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif"
+                }}
+              >
                 真心话卡牌
               </p>
             </div>
 
-            {/* Controls */}
             <div className="flex items-center gap-4">
-              {/* Mode Toggle */}
-              <div className="flex bg-warm-brown-light/10 rounded-full p-1">
+              <div 
+                className="flex rounded-full p-1"
+                style={{ background: '#FFF8EB' }}
+              >
                 <button
                   onClick={() => setMode('shuffle')}
-                  className={`
-                    px-6 py-2 rounded-full font-display text-sm transition-all duration-300
-                    ${mode === 'shuffle'
-                      ? 'bg-warm-coral text-white shadow-md'
-                      : 'text-warm-brown-dark hover:bg-warm-brown-light/10'
-                    }
-                  `}
+                  className="px-6 py-2 rounded-full text-sm transition-all duration-300"
+                  style={{
+                    fontFamily: "'Patrick Hand', cursive",
+                    background: mode === 'shuffle' ? '#4D7491' : 'transparent',
+                    color: mode === 'shuffle' ? '#FFFFFF' : '#282828',
+                    boxShadow: mode === 'shuffle' ? '0 4px 12px rgba(77,116,145,0.3)' : 'none'
+                  }}
                 >
-                  Shuffle / 抽卡
+                  <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Shuffle</span>
+                  {' / '}
+                  <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>抽卡</span>
                 </button>
                 <button
                   onClick={() => setMode('choose')}
-                  className={`
-                    px-6 py-2 rounded-full font-display text-sm transition-all duration-300
-                    ${mode === 'choose'
-                      ? 'bg-warm-coral text-white shadow-md'
-                      : 'text-warm-brown-dark hover:bg-warm-brown-light/10'
-                    }
-                  `}
+                  className="px-6 py-2 rounded-full text-sm transition-all duration-300"
+                  style={{
+                    fontFamily: "'Patrick Hand', cursive",
+                    background: mode === 'choose' ? '#4D7491' : 'transparent',
+                    color: mode === 'choose' ? '#FFFFFF' : '#282828',
+                    boxShadow: mode === 'choose' ? '0 4px 12px rgba(77,116,145,0.3)' : 'none'
+                  }}
                 >
-                  Choose / 选择
+                  <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Choose</span>
+                  {' / '}
+                  <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>选择</span>
                 </button>
               </div>
 
-              {/* Add Question Button */}
               <button
                 onClick={() => setIsCustomFormOpen(true)}
-                className="p-3 bg-[#F5EDE8] rounded-full hover:bg-[#F5EDE8]/80 transition-colors duration-200 shadow-md border-2 border-warm-brown-light/20"
+                className="p-3 rounded-full transition-colors duration-200"
+                style={{
+                  background: '#ECB68C',
+                  boxShadow: '0 2px 8px rgba(236,182,140,0.3)'
+                }}
                 title="Add custom question"
               >
-                <svg className="w-5 h-5 text-warm-brown-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg 
+                  className="w-5 h-5" 
+                  style={{ color: '#FFFFFF' }} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               </button>
@@ -124,36 +197,43 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         {mode === 'shuffle' ? (
           <ShuffleMode
             activeDeck={activeDeck}
             onCardDrawn={handleCardDrawn}
             onReset={handleResetDeck}
+            currentImageIndex={currentImageIndex}
+            cardImages={cardImages}
           />
         ) : (
           <ChooseMode
             questionsByCategory={questionsByCategory}
             onCardSelected={handleCardSelected}
             usedCardIds={usedCardIds}
+            currentImageIndex={currentImageIndex}
+            cardImages={cardImages}
           />
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="text-center py-8 text-warm-brown/50 text-sm">
-        <p>Made with ❤️ for meaningful conversations</p>
-        <p className="mt-1 text-xs">为有意义的对话而制作</p>
+      <footer className="text-center py-8 text-sm space-y-2" style={{ color: '#656565' }}>
+        <p style={{ fontFamily: "'Patrick Hand', cursive" }}>
+          Made with ❤️ for meaningful conversations
+        </p>
+        <p className="text-xs" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>
+          为有意义的对话而制作
+        </p>
+        <p className="text-xs mt-3" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif", color: '#656565' }}>
+          如果有任何建议，拜托联系微信：December7-P，这会对体验很有帮助，谢谢！！
+        </p>
       </footer>
 
-      {/* Used Cards Sidebar */}
       <UsedCardsSidebar
         usedCards={usedCards}
         onReturnCard={handleReturnCard}
       />
 
-      {/* Custom Question Form Modal */}
       <CustomQuestionForm
         isOpen={isCustomFormOpen}
         onClose={() => setIsCustomFormOpen(false)}

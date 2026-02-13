@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Card from './Card';
-import { drawRandomCard, areAllCardsUsed, getCategoryDisplay } from '../utils/gameUtils';
+import { drawRandomCard, getCategoryDisplay } from '../utils/gameUtils';
 
-const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
+const ShuffleMode = ({ activeDeck, onCardDrawn, onReset, currentImageIndex, cardImages }) => {
   const [currentCard, setCurrentCard] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -44,31 +44,40 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
     }, 300);
   };
 
+  // Click/tap on card to draw next card
+  const handleCardClick = () => {
+    if (!isDrawing && !allUsed) {
+      handleShuffle();
+    }
+  };
+
   const filteredDeck = getFilteredDeck();
   const allUsed = filteredDeck.length === 0;
   const categories = ['getting_to_know', 'ideals_reals', 'heart_to_heart', 'memories', 'matters_of_soul'];
 
   return (
     <div className="relative">
-      {/* Filter Toggle Button (Left side) */}
       <button
         onClick={() => setIsFilterOpen(!isFilterOpen)}
         className={`
           fixed top-1/2 -translate-y-1/2 z-40
-          bg-warm-coral text-white p-3 rounded-r-2xl shadow-lg
-          transition-all duration-300 hover:bg-warm-coral/90
+          p-3 rounded-r-2xl shadow-lg
+          transition-all duration-300
           ${isFilterOpen ? 'left-80' : 'left-0'}
         `}
+        style={{
+          background: '#ECB68C',
+          color: '#FFFFFF'
+        }}
         aria-label="Toggle filter categories"
       >
         <div className="flex flex-col items-center gap-1">
-          <span className="text-sm font-display">Filter</span>
+          <span className="text-sm" style={{ fontFamily: "'Patrick Hand', cursive" }}>Filter</span>
           <span className="text-xs">{Object.values(selectedCategories).filter(Boolean).length}/5</span>
           <span className="text-lg">{isFilterOpen ? '←' : '→'}</span>
         </div>
       </button>
 
-      {/* Backdrop */}
       {isFilterOpen && (
         <div
           onClick={() => setIsFilterOpen(false)}
@@ -76,24 +85,36 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
         />
       )}
 
-      {/* Filter Sidebar (Left side, collapsible) */}
       <div
         className={`
-          fixed top-0 left-0 h-full w-80 bg-warm-cream shadow-2xl z-40
+          fixed top-0 left-0 h-full w-80 shadow-2xl z-40
           transform transition-transform duration-300 ease-in-out
           ${isFilterOpen ? 'translate-x-0' : '-translate-x-full'}
           flex flex-col
         `}
+        style={{ background: '#ECB68C' }}
       >
-        {/* Header */}
-        <div className="p-6 border-b-2 border-warm-brown-light/20 bg-warm-sand/30">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-2xl font-display text-warm-brown-dark">
+        <div 
+          className="p-6 flex flex-col gap-2"
+          style={{ 
+            borderBottom: '2px solid rgba(255, 255, 255, 0.3)',
+            background: 'rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          <div className="flex items-center justify-between">
+            <h2 
+              className="text-2xl"
+              style={{ 
+                fontFamily: "'Patrick Hand', cursive",
+                color: '#FFFFFF'
+              }}
+            >
               Filter Categories
             </h2>
             <button
               onClick={() => setIsFilterOpen(false)}
-              className="text-warm-brown hover:text-warm-brown-dark transition-colors"
+              className="transition-colors"
+              style={{ color: '#FFFFFF' }}
               aria-label="Close sidebar"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,32 +122,50 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
               </svg>
             </button>
           </div>
-          <p className="text-sm text-warm-brown/70">选择类别</p>
-          <p className="text-xs text-warm-brown/60 mt-1">
+          <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.8)', fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>
+            选择类别
+          </p>
+          <p className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             {Object.values(selectedCategories).filter(Boolean).length} selected
           </p>
         </div>
 
-        {/* Categories List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {categories.map(category => {
             const display = getCategoryDisplay(category);
             return (
               <label
                 key={category}
-                className="flex items-center gap-3 cursor-pointer group p-3 rounded-xl hover:bg-white/50 transition-colors"
+                className="flex items-center gap-3 cursor-pointer group p-3 rounded-xl transition-colors"
+                style={{
+                  background: selectedCategories[category] 
+                    ? 'rgba(255, 255, 255, 0.2)' 
+                    : 'rgba(255, 255, 255, 0.1)'
+                }}
               >
                 <input
                   type="checkbox"
                   checked={selectedCategories[category]}
                   onChange={() => toggleCategory(category)}
-                  className="w-5 h-5 rounded border-2 border-warm-brown-light/40 checked:bg-warm-peach checked:border-warm-peach focus:ring-warm-peach focus:ring-2 accent-warm-peach flex-shrink-0"
+                  className="w-5 h-5 rounded flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-display text-warm-brown-dark group-hover:text-warm-peach transition-colors">
+                  <p 
+                    className="text-sm transition-colors"
+                    style={{
+                      fontFamily: "'Patrick Hand', cursive",
+                      color: '#FFFFFF'
+                    }}
+                  >
                     {display.en}
                   </p>
-                  <p className="text-xs text-warm-brown/70">
+                  <p 
+                    className="text-xs"
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif"
+                    }}
+                  >
                     {display.zh}
                   </p>
                 </div>
@@ -135,69 +174,111 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
           })}
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t-2 border-warm-brown-light/20 bg-warm-sand/30">
-          <p className="text-xs text-warm-brown/60 text-center">
+        <div 
+          className="p-4"
+          style={{ 
+            borderTop: '2px solid rgba(255, 255, 255, 0.3)',
+            background: 'rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          <p className="text-xs text-center" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             Select categories to include in shuffle
           </p>
         </div>
       </div>
 
-      {/* Main Content - Centered and Larger */}
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
-        {/* Shuffle Button - Larger */}
         <div className="text-center">
           <button
             onClick={handleShuffle}
             disabled={allUsed || isDrawing}
             className={`
-              px-16 py-6 rounded-full text-2xl font-display font-semibold
+              px-16 py-6 rounded-full text-2xl font-semibold
               transition-all duration-300 transform
-              ${allUsed || isDrawing
-                ? 'bg-warm-brown-light/30 text-warm-brown-light cursor-not-allowed'
-                : 'bg-warm-coral text-white hover:bg-warm-coral/90 hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl'
-              }
+              ${allUsed || isDrawing ? 'cursor-not-allowed opacity-50' : 'hover:scale-105 active:scale-95'}
             `}
+            style={{
+              fontFamily: "'Patrick Hand', cursive",
+              background: allUsed || isDrawing ? '#D0B7B0' : '#4D7491',
+              color: '#FFFFFF',
+              boxShadow: allUsed || isDrawing ? 'none' : '0 4px 16px rgba(77, 116, 145, 0.4)'
+            }}
           >
             {isDrawing ? (
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-3 justify-center">
                 <span className="inline-block w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin" />
                 Drawing...
               </span>
             ) : allUsed ? (
               'No Cards Available'
             ) : (
-              <>Shuffle / 抽卡</>
+              <>
+                <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Shuffle</span>
+                {' / '}
+                <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>抽卡</span>
+              </>
             )}
           </button>
 
-          <p className="mt-4 text-base text-warm-brown/70">
+          <p className="mt-4 text-base" style={{ color: '#656565' }}>
             {filteredDeck.length} cards in selected categories
           </p>
         </div>
 
-        {/* Current Card Display - Larger and Centered */}
         <div className="min-h-[500px] flex items-center justify-center">
           {currentCard ? (
-            <div className="w-full">
-              <Card question={currentCard} />
+            <div 
+              className="w-full cursor-pointer"
+              onClick={handleCardClick}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  handleCardClick();
+                }
+              }}
+              aria-label="Click to draw next card"
+            >
+              <Card 
+                question={currentCard} 
+                currentImage={cardImages[currentImageIndex]}
+              />
+              <p className="text-center mt-4 text-sm" style={{ 
+                color: '#656565',
+                fontFamily: "'Patrick Hand', cursive"
+              }}>
+                <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Tap card for next question</span>
+                {' / '}
+                <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>点击卡片抽下一张</span>
+              </p>
             </div>
           ) : (
-            <div className="text-center space-y-6 text-warm-brown/60 px-4">
+            <div className="text-center space-y-6 px-4" style={{ color: '#656565' }}>
               {allUsed ? (
                 <>
-                  <p className="text-2xl font-display">All cards have been used!</p>
+                  <p className="text-2xl" style={{ fontFamily: "'Patrick Hand', cursive" }}>
+                    All cards have been used!
+                  </p>
                   <button
                     onClick={onReset}
-                    className="px-8 py-4 bg-warm-peach text-white rounded-full font-display text-lg hover:bg-warm-peach/80 transition-colors duration-200 shadow-lg"
+                    className="px-8 py-4 rounded-full text-lg transition-colors duration-200"
+                    style={{
+                      background: '#ECB68C',
+                      color: '#FFFFFF',
+                      fontFamily: "'Patrick Hand', cursive",
+                      boxShadow: '0 4px 12px rgba(236, 182, 140, 0.3)'
+                    }}
                   >
-                    Reset Deck / 重置卡牌
+                    <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Reset Deck</span>
+                    {' / '}
+                    <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>重置卡牌</span>
                   </button>
                 </>
               ) : (
                 <>
                   <svg
                     className="w-24 h-24 mx-auto opacity-30"
+                    style={{ color: '#656565' }}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -209,8 +290,12 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset }) => {
                       d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                     />
                   </svg>
-                  <p className="text-xl font-display">Click "Shuffle" to draw a card</p>
-                  <p className="text-base">点击"抽卡"开始</p>
+                  <p className="text-xl" style={{ fontFamily: "'Patrick Hand', cursive" }}>
+                    Click "Shuffle" to draw a card
+                  </p>
+                  <p className="text-base" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>
+                    点击"抽卡"开始
+                  </p>
                 </>
               )}
             </div>

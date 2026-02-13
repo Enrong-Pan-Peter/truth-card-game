@@ -7,21 +7,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // New color scheme
+        ivory: '#FFF8EB',
+        'pure-white': '#FFFFFF',
+        'blue-primary': '#4D7491',
+        'orange-primary': '#ECB68C',
+        'black-primary': '#282828',
+        'gray-secondary': '#656565',
+        'pale-pink': '#D0B7B0',
+        
+        // Keep warm colors for compatibility
         warm: {
-          cream: '#CEA0AE',
-          sand: '#D5B0AC',
-          peach: '#684551',
-          coral: '#402E2A',
+          cream: '#FFF8EB',  // Updated to ivory
+          sand: '#FFFFFF',    // Updated to white
+          peach: '#ECB68C',   // Updated to orange
+          coral: '#4D7491',   // Updated to blue
           brown: {
-            light: '#8D6E63',
-            DEFAULT: '#6D4C41',
-            dark: '#402E2A',
+            light: '#D0B7B0', // Updated to pale pink
+            DEFAULT: '#656565', // Updated to gray
+            dark: '#282828',   // Updated to black
           },
         },
       },
       fontFamily: {
-        sans: ['Crimson Text', 'Georgia', 'serif'],
-        display: ['Merriweather', 'Georgia', 'serif'],
+        sans: ['Ma Shan Zheng', 'Crimson Text', 'Georgia', 'serif'],
+        display: ['Caveat', 'cursive'],
+        handwritten: ['Caveat', 'cursive'],
       },
     },
   },
