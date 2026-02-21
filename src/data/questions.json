@@ -99,6 +99,136 @@
       "id": "gk020",
       "en": "What are the characteristics of the people you admire?",
       "zh": "你欣赏的人普遍有什么特点呢？"
+    },
+    {
+      "id": "gk021",
+      "en": "What is your MBTI personality type? Do you think it describes you well?",
+      "zh": "你的MBTI是什么？你觉得它描述得准确吗？"
+    },
+    {
+      "id": "gk022",
+      "en": "What is your Enneagram type? Do you think it describes you well?",
+      "zh": "你的九型人格类型是什么？你觉得它描述得准确吗？"
+    },
+    {
+      "id": "gk023",
+      "en": "Are you the proactive one in social situations?",
+      "zh": "你在社交场合中是积极主动的人吗？"
+    },
+    {
+      "id": "gk024",
+      "en": "What kind of people do you prefer to be friends with?",
+      "zh": "你更容易跟什么样的人交朋友？"
+    },
+    {
+      "id": "gk025",
+      "en": "Ask back: pick another card and ask another person to answer for you.",
+      "zh": "反问卡：再抽一张卡，让另一个人来回答这个问题。"
+    },
+    {
+      "id": "gk026",
+      "en": "Pass: you can choose to skip this question and pass to the next person.",
+      "zh": "跳过卡：你可以选择跳过这个问题，直接传给下一个人。"
+    },
+    {
+      "id": "gk027",
+      "en": "Master card: you can pick a person to ask any one question.",
+      "zh": "指定卡：你可以指定一个人问一个你想问的问题。"
+    },
+    {
+      "id": "gk028",
+      "en": "Friend card: get another card and pick a person to answer with you.",
+      "zh": "陪伴卡：再抽一张卡，选一个人和你一起回答。"
+    },
+    {
+      "id": "gk029",
+      "en": "Flood card: take another card and everyone has to answer that question.",
+      "zh": "洪水卡：抽取另一张卡，每个人都要回答那张卡上的问题。"
+    },
+    {
+      "id": "gk030",
+      "en": "In your browser history, what is the most embarrassing thing you have searched for?",
+      "zh": "在你的浏览器历史记录中，你搜索过最尴尬的事情是什么？"
+    },
+    {
+      "id": "gk031",
+      "en": "What is the most ridiculous thing you have ever done?",
+      "zh": "你做过的最荒唐的事情是什么？"
+    },
+    {
+      "id": "gk032",
+      "en": "Without mentioning your name, major of studies, and family origin, how would you introduce yourself?",
+      "zh": "不能提你的名字、专业和家庭背景，你会怎么介绍自己？"
+    },
+    {
+      "id": "gk033",
+      "en": "What is the the first thing you want to do as you retire?",
+      "zh": "你退休后第一件事想做什么？"
+    },
+    {
+      "id": "gk034",
+      "en": "If you have to give up one of chopsticks, spoons or forks, which would you choose to give up?",
+      "zh": "如果必须放弃筷子、勺子或叉子中的一个，你会选择放弃哪一个？"
+    },
+    {
+      "id": "gk035",
+      "en": "If you can only eat one cuisine for the rest of your life, which cuisine would you choose?",
+      "zh": "如果你只能吃一种菜系，你会选择哪一种？"
+    },
+    {
+      "id": "gk036",
+      "en": "Any 'wise saying' or 'life motto' you think is annoying or even useless?",
+      "zh": "有没有什么“人生鸡汤”或“座右铭”你觉得很烦人甚至毫无意义？"
+    },
+    {
+      "id": "gk037",
+      "en": "Give two truths and one lie about yourself and pick a person to guess.",
+      "zh": "说出两个关于你自己的真话和一个谎话，然后让另一个人来猜。"
+    },
+    {
+      "id": "gk038",
+      "en": "What food represents you the most?",
+      "zh": "什么食物最能代表你？"
+    },
+    {
+      "id": "gk039",
+      "en": "What is your favorite emoji?",
+      "zh": "你最喜欢的表情符号是什么？"
+    },
+    {
+      "id": "gk040",
+      "en": "What animal represents you the most?",
+      "zh": "什么动物最能代表你？"
+    },
+    {
+      "id": "gk041",
+      "en": "I am the only one in this room ___________?",
+      "zh": "我是这个屋子里唯一 __________。"
+    },
+    {
+      "id": "gk042",
+      "en": "What is the most useless thing you have ever bought?",
+      "zh": "你买过的最智商税的东西是什么？"
+    },
+    {
+      "id": "gk043",
+      "en": "Explain your WeChat/Instagram profile name, avatar, and signature.",
+      "zh": "解释一下你的微信/Instagram 名称、头像和签名！"
+    },
+    {
+      "id": "gk044",
+      "en": "What is the most ridiculous thing you have ever done to procrastinate on a ddl?",
+      "zh": "你为了拖延DDL做过的最荒谬的事情是什么？"
+    },
+    {
+      "id": "gk045",
+      "en": "What is your weirdest sleeping spot at school or at work?",
+      "zh": "你在学校或公司最奇怪的睡觉点是哪里？"
+    },
+    {
+      "id": "gk046",
+      "en": "What is the most ridiculous thing you have ever done to get out of a social event?",
+      "zh": "你为了逃避社交活动做过的最荒谬的事情是什么？"
     }
   ],
   "ideals_reals": [
@@ -151,6 +281,151 @@
       "id": "ir010",
       "en": "Where and how would you like to be when you die?",
       "zh": "你希望自己离世的时候是什么场景？"
+    },
+    {
+      "id": "ir011",
+      "en": "What is your biggest fear about the future?",
+      "zh": "你对未来最大的恐惧是什么？"
+    },
+    {
+      "id": "ir012",
+      "en": "What is your biggest hope about the future?",
+      "zh": "你对未来最大的期望是什么？"
+    },
+    {
+      "id": "ir013",
+      "en": "What is your ideal job?",
+      "zh": "你理想的工作是什么？"
+    },
+    {
+      "id": "ir014",
+      "en": "What is your ideal family like?",
+      "zh": "你理想的家庭是什么样子的？"
+    },
+    {
+      "id": "ir015",
+      "en": "What is your ideal relationship like?",
+      "zh": "你理想的感情是什么样子的？"
+    },
+    {
+      "id": "ir016",
+      "en": "What is your ideal home like?",
+      "zh": "你对未来住的房子的想象是什么样子的？"
+    },
+    {
+      "id": "ir017",
+      "en": "What is your ideal self like?",
+      "zh": "你理想中的自己是什么样子的？"
+    },
+    {
+      "id": "ir018",
+      "en": "What is your ideal church like?",
+      "zh": "你理想中的教会是什么样子的？"
+    },
+    {
+      "id": "ir019",
+      "en": "What is your ideal community like?",
+      "zh": "你理想中的团契是什么样子的？"
+    },
+    {
+      "id": "ir020",
+      "en": "What is your ideal world like?",
+      "zh": "你理想中的世界是什么样子的？"
+    },
+    {
+      "id": "ir021",
+      "en": "Ask back: pick another card and ask another person to answer for you.",
+      "zh": "反问卡：再抽一张卡，让另一个人来回答这个问题。"
+    },
+    {
+      "id": "ir022",
+      "en": "Pass: you can choose to skip this question and pass to the next person.",
+      "zh": "跳过卡：你可以选择跳过这个问题，直接传给下一个人。"
+    },
+    {
+      "id": "ir023",
+      "en": "Master card: you can pick a person to ask any one question.",
+      "zh": "指定卡：你可以指定一个人问一个你想问的问题。"
+    },
+    {
+      "id": "ir024",
+      "en": "Friend card: get another card and pick a person to answer with you.",
+      "zh": "陪伴卡：再抽一张卡，选一个人和你一起回答。"
+    },
+    {
+      "id": "ir025",
+      "en": "Flood card: take another card and everyone has to answer that question.",
+      "zh": "洪水卡：抽取另一张卡，每个人都要回答那张卡上的问题。"
+    },
+    {
+      "id": "ir026",
+      "en": "If you can make anything your occupation, what would it be?",
+      "zh": "如果你能把任何事情作为你的事业，你会做什么？"
+    },
+    {
+      "id": "ir027",
+      "en": "If you can live in any era of history, which era would you choose to live in?",
+      "zh": "如果你可以选择生活在历史上的任何一个时代，你会选择哪个时代？"
+    },
+    {
+      "id": "ir028",
+      "en": "If you can have a superpower, what superpower would you choose?",
+      "zh": "如果你可以拥有一种超能力，你会选择什么超能力？"
+    },
+    {
+      "id": "ir029",
+      "en": "If you can have dinner with any one person in the world, who would you choose to have dinner with?",
+      "zh": "如果你可以和世界上的任何一个人共进晚餐，你会选择谁？"
+    },
+    {
+      "id": "ir030",
+      "en": "If you can be famous for something, what would you like to be famous for?",
+      "zh": "如果你可以因为某件事而出名，你希望因为什么事而出名？"
+    },
+    {
+      "id": "ir031",
+      "en": "What is your never accomplished health plan?",
+      "zh": "你最常做但从没成功的健康计划是什么？"
+    },
+    {
+      "id": "ir032",
+      "en": "If you can run a company that is completely useless, what would it sell?",
+      "zh": "如果你可以经营一家完全无用的公司，它会卖什么？"
+    },
+    {
+      "id": "ir033",
+      "en": "If you can have a lifetime supply of something, what would you want to have a lifetime supply of?",
+      "zh": "如果你可以拥有某样东西的终身供应，你希望是什么？"
+    },
+    {
+      "id": "ir034",
+      "en": "If you can have any animal as a pet, what animal would you choose to have as a pet?",
+      "zh": "如果你可以养任何动物作为宠物，你会选择什么动物？"
+    },
+    {
+      "id": "ir035",
+      "en": "If you can exchange life with anyone for one day, who would you choose and why?",
+      "zh": "如果你可以和任何人交换一天的生活，你会选择谁？为什么？"
+    },
+    {
+        "id": "ir036",
+        "en": "If you have to get stuck in an island with someone in the fellowship, who would it be and why?",
+        "zh": "如果你必须和团契中的某个人被困在一个岛上，你会选择谁？为什么？"
+    },
+    {
+      "id": "ir037",
+      "en": "If you can have a billboard with anything on it, what would you put on the billboard?",
+      "zh": "如果你可以拥有一个广告牌，上面可以写任何东西，你会在广告牌上写什么？"
+    },
+    {
+      "id": "ir038",
+      "en": "If you can have a theme song that plays whenever you enter a room, what would your theme song be?",
+      "zh": "如果你可以有一首主题曲，每当你进入一个房间时都会播放，你的主题曲会是什么？"
+    },
+    {
+      "id": "ir039",
+      "en": "If you can have an extra hour everyday, what would you do with that extra hour?",
+      "zh": "如果你可以每天多出一个小时，你会用这多出来的时间做什么？"
     }
   ],
   "heart_to_heart": [
@@ -258,6 +533,216 @@
       "id": "hh021",
       "en": "Can you live with long-distance relationship?",
       "zh": "你能接受异地恋吗？"
+    },
+    {
+      "id": "hh022",
+      "en": "What is your love language?",
+      "zh": "你的爱的语言是什么？"
+    },
+    {
+      "id": "hh023",
+      "en": "Do you think TV-style romantic love is possible in real life?",
+      "zh": "你觉得电视剧里甜甜的爱情可能发生在你身上吗？"
+    },
+    {
+      "id": "hh024",
+      "en": "If you're currently in a relationship, what is your love story?",
+      "zh": "如果你目前在一段关系中，你可以分享你的爱情故事吗？"
+    },
+    {
+      "id": "hh025",
+      "en": "What is the most romantic thing you have ever done or received?",
+      "zh": "你做过或收到过的最浪漫的事情是什么？"
+    },
+    {
+      "id": "hh026",
+      "en": "Are you more likely to be a dominant partner in a relationship?",
+      "zh": "你是霸道总裁类型的恋人吗？"
+    },
+    {
+      "id": "hh027",
+      "en": "Do you want to date someone in the same field as you?",
+      "zh": "你希望和相同专业或者行业的人交往吗？"
+    },
+    {
+      "id": "hh028",
+      "en": "What is the most important lesson you have learned from your parents' relationship?",
+      "zh": "你从父母的关系中学到了什么最重要的教训？"
+    },
+    {
+      "id": "hh029",
+      "en": "What is the most important lesson you have learned from your past romantic relationships?",
+      "zh": "你从过去的恋爱关系中学到最重要的事情是什么？"
+    },
+    {
+      "id": "hh030",
+      "en": "What is your biggest insecurity in a relationship and how do you deal with it?",
+      "zh": "你在感情中最大的自卑是什么？你是如何处理它的？"
+    },
+    {
+      "id": "hh031",
+      "en": "Are you afraid of people hating your true self?",
+      "zh": "你会害怕别人讨厌真实的你吗？"
+    },
+    {
+      "id": "hh032",
+      "en": "In a relationship, how would you order the importance of his/her personality, family background, appearance, and finances?",
+      "zh": "在一段关系中，你会如何排序对方的性格、家庭背景、外貌和经济状况的重要程度？"
+    },
+    {
+      "id": "hh033",
+      "en": "Ask back: pick another card and ask another person to answer for you.",
+      "zh": "反问卡：再抽一张卡，让另一个人来回答这个问题。"
+    },
+    {
+      "id": "hh034",
+      "en": "Pass: you can choose to skip this question and pass to the next person.",
+      "zh": "跳过卡：你可以选择跳过这个问题，直接传给下一个人。"
+    },
+    {
+      "id": "hh035",
+      "en": "Master card: you can pick a person to ask any one question.",
+      "zh": "指定卡：你可以指定一个人问一个你想问的问题。"
+    },
+    {
+      "id": "hh036",
+      "en": "Friend card: get another card and pick a person to answer with you.",
+      "zh": "陪伴卡：再抽一张卡，选一个人和你一起回答。"
+    },
+    {
+      "id": "hh037",
+      "en": "When did you last cry and why?",
+      "zh": "你最近一次流泪是什么时候，因为什么事情？"
+    },
+    {
+      "id": "hh038",
+      "en": "Flood card: take another card and everyone has to answer that question.",
+      "zh": "洪水卡：抽取另一张卡，每个人都要回答那张卡上的问题。"
+    },
+    {
+      "id": "hh039",
+      "en": "Do you feel pressued when blending in a new group of people? Why?",
+      "zh": "你觉得融入一个新群体有压力吗？为什么？"
+    },
+    {
+      "id": "hh040",
+      "en": "What was the worst joke you have ever told",
+      "zh": "你将过最失败的笑话是什么？"
+    },
+    {
+      "id": "hh041",
+      "en": "What is your favorite villain?",
+      "zh": "你最喜欢的大反派是谁？"
+    },
+    {
+      "id": "hh042",
+      "en": "What is your biggest insecurity in a relationship and how do you deal with it?",
+      "zh": "你在感情中最大的自卑是什么？你是如何处理它的？"
+    },
+    {
+      "id": "hh043",
+      "en": "When was the last time you lied to your parents, for what?",
+      "zh": "你最后一次对父母撒谎是什么时候？为什么？"
+    },
+    {
+      "id": "hh044",
+      "en": "What is the most rebellious thing you have ever done in your life?",
+      "zh": "你做过的最叛逆的事情是什么？"
+    },
+    {
+      "id": "hh045",
+      "en": "Name one thing other feel envious about you, but you actually dislike?",
+      "zh": "有没有一件别人很羡慕，但你其实不喜欢的事情？"
+    },
+    {
+      "id": "hh046",
+      "en": "We all like to spend time with people we get along with, but there are often some people in the fellowship that you don't get along with. Do you feel like those people are a burden to you?",
+      "zh": "我们都喜欢跟合得来的人呆在一起，但团契常常有些合不来的人。你觉得这些人是你的负担吗？"
+    },
+    {
+      "id": "hh047",
+      "en": "What is the most difficult thing for you to forgive?",
+      "zh": "什么事情是你最难以原谅的？"
+    },
+    {
+      "id": "hh048",
+      "en": "What is the most difficult thing for you to ask forgiveness for?",
+      "zh": "什么事情是你最难以请求原谅的？"
+    },
+    {
+      "id": "hh049",
+      "en": "What is the most difficult thing for you to apologize for?",
+      "zh": "什么事情是你最难以道歉的？"
+    },
+    {
+      "id": "hh050",
+      "en": "What is the most difficult thing for you to forgive yourself for?",
+      "zh": "什么事情是你最难以原谅自己的？"
+    },
+    {
+      "id": "hh051",
+      "en": "What do you think is the boundary between 'getting along' and 'pretending nothing is wrong'?",
+      "zh": "你觉得’和睦‘和’假装没事‘之间的界限在哪里？"
+    },
+    {
+      "id": "hh052",
+      "en": "What is the most difficult thing for you to forgive in a relationship?",
+      "zh": "在一段关系中，什么事情是你最难以原谅的？"
+    },
+    {
+      "id": "hh053",
+      "en": "Roast your fellowship on one thing!",
+      "zh": "吐槽你所在的团契一个点！"
+    },
+    {
+      "id": "hh054",
+      "en": "What do you wish others could understand about you?",
+      "zh": "有什么是你希望别人能理解你的地方？"
+    },
+    {
+      "id": "hh055",
+      "en": "When someone has a completely different opinion from you, how do you handle it?",
+      "zh": "当有人和你观点完全不一样时，你会怎么做？"
+    },
+    {
+      "id": "hh056",
+      "en": "Can a fellowship exist without shared interests (e.g., not eating together, not playing together)?",
+      "zh": "如果团契里没有共同兴趣（不一起吃饭，不一起玩），团契还能存在吗？"
+    },
+    {
+      "id": "hh057",
+      "en": "Would you actively care about the people who are neglected in the fellowship?",
+      "zh": "你会主动关心团契里被忽视的人吗？"
+    },
+    {
+      "id": "hh058",
+      "en": "When you pray 'Lord, please grant us unity', who do you actually hope to be changed first in your heart?",
+      "zh": "当你祷告’主啊求你赐下合一‘时，你内心其实最希望谁先被改变？"
+    },
+    {
+      "id": "hh059",
+      "en": "If God is asking a question to you, what are you afraid of Him asking?",
+      "zh": "如果上帝今天亲口问你一个问题，你最怕祂问你什么？"
+    },
+    {
+      "id": "hh060",
+      "en": "What are you most afraid of God asking you to forfeit?",
+      "zh": "你最害怕上帝要你放下什么？"
+    },
+    {
+      "id": "hh061",
+      "en": "Is forgiveness always possible, why or why not?",
+      "zh": "宽恕总是可能的吗？为什么或为什么不？"
+    },
+    {
+      "id": "hh062",
+      "en": "If you bring a new friend to the fellowship, what scenario are you most afraid of them seeing on the first day?",
+      "zh": "如果你带一个新朋友来团契，你最怕ta第一天看到什么情景？"
+    },
+    {
+      "id": "hh063",
+      "en": "What is the most painful part of growing up?",
+      "zh": "你觉得’成长‘中最痛的部分是什么？"
     }
   ],
   "memories": [
@@ -360,7 +845,77 @@
       "id": "mem020",
       "en": "What is your most treasured memory?",
       "zh": "你最珍惜的记忆是什么？"
-    }  
+    },
+    {
+      "id": "mem021",
+      "en": "What is the most embarrassing moment you have ever had?",
+      "zh": "你经历过的最尴尬的时刻是什么？"
+    },
+    {
+      "id": "mem022",
+      "en": "What is the most meaningful thing you have ever done for someone else?",
+      "zh": "你为别人做过的最有意义的事情是什么？"
+    },
+    {
+      "id": "mem023",
+      "en": "Describe a time when you felt truly proud of yourself.",
+      "zh": "描述一个你感到真正为自己骄傲的时刻吧。"
+    },
+    {
+      "id": "mem024",
+      "en": "What is the most surprising thing that has ever happened to you?",
+      "zh": "你经历过的最让人惊讶的事情是什么？"
+    },
+    {
+      "id": "mem025",
+      "en": "Name one experience you think is unique to you.",
+      "zh": "说出一个你认为只有自己经历过的童年经历？"
+    },
+    {
+      "id": "mem026",
+      "en": "Ask back: pick another card and ask another person to answer for you.",
+      "zh": "反问卡：再抽一张卡，让另一个人来回答这个问题。"
+    },
+    {
+      "id": "mem027",
+      "en": "Pass: you can choose to skip this question and pass to the next person.",
+      "zh": "跳过卡：你可以选择跳过这个问题，直接传给下一个人。"
+    },
+    {
+      "id": "mem028",
+      "en": "Master card: you can pick a person to ask any one question.",
+      "zh": "指定卡：你可以指定一个人问一个你想问的问题。"
+    },
+    {
+      "id": "mem029",
+      "en": "Friend card: get another card and pick a person to answer with you.",
+      "zh": "陪伴卡：再抽一张卡，选一个人和你一起回答。"
+    },
+    {
+      "id": "mem030",
+      "en": "Flood card: take another card and everyone has to answer that question.",
+      "zh": "洪水卡：抽取另一张卡，每个人都要回答那张卡上的问题。"
+    },
+    {
+      "id": "mem031",
+      "en": "What is the most memorable thing that has ever happened to you in this fellowship?",
+      "zh": "在这个团契里，你经历过的最难忘的事情是什么？"
+    },
+    {
+      "id": "mem032",
+      "en": "What was your biggest fear as a child and what is your biggest fear now?",
+      "zh": "小时候你最害怕什么？长大后你最害怕什么？"
+    },
+    {
+      "id": "mem033",
+      "en": "What is something you believed 100% as a child but later found out to be completely wrong?",
+      "zh": "小时候你百分百相信，但现在却发现完全错误的事情是什么？"
+    },
+    {
+      "id": "mem034",
+      "en": "Have you changed your mind on something important before? What made you change your mind?",
+      "zh": "你是否曾在某件重要的事情上改变过想法？是什么促成的？"
+    }
   ],
   "matters_of_soul": [
     {
@@ -452,6 +1007,266 @@
       "id": "ms018",
       "en": "How has your faith been challenged and how did you overcome it?",
       "zh": "你的信仰经历过哪些挑战，你是如何克服的？"
+    },
+    {
+      "id": "ms019",
+      "en": "What is your favorite worship song and why?",
+      "zh": "你最喜欢的敬拜歌曲是什么？为什么？"
+    },
+    {
+      "id": "ms020",
+      "en": "What is your favorite Christian book and why?",
+      "zh": "你最喜欢的基督教书籍是什么？为什么？"
+    },
+    {
+      "id": "ms021",
+      "en": "What is your favorite Christian movie and why?",
+      "zh": "你最喜欢的基督教电影是什么？为什么？"
+    },
+    {
+      "id": "ms022",
+      "en": "Ask back: pick another card and ask another person to answer for you.",
+      "zh": "反问卡：再抽一张卡，让另一个人来回答这个问题。"
+    },
+    {
+      "id": "ms023",
+      "en": "Pass: you can choose to skip this question and pass to the next person.",
+      "zh": "跳过卡：你可以选择跳过这个问题，直接传给下一个人。"
+    },
+    {
+      "id": "ms024",
+      "en": "Master card: you can pick a person to ask any one question.",
+      "zh": "指定卡：你可以指定一个人问一个你想问的问题。"
+    },
+    {
+      "id": "ms025",
+      "en": "Friend card: get another card and pick a person to answer with you.",
+      "zh": "陪伴卡：再抽一张卡，选一个人和你一起回答。"
+    },
+    {
+      "id": "ms026",
+      "en": "If there is fellowship in heaven, what would you most like to do with your brothers and sisters?",
+      "zh": "如果天堂里有团契，你觉得会有什么样的活动？"
+    },
+    {
+      "id": "ms027",
+      "en": "How are you serving others lately in church/fellowship?",
+      "zh": "你最近在教会/团契中是如何服侍他人的？"
+    },
+    {
+      "id": "ms028",
+      "en": "What is your spiritual gift?",
+      "zh": "你的属灵恩赐是什么?"
+    },
+    {
+      "id": "ms029",
+      "en": "Flood card: take another card and everyone has to answer that question.",
+      "zh": "洪水卡：抽取另一张卡，每个人都要回答那张卡上的问题。"
+    },
+    {
+      "id": "ms030",
+      "en": "If there is a God who can answer all questions, what would you ask Him?",
+      "zh": "如果有一位上帝能回答你的各种问题，你会问祂什么？"
+    },
+    {
+      "id": "ms031",
+      "en": "Which spiritual persona are you afraid of the most? Why?",
+      "zh": "你最害怕哪一种属灵人设？为什么？"
+    },
+    {
+      "id": "ms032",
+      "en": "Rap card: pick another card and answer the question in a rap style.",
+      "zh": "说唱卡：抽取另一张卡，并用说唱的方式回答那张卡上的问题。"
+    },
+    {
+      "id": "ms033",
+      "en": "Double card: pick two cards and answer both questions.",
+      "zh": "双倍卡：抽取两张卡，并回答两张卡上的两个问题。"
+    },
+    {
+      "id": "ms034",
+      "en": "Silent card: you can choose to answer the question with a mime or a drawing instead of words.",
+      "zh": "沉默卡：你可以选择用肢体表演或者画画的方式来回答这个问题，而不是用语言。"
+    },
+    {
+      "id": "ms035",
+      "en": "If you can have a conversation with any one person in the Bible, who would you choose to have a conversation with and why?",
+      "zh": "如果你可以和圣经中的任何一个人进行对话，你会选择和谁对话？为什么？"
+    },
+    {
+      "id": "ms036",
+      "en": "If you can witness any one event in the Bible, which event would you choose to witness and why?",
+      "zh": "如果你可以见证圣经中的任何一个事件，你会选择见证哪个事件？为什么？"
+    },
+    {
+      "id": "ms037",
+      "en": "Do you think prayer change the world or change people? Why?",
+      "zh": "你认为祷告是改变世界还是改变人？为什么？"
+    },
+    {
+      "id": "ms038",
+      "en": "If you have to get stuck with a biblical character in the elevator for 24 hours, who would you NOT choose, why?",
+      "zh": "如果你必须和圣经中的一位人物在电梯里困上24小时，你会选择不和谁一起？为什么？"
+    },
+    {
+      "id": "ms039",
+      "en": "You want others to know that believing in Jesus is not actually _________, what would you fill in the blank with?",
+      "zh": "你最想让别人知道信耶稣其实不是_________？"
+    },
+    {
+      "id": "ms040",
+      "en": "Do you usually pray to change circumstances, change others, or change yourself?",
+      "zh": "你通常祷告是为了改变环境、改变他人，还是改变自己？"
+    },
+    {
+      "id": "ms041",
+      "en": "What is your least believing biblical promise?",
+      "zh": "你现在最难相信的圣经应许是哪一个？"
+    },
+    {
+      "id": "ms042",
+      "en": "What is your most believing biblical promise?",
+      "zh": "你现在最相信的圣经应许是哪一个？"
+    },
+    {
+      "id": "ms043",
+      "en": "If you can ask God to give you one spiritual gift, which spiritual gift would you ask for and why?",
+      "zh": "如果你可以向神祈求赐予你一种属灵恩赐，你会祈求哪一种恩赐？为什么？"
+    },
+    {
+      "id": "ms044",
+      "en": "If you can ask God to answer one prayer for you, which prayer would you ask Him to answer and why?",
+      "zh": "如果你可以向神祈求回答一个祷告，你会祈求回答哪个祷告？为什么？"
+    },
+    {
+      "id": "ms045",
+      "en": "What do you think is the most counter-intuitive truth about God?",
+      "zh": "你认为关于上帝最反直觉的真理是什么？"
+    },
+    {
+      "id": "ms046",
+      "en": "What kind of Christian do you want to be?",
+      "zh": "你最想变成一个怎么样的基督徒？"
+    },
+    {
+      "id": "ms047",
+      "en": "When was the last time you recognized a sin in your own life?",
+      "zh": "你最近一次认识到自己的罪是什么时候？"
+    },
+    {
+      "id": "ms048",
+      "en": "If 'being in Christ' is not 'being the same', what is it?",
+      "zh": "如果‘在基督里合一’不是‘大家都一样’，它到底是什么？"
+    },
+    {
+      "id": "ms049",
+      "en": "Have you met any fake Christians, when?",
+      "zh": "你体会过‘虚假的基督徒’吗，具体什么事情？"
+    },
+    {
+      "id": "ms050",
+      "en": "What is the difference between 'forgiveness' and 'forgotteness' in your life?",
+      "zh": "在你的生命中，‘原谅’和‘遗忘’有什么区别？"
+    },
+    {
+      "id": "ms051",
+      "en": "Have you ever been shocked by someone's acceptance of you?",
+      "zh": "你是否曾被某人对你的接纳所震惊？"
+    },
+    {
+      "id": "ms052",
+      "en": "When you have wronged, do you tend to hide from God or seek Him?",
+      "zh": "在当你做错事之后，你更容易躲着上帝还是找上帝？"
+    },
+    {
+      "id": "ms053",
+      "en": "How has your faith changed your perspective on life?",
+      "zh": "你的信仰如何改变了你对生活的看法？"
+    },
+    {
+      "id": "ms054",
+      "en": "What is the most difficult thing about being a Christian?",
+      "zh": "作为一个基督徒，最难的事情是什么？"
+    },
+    {
+      "id": "ms055",
+      "en": "What has 'fellowship in Christ' changed in your view of socialing?",
+      "zh": "你觉得‘在基督里的团契’最打破你以往社交观念的地方是什么？"
+    },
+    {
+      "id": "ms056",
+      "en": "_______ has made me feel like I'm separated from the love of Christ.",
+      "zh": "_______ 曾让我感觉就像与基督的爱隔绝了。"
+    },
+    {
+      "id": "ms057",
+      "en": "Do you think 'growing' is an additive process or a subtractive process?",
+      "zh": "你觉得‘成长’是一种增加，还是一种被剥夺的过程？"
+    },
+    {
+      "id": "ms058",
+      "en": "What is your biggest flip after believing in Jesus?",
+      "zh": "你信主后最大的转变是什么？"
+    },
+    {
+      "id": "ms059",
+      "en": "What difficulty are you facing, and how does it affect your faith in God?",
+      "zh": "你最近遇到了哪些困境？它如何影响你对神的信心？"
+    },
+    {
+      "id": "ms060",
+      "en": "Have Christians around you ever been a pressure to you?",
+      "zh": "你身边的基督徒有成为过你的压力吗？在什么方面上？"
+    },
+    {
+      "id": "ms061",
+      "en": "Double card: pick two cards and answer both questions.",
+      "zh": "双倍卡：选择两张卡片并回答两个问题。"
+    },
+    {
+      "id": "ms062",
+      "en": "Silent card: you can choose to answer the next question with a mime or a drawing instead of words.",
+      "zh": "沉默卡：你可以选择用肢体表演或者画画的方式来回答这个问题，而不是用语言。"
+    },
+    {
+      "id": "ms063",
+      "en": "Rap card: pick another card and answer the question in a rap style.",
+      "zh": "说唱卡：抽取另一张卡，并用说唱的方式回答那张卡上的问题。"
+    },
+    {
+      "id": "ms064",
+      "en": "Flood card: take another card and everyone has to answer that question.",
+      "zh": "洪水卡：抽取另一张卡，每个人都要回答那张卡上的问题。"
+    },
+    {
+      "id": "ms065",
+      "en": "If you can ask God to give you one spiritual gift, which spiritual gift would you ask for and why?",
+      "zh": "如果你可以向神祈求赐予你一种属灵恩赐，你会祈求哪一种恩赐？为什么？"
+    },
+    {
+      "id": "ms066",
+      "en": "Which Bible verse has made you feel like being 'slapped in the face'?",
+      "zh": "有没有哪节经文让你觉得’被打脸‘？"
+    },
+    {
+      "id": "ms067",
+      "en": "How do you differentiate between right and wrong?",
+      "zh": "你如何判断什么是对是错？"
+    },
+    {
+      "id": "ms068",
+      "en": "What is the most difficult sin for you to confess?",
+      "zh": "什么罪是你最难以承认的？"
+    },
+    {
+      "id": "ms069",
+      "en": "Do you have a question that you've been asking God for a long time without an answer?",
+      "zh": "你有没有哪个问题问上帝很久都没有答案？"
+    },
+    {
+      "id": "ms070",
+      "en": "Have you ever doubted that God really loves you?",
+      "zh": "你曾经怀疑过上帝真的爱你吗？"
     }
   ]
 }
