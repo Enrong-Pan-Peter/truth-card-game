@@ -42,11 +42,12 @@ const Card = ({ question, onClose, currentImage }) => {
             transformOrigin: 'center center',
             zIndex: 2,
             minHeight: '350px',
+            height: '350px',
             border: '2px solid rgba(208, 183, 176, 0.2)'
           }}
         >
-          <div className="flex flex-col md:flex-row h-full">
-            <div className="flex-[7] p-6 md:p-8 space-y-4 md:space-y-6">
+          <div className="flex flex-col md:flex-row" style={{ height: '100%' }}>
+            <div className="flex-[7] p-6 md:p-8 space-y-4 md:space-y-6 flex flex-col justify-center">
               <div className="inline-block">
                 <span 
                   className="text-sm px-4 py-2 rounded-full"
@@ -87,17 +88,24 @@ const Card = ({ question, onClose, currentImage }) => {
               </div>
             </div>
 
+            
             <div 
-              className="flex-[3] p-4 md:p-6 flex items-center justify-center min-h-[150px] md:min-h-0"
-              style={{ background: '#FFFFFF' }}
+              className="flex-[3] p-4 md:p-6 flex justify-center"
+              style={{ 
+                background: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
-              <div className="w-full max-w-[120px] md:max-w-[180px] flex items-center justify-center">
+            
+              <div className="w-full max-w-[210px] md:max-w-[315px] flex items-center justify-center">
                 {currentImage ? (
                   <img 
                     src={currentImage} 
                     alt="Card decoration"
                     className="w-full h-auto object-contain"
-                    style={{ maxHeight: '180px' }}
+                    style={{ maxHeight: '320px' }}
                     onError={(e) => {
                       e.target.style.display = 'none';
                     }}

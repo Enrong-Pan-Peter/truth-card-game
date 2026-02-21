@@ -25,11 +25,11 @@ function App() {
     '/images/card-image-3.png',
     '/images/card-image-4.png',
     '/images/card-image-5.png',
-    '/images/card-image-6.png',
-    '/images/card-image-7.png',
-    '/images/card-image-8.png',
-    '/images/card-image-9.png',
-    '/images/card-image-10.png',
+    // '/images/card-image-6.png',
+    // '/images/card-image-7.png',
+    // '/images/card-image-8.png',
+    // '/images/card-image-9.png',
+    // '/images/card-image-10.png',
   ];
 
   useEffect(() => {
@@ -217,17 +217,23 @@ function App() {
         )}
       </main>
 
-      <footer className="text-center py-8 text-sm space-y-2" style={{ color: '#656565' }}>
-        <p style={{ fontFamily: "'Patrick Hand', cursive" }}>
-          Made with ❤️ for meaningful conversations
-        </p>
-        <p className="text-xs" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>
-          为有意义的对话而制作
-        </p>
-        <p className="text-xs mt-3" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif", color: '#656565' }}>
-          如果有任何建议，拜托联系微信：December7-P，这会对体验很有帮助，谢谢！！
-        </p>
-      </footer>
+      <footer className="text-center py-8 text-sm space-y-3" style={{ color: '#656565' }}>
+      <p style={{ fontFamily: "'Patrick Hand', cursive" }}>
+        Made with ❤️ for meaningful conversations
+        <span style={{ margin: '0 8px' }}>|</span>
+        <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>为有意义的对话而制作</span>
+      </p>
+      
+      <p className="text-xs mt-4" style={{ fontFamily: "'Patrick Hand', cursive", color: '#656565' }}>
+        © Lovely illustrations by talented artist Baichen (Peter) Lin
+        <span style={{ margin: '0 8px' }}>|</span>
+        <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>插画设计：林百宸</span>
+      </p>
+      
+      <p className="text-xs mt-3" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif", color: '#656565' }}>
+        如果有任何建议，拜托联系微信：December7-P，这会对体验很有帮助，谢谢！！
+      </p>
+    </footer>
 
       <UsedCardsSidebar
         usedCards={usedCards}
