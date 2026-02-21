@@ -18,19 +18,19 @@ function App() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
-  // Put your 10 images in /public/images/ folder
+  // Put images in /public/images/ folder
   const cardImages = [
-    '/images/card-image-1.png',
-    '/images/card-image-2.png',
-    '/images/card-image-3.png',
-    '/images/card-image-4.png',
-    '/images/card-image-5.png',
-    // '/images/card-image-6.png',
-    // '/images/card-image-7.png',
-    // '/images/card-image-8.png',
-    // '/images/card-image-9.png',
-    // '/images/card-image-10.png',
-  ];
+  '/truth-card-game/images/card-image-1.png',
+  '/truth-card-game/images/card-image-2.png',
+  '/truth-card-game/images/card-image-3.png',
+  '/truth-card-game/images/card-image-4.png',
+  '/truth-card-game/images/card-image-5.png',
+  // '/truth-card-game/images/card-image-6.png',
+  // '/truth-card-game/images/card-image-7.png',
+  // '/truth-card-game/images/card-image-8.png',
+  // '/truth-card-game/images/card-image-9.png',
+  // '/truth-card-game/images/card-image-10.png',
+];
 
   useEffect(() => {
     const questions = loadAllQuestions(questionsData);
