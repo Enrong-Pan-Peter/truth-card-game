@@ -34,15 +34,13 @@ const Card = ({ question, onClose, currentImage }) => {
         />
 
         <div 
-          className={`relative rounded-3xl overflow-hidden ${isShuffling ? 'card-shuffle-animation' : ''}`}
+          className={`relative rounded-3xl overflow-hidden card-container ${isShuffling ? 'card-shuffle-animation' : ''}`}
           style={{
             background: '#FFFFFF',
             boxShadow: '0 4px 16px rgba(40, 40, 40, 0.1), 0 8px 32px rgba(40, 40, 40, 0.05)',
             transform: 'rotate(-2deg)',
             transformOrigin: 'center center',
             zIndex: 2,
-            minHeight: '350px',
-            height: '350px',
             border: '2px solid rgba(208, 183, 176, 0.2)'
           }}
         >
