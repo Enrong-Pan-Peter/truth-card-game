@@ -1,4 +1,4 @@
-# Truth Cards | 真心话卡牌
+# Truth Cards for Christian Fellowship | 基督徒团契真心话卡牌
 
 A warm, inviting card game designed for meaningful conversations in Christian community.
 
@@ -40,6 +40,10 @@ Browse questions by category before selecting one to discuss.
 ## Customization
 
 Feel free to add your own questions using the "+" button. Custom questions are available for your current session.
+
+## Credit for Illustrations
+
+Special thanks to talented artist Baichen (Peter) Lin for the loving illustrations. © peterlin.0100x@gmail.com
 
 ## License
 
