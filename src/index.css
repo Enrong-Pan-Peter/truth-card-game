@@ -139,15 +139,16 @@ input[type="checkbox"]:focus {
   animation: cardShuffle 0.6s ease-in-out;
 }
 
-/* Card responsive heights */
-.card-container {
-  min-height: 450px; /* Mobile: taller */
+/* Responsive card heights */
+.rounded-3xl {
+  min-height: 450px; /* Mobile */
 }
 
 @media (min-width: 768px) {
-  .card-container {
-    min-height: 350px;
-    height: 350px; /* Desktop: fixed for centering */
+  .rounded-3xl {
+    min-height: 350px; /* Desktop minimum */
+    display: flex;
+    flex-direction: column;
   }
 }
 

@@ -44,7 +44,7 @@ const Card = ({ question, onClose, currentImage }) => {
             border: '2px solid rgba(208, 183, 176, 0.2)'
           }}
         >
-          <div className="flex flex-col md:flex-row" style={{ height: '100%' }}>
+         <div className="flex flex-col md:flex-row flex-1">
             <div className="flex-[7] p-6 md:p-8 space-y-4 md:space-y-6 flex flex-col justify-center">
               <div className="inline-block">
                 <span 
@@ -87,13 +87,10 @@ const Card = ({ question, onClose, currentImage }) => {
             </div>
 
             
-            <div 
-              className="flex-[3] p-4 md:p-6 flex justify-center"
+            <div className="flex-[3] p-4 md:p-6 flex justify-center items-center"
               style={{ 
                 background: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                alignSelf: 'stretch'
               }}
             >
             

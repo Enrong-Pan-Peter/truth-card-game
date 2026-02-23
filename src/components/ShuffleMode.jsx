@@ -6,6 +6,7 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset, currentImageIndex, card
   const [currentCard, setCurrentCard] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [allowRepeat, setAllowRepeat] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState({
     getting_to_know: true,
     ideals_reals: true,
@@ -28,17 +29,28 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset, currentImageIndex, card
   const handleShuffle = () => {
     const filteredDeck = getFilteredDeck();
     
-    if (filteredDeck.length === 0) {
+    if (filteredDeck.length === 0 && !allowRepeat) {
       return;
     }
 
     setIsDrawing(true);
     
     setTimeout(() => {
-      const drawnCard = drawRandomCard(filteredDeck);
+      let drawnCard;
+      if (allowRepeat && activeDeck.length > 0) {
+        // Allow repeat - draw from all questions (including used ones)
+        const allFilteredCards = activeDeck.filter(card => selectedCategories[card.category]);
+        drawnCard = drawRandomCard(allFilteredCards);
+      } else {
+        // No repeat - draw from unused cards only
+        drawnCard = drawRandomCard(filteredDeck);
+      }
+      
       if (drawnCard) {
         setCurrentCard(drawnCard);
-        onCardDrawn(drawnCard);
+        if (!allowRepeat) {
+          onCardDrawn(drawnCard); // Only mark as used if no repeat mode
+        }
       }
       setIsDrawing(false);
     }, 300);
@@ -188,6 +200,36 @@ const ShuffleMode = ({ activeDeck, onCardDrawn, onReset, currentImageIndex, card
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+        {/* Repeat Toggle - Small slide button */}
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <span className="text-sm" style={{ color: '#656565', fontFamily: "'Patrick Hand', cursive" }}>
+            Allow Repeat
+          </span>
+          <button
+            onClick={() => setAllowRepeat(!allowRepeat)}
+            className={`
+              relative w-12 h-6 rounded-full transition-colors duration-300
+              ${allowRepeat ? 'bg-blue-primary' : 'bg-gray-300'}
+            `}
+            style={{
+              background: allowRepeat ? '#4D7491' : '#D0B7B0'
+            }}
+            aria-label="Toggle allow repeat"
+          >
+            <div
+              className={`
+                absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full
+                transition-transform duration-300 transform
+                ${allowRepeat ? 'translate-x-6' : 'translate-x-0'}
+              `}
+            />
+          </button>
+          <span className="text-xs" style={{ color: '#656565', fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>
+            允许重复
+          </span>
+        </div>
+
         <div className="text-center">
           <button
             onClick={handleShuffle}
