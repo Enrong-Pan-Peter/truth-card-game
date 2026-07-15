@@ -1,251 +1,349 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import questionsData from './data/questions.json';
+import {
+  CARD_IMAGES,
+  CATEGORIES,
+  drawRandomCard,
+  groupByCategory,
+  loadAllQuestions,
+} from './utils/gameUtils';
+import { loadState, saveState } from './utils/storage';
+import { Bi, LanguageProvider, pick } from './i18n';
 import ShuffleMode from './components/ShuffleMode';
 import ChooseMode from './components/ChooseMode';
-import UsedCardsSidebar from './components/UsedCardsSidebar';
+import Sheet from './components/Sheet';
+import BottomBar from './components/BottomBar';
+import FilterPanel from './components/FilterPanel';
+import UsedPanel from './components/UsedPanel';
 import CustomQuestionForm from './components/CustomQuestionForm';
-import questionsData from './data/questions.json';
-import { loadAllQuestions, groupByCategory } from './utils/gameUtils';
+import { FilterIcon, PlusIcon, UsedIcon } from './components/Icons';
+
+const saved = loadState() || {};
+const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, true]));
+
+const LangToggle = ({ lang, onChange }) => (
+  <div className="flex rounded-full bg-ivory p-0.5 border-2 border-pale-pink/30 shrink-0">
+    {[
+      ['en', 'EN'],
+      ['zh', '中文'],
+      ['both', '双语'],
+    ].map(([value, label]) => (
+      <button
+        key={value}
+        onClick={() => onChange(value)}
+        className={`px-2.5 h-9 rounded-full text-xs transition-colors ${
+          lang === value ? 'bg-blue-primary text-white' : 'text-gray-secondary'
+        }`}
+        aria-pressed={lang === value}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+);
+
+const HeaderIconButton = ({ onClick, label, badge, orange, children }) => (
+  <button
+    onClick={onClick}
+    title={label}
+    aria-label={label}
+    className={`relative w-11 h-11 rounded-full flex items-center justify-center transition-colors ${
+      orange
+        ? 'bg-orange-primary text-white shadow-btn-orange'
+        : 'bg-ivory border-2 border-pale-pink/30 text-gray-secondary hover:text-ink'
+    }`}
+  >
+    {children}
+    {badge != null && (
+      <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-orange-primary text-white text-[10px] leading-[18px] text-center">
+        {badge}
+      </span>
+    )}
+  </button>
+);
 
 function App() {
-  const [mode, setMode] = useState('shuffle');
-  const [allQuestions, setAllQuestions] = useState([]);
-  const [activeDeck, setActiveDeck] = useState([]);
-  const [usedCards, setUsedCards] = useState([]);
-  const [isCustomFormOpen, setIsCustomFormOpen] = useState(false);
-  const [customIdCounter, setCustomIdCounter] = useState(1);
-  
-  const [headerVisible, setHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  // Put images in /public/images/ folder
-  const cardImages = [
-  '/truth-card-game/images/card-image-1.png',
-  '/truth-card-game/images/card-image-2.png',
-  '/truth-card-game/images/card-image-3.png',
-  '/truth-card-game/images/card-image-4.png',
-  '/truth-card-game/images/card-image-5.png',
-  // '/truth-card-game/images/card-image-6.png',
-  // '/truth-card-game/images/card-image-7.png',
-  // '/truth-card-game/images/card-image-8.png',
-  // '/truth-card-game/images/card-image-9.png',
-  // '/truth-card-game/images/card-image-10.png',
-];
+  // --- persisted state (auto-restored on load) ---
+  const [lang, setLang] = useState(saved.lang || 'both');
+  const [mode, setMode] = useState(saved.mode || 'shuffle');
+  const [customQuestions, setCustomQuestions] = useState(saved.customQuestions || []);
+  const [customIdCounter, setCustomIdCounter] = useState(saved.customIdCounter || 1);
+  const [usedIds, setUsedIds] = useState(saved.usedIds || []);
+  const [selectedCategories, setSelectedCategories] = useState({
+    ...defaultCategories,
+    ...(saved.selectedCategories || {}),
+  });
+  const [allowRepeat, setAllowRepeat] = useState(saved.allowRepeat || false);
+  const [currentCardId, setCurrentCardId] = useState(saved.currentCardId || null);
+  const [imageIndex, setImageIndex] = useState(
+    saved.imageIndex ?? Math.floor(Math.random() * CARD_IMAGES.length)
+  );
 
+  // --- transient state ---
+  const [openSheet, setOpenSheet] = useState(null); // 'filter' | 'used' | 'add' | null
+  const [isDrawing, setIsDrawing] = useState(false);
+
+  // --- derived ---
+  const allQuestions = useMemo(
+    () => [...loadAllQuestions(questionsData), ...customQuestions],
+    [customQuestions]
+  );
+  const usedSet = useMemo(() => new Set(usedIds), [usedIds]);
+  const activeDeck = useMemo(
+    () => allQuestions.filter((q) => !usedSet.has(q.id)),
+    [allQuestions, usedSet]
+  );
+  const filteredDeck = useMemo(
+    () => activeDeck.filter((q) => selectedCategories[q.category]),
+    [activeDeck, selectedCategories]
+  );
+  const totalInSelected = useMemo(
+    () => allQuestions.filter((q) => selectedCategories[q.category]).length,
+    [allQuestions, selectedCategories]
+  );
+  const usedCards = useMemo(() => {
+    const byId = new Map(allQuestions.map((q) => [q.id, q]));
+    return usedIds.map((id) => byId.get(id)).filter(Boolean);
+  }, [allQuestions, usedIds]);
+  const currentCard = useMemo(
+    () => allQuestions.find((q) => q.id === currentCardId) || null,
+    [allQuestions, currentCardId]
+  );
+  const remaining = useMemo(() => {
+    const grouped = groupByCategory(activeDeck);
+    return Object.fromEntries(CATEGORIES.map((c) => [c, grouped[c].length]));
+  }, [activeDeck]);
+  const selectedCount = CATEGORIES.filter((c) => selectedCategories[c]).length;
+  const canDraw = (allowRepeat ? totalInSelected : filteredDeck.length) > 0;
+  const questionsByCategory = useMemo(() => groupByCategory(allQuestions), [allQuestions]);
+  const currentImage = CARD_IMAGES[imageIndex % CARD_IMAGES.length];
+
+  // --- persistence: save everything on every change ---
   useEffect(() => {
-    const questions = loadAllQuestions(questionsData);
-    setAllQuestions(questions);
-    setActiveDeck(questions);
-  }, []);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (window.innerWidth <= 768) {
-        if (currentScrollY < lastScrollY || currentScrollY < 50) {
-          setHeaderVisible(true);
-        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          setHeaderVisible(false);
-        }
-      } else {
-        setHeaderVisible(true);
+    saveState({
+      lang,
+      mode,
+      customQuestions,
+      customIdCounter,
+      usedIds,
+      selectedCategories,
+      allowRepeat,
+      currentCardId,
+      imageIndex,
+    });
+  }, [
+    lang,
+    mode,
+    customQuestions,
+    customIdCounter,
+    usedIds,
+    selectedCategories,
+    allowRepeat,
+    currentCardId,
+    imageIndex,
+  ]);
+
+  // --- actions ---
+  const handleDraw = () => {
+    if (isDrawing || !canDraw) return;
+    setIsDrawing(true);
+    setTimeout(() => {
+      const pool = allowRepeat
+        ? allQuestions.filter((q) => selectedCategories[q.category] && q.id !== currentCardId)
+        : filteredDeck;
+      const source = pool.length
+        ? pool
+        : allQuestions.filter((q) => selectedCategories[q.category]);
+      const card = drawRandomCard(source);
+      if (card) {
+        setCurrentCardId(card.id);
+        if (!allowRepeat) setUsedIds((prev) => [...prev, card.id]);
+        setImageIndex(Math.floor(Math.random() * CARD_IMAGES.length));
       }
-      
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
-  
-  const getRandomImage = () => {
-    const randomIndex = Math.floor(Math.random() * cardImages.length);
-    setCurrentImageIndex(randomIndex);
-    return cardImages[randomIndex];
+      setIsDrawing(false);
+    }, 280);
   };
 
-  const handleCardDrawn = (card) => {
-    setActiveDeck(prev => prev.filter(q => q.id !== card.id));
-    setUsedCards(prev => [...prev, card]);
-    getRandomImage();
+  const handleChooseCard = (question) => {
+    setCurrentCardId(question.id);
+    if (!usedSet.has(question.id)) setUsedIds((prev) => [...prev, question.id]);
+    setImageIndex(Math.floor(Math.random() * CARD_IMAGES.length));
   };
 
-  const handleCardSelected = (card) => {
-    setActiveDeck(prev => prev.filter(q => q.id !== card.id));
-    setUsedCards(prev => [...prev, card]);
-    getRandomImage();
+  const handleReturnCard = (id) => setUsedIds((prev) => prev.filter((x) => x !== id));
+
+  const resetDeck = () => {
+    setUsedIds([]);
+    setCurrentCardId(null);
   };
 
-  const handleReturnCard = (card) => {
-    setUsedCards(prev => prev.filter(q => q.id !== card.id));
-    setActiveDeck(prev => [...prev, card]);
+  const confirmResetDeck = () => {
+    if (
+      window.confirm(
+        pick(lang, 'Reset the deck? Used cards will be cleared.', '重置卡组？已用记录将被清空。')
+      )
+    ) {
+      resetDeck();
+      setOpenSheet(null);
+    }
   };
 
-  const handleResetDeck = () => {
-    setActiveDeck(allQuestions);
-    setUsedCards([]);
+  const handleAddCustomQuestion = ({ en, zh, category }) => {
+    const question = { id: `custom${customIdCounter}`, en, zh, category, isCustom: true };
+    setCustomQuestions((prev) => [...prev, question]);
+    setCustomIdCounter((c) => c + 1);
   };
 
-  const handleAddCustomQuestion = (formData) => {
-    const newQuestion = {
-      id: `custom${customIdCounter}`,
-      en: formData.en,
-      zh: formData.zh,
-      category: formData.category,
-      isCustom: true
-    };
-
-    setAllQuestions(prev => [...prev, newQuestion]);
-    setActiveDeck(prev => [...prev, newQuestion]);
-    setCustomIdCounter(prev => prev + 1);
-  };
-
-  const questionsByCategory = groupByCategory(activeDeck);
-  const usedCardIds = usedCards.map(card => card.id);
+  const closeSheet = () => setOpenSheet(null);
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFF8EB' }}>
-      <header 
-        className={`sticky top-0 z-20 transition-transform duration-300 ${!headerVisible ? '-translate-y-full' : 'translate-y-0'}`}
-        style={{ 
-          background: '#FFFFFF',
-          borderBottom: '2px solid rgba(208, 183, 176, 0.3)',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <h1 
-                className="text-3xl md:text-4xl"
-                style={{ 
-                  fontFamily: "'Patrick Hand', cursive",
-                  color: '#282828'
-                }}
-              >
+    <LanguageProvider lang={lang}>
+      <div className="min-h-dvh bg-ivory flex flex-col">
+        {/* Header: compact on mobile, full controls on desktop */}
+        <header className="bg-white/95 backdrop-blur border-b-2 border-pale-pink/30 md:sticky md:top-0 z-30">
+          <div className="max-w-6xl mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-3">
+            <div className="flex items-baseline gap-2 min-w-0">
+              <h1 className="font-hand text-2xl md:text-3xl text-ink whitespace-nowrap">
                 Truth Cards
               </h1>
-              <p 
-                className="text-sm mt-1"
-                style={{ 
-                  color: '#656565',
-                  fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif"
-                }}
-              >
+              <span className="font-zh text-sm text-gray-secondary hidden sm:inline">
                 真心话卡牌
-              </p>
+              </span>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div 
-                className="flex rounded-full p-1"
-                style={{ background: '#FFF8EB' }}
-              >
-                <button
-                  onClick={() => setMode('shuffle')}
-                  className="px-6 py-2 rounded-full text-sm transition-all duration-300"
-                  style={{
-                    fontFamily: "'Patrick Hand', cursive",
-                    background: mode === 'shuffle' ? '#4D7491' : 'transparent',
-                    color: mode === 'shuffle' ? '#FFFFFF' : '#282828',
-                    boxShadow: mode === 'shuffle' ? '0 4px 12px rgba(77,116,145,0.3)' : 'none'
-                  }}
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="hidden md:flex items-center gap-3">
+                <div className="flex rounded-full bg-ivory p-1 border-2 border-pale-pink/20">
+                  {['shuffle', 'choose'].map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => setMode(m)}
+                      className={`px-5 h-10 rounded-full text-sm transition-all ${
+                        mode === m ? 'bg-blue-primary text-white shadow-btn' : 'text-ink'
+                      }`}
+                      aria-pressed={mode === m}
+                    >
+                      {m === 'shuffle' ? <Bi en="Shuffle" zh="抽卡" /> : <Bi en="Choose" zh="选择" />}
+                    </button>
+                  ))}
+                </div>
+                <HeaderIconButton
+                  onClick={() => setOpenSheet('filter')}
+                  label={pick(lang, 'Filter categories', '筛选类别')}
+                  badge={selectedCount < CATEGORIES.length ? selectedCount : null}
                 >
-                  <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Shuffle</span>
-                  {' / '}
-                  <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>抽卡</span>
-                </button>
-                <button
-                  onClick={() => setMode('choose')}
-                  className="px-6 py-2 rounded-full text-sm transition-all duration-300"
-                  style={{
-                    fontFamily: "'Patrick Hand', cursive",
-                    background: mode === 'choose' ? '#4D7491' : 'transparent',
-                    color: mode === 'choose' ? '#FFFFFF' : '#282828',
-                    boxShadow: mode === 'choose' ? '0 4px 12px rgba(77,116,145,0.3)' : 'none'
-                  }}
+                  <FilterIcon className="w-5 h-5" />
+                </HeaderIconButton>
+                <HeaderIconButton
+                  onClick={() => setOpenSheet('used')}
+                  label={pick(lang, 'Used cards', '已用卡牌')}
+                  badge={usedIds.length > 0 ? usedIds.length : null}
                 >
-                  <span style={{ fontFamily: "'Patrick Hand', cursive" }}>Choose</span>
-                  {' / '}
-                  <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>选择</span>
-                </button>
+                  <UsedIcon className="w-5 h-5" />
+                </HeaderIconButton>
+                <HeaderIconButton
+                  onClick={() => setOpenSheet('add')}
+                  label={pick(lang, 'Add a question', '添加问题')}
+                  orange
+                >
+                  <PlusIcon className="w-5 h-5" strokeWidth={2.2} />
+                </HeaderIconButton>
               </div>
-
-              <button
-                onClick={() => setIsCustomFormOpen(true)}
-                className="p-3 rounded-full transition-colors duration-200"
-                style={{
-                  background: '#ECB68C',
-                  boxShadow: '0 2px 8px rgba(236,182,140,0.3)'
-                }}
-                title="Add custom question"
-              >
-                <svg 
-                  className="w-5 h-5" 
-                  style={{ color: '#FFFFFF' }} 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-              </button>
+              <LangToggle lang={lang} onChange={setLang} />
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-        {mode === 'shuffle' ? (
-          <ShuffleMode
-            activeDeck={activeDeck}
-            onCardDrawn={handleCardDrawn}
-            onReset={handleResetDeck}
-            currentImageIndex={currentImageIndex}
-            cardImages={cardImages}
+        <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-4 md:py-8">
+          {mode === 'shuffle' ? (
+            <ShuffleMode
+              currentCard={currentCard}
+              image={currentImage}
+              isDrawing={isDrawing}
+              canDraw={canDraw}
+              filteredCount={filteredDeck.length}
+              totalInSelected={totalInSelected}
+              allowRepeat={allowRepeat}
+              onDraw={handleDraw}
+              onReset={resetDeck}
+              onOpenFilter={() => setOpenSheet('filter')}
+            />
+          ) : (
+            <ChooseMode
+              questionsByCategory={questionsByCategory}
+              onCardSelected={handleChooseCard}
+              usedIds={usedIds}
+              image={currentImage}
+            />
+          )}
+        </main>
+
+        <footer className="text-center px-4 pt-4 pb-24 md:pb-8 text-sm text-gray-secondary space-y-2">
+          <p>
+            <Bi en="Made with ♥ for meaningful conversations" zh="为有意义的对话而制作" />
+          </p>
+          <p className="text-xs">
+            <Bi en="Lovely illustrations by Baichen (Peter) Lin" zh="插画设计：林百宸" />
+          </p>
+          <p className="text-xs font-zh">如果有任何建议，拜托联系微信：December7-P，谢谢！</p>
+        </footer>
+
+        <BottomBar
+          mode={mode}
+          onModeChange={setMode}
+          onOpenSheet={setOpenSheet}
+          usedCount={usedIds.length}
+          filterCount={selectedCount}
+          totalCategories={CATEGORIES.length}
+        />
+
+        <Sheet
+          open={openSheet === 'filter'}
+          onClose={closeSheet}
+          titleEn="Filter Categories"
+          titleZh="筛选类别"
+        >
+          <FilterPanel
+            selectedCategories={selectedCategories}
+            onToggleCategory={(cat) =>
+              setSelectedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }))
+            }
+            onSelectAll={() => setSelectedCategories(defaultCategories)}
+            remaining={remaining}
+            allowRepeat={allowRepeat}
+            onToggleRepeat={() => setAllowRepeat((v) => !v)}
           />
-        ) : (
-          <ChooseMode
-            questionsByCategory={questionsByCategory}
-            onCardSelected={handleCardSelected}
-            usedCardIds={usedCardIds}
-            currentImageIndex={currentImageIndex}
-            cardImages={cardImages}
-          />
-        )}
-      </main>
+        </Sheet>
 
-      <footer className="text-center py-8 text-sm space-y-3" style={{ color: '#656565' }}>
-      <p style={{ fontFamily: "'Patrick Hand', cursive" }}>
-        Made with ❤️ for meaningful conversations
-        <span style={{ margin: '0 8px' }}>|</span>
-        <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>为有意义的对话而制作</span>
-      </p>
-      
-      <p className="text-xs mt-4" style={{ fontFamily: "'Patrick Hand', cursive", color: '#656565' }}>
-        © Lovely illustrations by talented artist Baichen (Peter) Lin
-        <span style={{ margin: '0 8px' }}>|</span>
-        <span style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif" }}>插画设计：林百宸</span>
-      </p>
-      
-      <p className="text-xs mt-3" style={{ fontFamily: "'Ma Shan Zheng', 'Crimson Text', serif", color: '#656565' }}>
-        如果有任何建议，拜托联系微信：December7-P，这会对体验很有帮助，谢谢！！
-      </p>
-    </footer>
+        <Sheet
+          open={openSheet === 'used'}
+          onClose={closeSheet}
+          titleEn="Used Cards"
+          titleZh="已用卡牌"
+          footer={
+            usedIds.length > 0 ? (
+              <button
+                onClick={confirmResetDeck}
+                className="w-full py-3 min-h-[48px] rounded-full bg-orange-primary text-white shadow-btn-orange active:scale-95 transition-transform"
+              >
+                <Bi en="Reset Deck" zh="重置卡组" />
+              </button>
+            ) : null
+          }
+        >
+          <UsedPanel usedCards={usedCards} onReturnCard={handleReturnCard} />
+        </Sheet>
 
-      <UsedCardsSidebar
-        usedCards={usedCards}
-        onReturnCard={handleReturnCard}
-      />
-
-      <CustomQuestionForm
-        isOpen={isCustomFormOpen}
-        onClose={() => setIsCustomFormOpen(false)}
-        onAddQuestion={handleAddCustomQuestion}
-      />
-    </div>
+        <Sheet
+          open={openSheet === 'add'}
+          onClose={closeSheet}
+          titleEn="Add a Question"
+          titleZh="添加问题"
+        >
+          <CustomQuestionForm onAdd={handleAddCustomQuestion} onClose={closeSheet} />
+        </Sheet>
+      </div>
+    </LanguageProvider>
   );
 }
 

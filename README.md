@@ -23,11 +23,18 @@ Browse questions by category before selecting one to discuss.
 
 ## Features
 
-- Questions in both English and Chinese
-- Filter categories in shuffle mode
-- Track which questions have been used
+- Questions in both English and Chinese, with a language toggle (EN / 中文 / 双语)
+- Filter categories and allow-repeat option
+- Track which questions have been used, return cards to the deck
 - Add your own custom questions
-- Works on phones, tablets, and computers
+- Everything is saved on your device — locking your phone or refreshing never loses the game
+- Installable as an app (Add to Home Screen) and works fully offline
+- Mobile-first design with a bottom action bar; full layout on desktop
+
+## Development & Deployment
+
+Built with React + Vite + Tailwind. See [DEPLOY.md](DEPLOY.md) for deploying to
+cards.enrongpan.com (Vercel) or GitHub Pages.
 
 ## Tips for Good Conversations
 
@@ -39,7 +46,7 @@ Browse questions by category before selecting one to discuss.
 
 ## Customization
 
-Feel free to add your own questions using the "+" button. Custom questions are available for your current session.
+Feel free to add your own questions using the "+" button. Custom questions are saved on your device and stay available across sessions.
 
 ## Credit for Illustrations
 
