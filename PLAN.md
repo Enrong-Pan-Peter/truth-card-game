@@ -37,7 +37,7 @@ Goal: turn the static GitHub Pages site into a dynamic, mobile-first app at **ca
 3. At your registrar's DNS panel add: `CNAME  cards  cname.vercel-dns.com` (Vercel shows the exact value; propagates in minutes, HTTPS automatic).
 4. Old GitHub Pages URL gets a redirect notice or is retired.
 
-## Phase 4 — Supabase: cloud question bank + live rooms
+## Phase 4 — Supabase: cloud question bank + live rooms ✅ code ready — see SETUP-SUPABASE.md
 
 **Cloud question bank**
 - `questions` table seeded from `questions.json`; app fetches on load, falls back to the bundled JSON offline.

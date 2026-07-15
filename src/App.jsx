@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import questionsData from './data/questions.json';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CARD_IMAGES,
   CATEGORIES,
   drawRandomCard,
   groupByCategory,
-  loadAllQuestions,
 } from './utils/gameUtils';
 import { loadState, saveState } from './utils/storage';
 import { Bi, LanguageProvider, pick } from './i18n';
+import { supabase } from './lib/supabase';
+import { useCloudQuestions } from './hooks/useCloudQuestions';
+import { useRoom } from './hooks/useRoom';
 import ShuffleMode from './components/ShuffleMode';
 import ChooseMode from './components/ChooseMode';
 import Sheet from './components/Sheet';
@@ -16,10 +17,13 @@ import BottomBar from './components/BottomBar';
 import FilterPanel from './components/FilterPanel';
 import UsedPanel from './components/UsedPanel';
 import CustomQuestionForm from './components/CustomQuestionForm';
-import { FilterIcon, PlusIcon, UsedIcon } from './components/Icons';
+import RoomPanel from './components/RoomPanel';
+import { FilterIcon, PlusIcon, UsedIcon, UsersIcon } from './components/Icons';
 
 const saved = loadState() || {};
 const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, true]));
+const newQuestionId = () =>
+  `c-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
 
 const LangToggle = ({ lang, onChange }) => (
   <div className="flex rounded-full bg-ivory p-0.5 border-2 border-pale-pink/30 shrink-0">
@@ -63,11 +67,10 @@ const HeaderIconButton = ({ onClick, label, badge, orange, children }) => (
 );
 
 function App() {
-  // --- persisted state (auto-restored on load) ---
+  // --- persisted personal state (auto-restored on load) ---
   const [lang, setLang] = useState(saved.lang || 'both');
   const [mode, setMode] = useState(saved.mode || 'shuffle');
   const [customQuestions, setCustomQuestions] = useState(saved.customQuestions || []);
-  const [customIdCounter, setCustomIdCounter] = useState(saved.customIdCounter || 1);
   const [usedIds, setUsedIds] = useState(saved.usedIds || []);
   const [selectedCategories, setSelectedCategories] = useState({
     ...defaultCategories,
@@ -80,13 +83,47 @@ function App() {
   );
 
   // --- transient state ---
-  const [openSheet, setOpenSheet] = useState(null); // 'filter' | 'used' | 'add' | null
+  const [openSheet, setOpenSheet] = useState(null); // 'filter' | 'used' | 'add' | 'room' | null
   const [isDrawing, setIsDrawing] = useState(false);
+  const [roomCustoms, setRoomCustoms] = useState([]); // room-scoped custom questions
+
+  // --- cloud question bank (falls back to cache, then bundled JSON) ---
+  const baseQuestions = useCloudQuestions();
+
+  // --- live room ---
+  const applyRemoteState = useCallback((st) => {
+    if (Array.isArray(st.usedIds)) setUsedIds(st.usedIds);
+    setCurrentCardId(st.currentCardId ?? null);
+    if (typeof st.imageIndex === 'number') setImageIndex(st.imageIndex);
+    if (st.selectedCategories)
+      setSelectedCategories({ ...defaultCategories, ...st.selectedCategories });
+    if (typeof st.allowRepeat === 'boolean') setAllowRepeat(st.allowRepeat);
+    if (Array.isArray(st.customQuestions)) setRoomCustoms(st.customQuestions);
+  }, []);
+  const room = useRoom({ onRemoteState: applyRemoteState });
+
+  // Join from ?room=CODE link (QR) or silently rejoin the last room
+  const bootRef = useRef(false);
+  useEffect(() => {
+    if (bootRef.current || !supabase) return;
+    bootRef.current = true;
+    const urlRoom = new URLSearchParams(window.location.search).get('room');
+    if (urlRoom) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.hash);
+      room.joinRoom(urlRoom).then((res) => {
+        if (!res.error) setOpenSheet('room');
+      });
+    } else if (saved.roomCode) {
+      room.joinRoom(saved.roomCode, { silent: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // --- derived ---
+  const activeCustoms = room.active ? roomCustoms : customQuestions;
   const allQuestions = useMemo(
-    () => [...loadAllQuestions(questionsData), ...customQuestions],
-    [customQuestions]
+    () => [...baseQuestions, ...activeCustoms],
+    [baseQuestions, activeCustoms]
   );
   const usedSet = useMemo(() => new Set(usedIds), [usedIds]);
   const activeDeck = useMemo(
@@ -118,30 +155,61 @@ function App() {
   const questionsByCategory = useMemo(() => groupByCategory(allQuestions), [allQuestions]);
   const currentImage = CARD_IMAGES[imageIndex % CARD_IMAGES.length];
 
-  // --- persistence: save everything on every change ---
+  // --- persistence ---
+  // In a room the server owns gameplay state; only personal prefs are saved,
+  // and the personal snapshot from before joining stays untouched for later.
   useEffect(() => {
-    saveState({
-      lang,
-      mode,
-      customQuestions,
-      customIdCounter,
-      usedIds,
-      selectedCategories,
-      allowRepeat,
-      currentCardId,
-      imageIndex,
-    });
+    if (room.active) {
+      saveState({ ...(loadState() || {}), lang, mode, roomCode: room.code });
+    } else {
+      saveState({
+        lang,
+        mode,
+        roomCode: null,
+        customQuestions,
+        usedIds,
+        selectedCategories,
+        allowRepeat,
+        currentCardId,
+        imageIndex,
+      });
+    }
   }, [
     lang,
     mode,
+    room.active,
+    room.code,
     customQuestions,
-    customIdCounter,
     usedIds,
     selectedCategories,
     allowRepeat,
     currentCardId,
     imageIndex,
   ]);
+
+  // --- single state writer: applies locally and syncs to the room ---
+  const commit = (updates) => {
+    if ('usedIds' in updates) setUsedIds(updates.usedIds);
+    if ('currentCardId' in updates) setCurrentCardId(updates.currentCardId);
+    if ('imageIndex' in updates) setImageIndex(updates.imageIndex);
+    if ('selectedCategories' in updates) setSelectedCategories(updates.selectedCategories);
+    if ('allowRepeat' in updates) setAllowRepeat(updates.allowRepeat);
+    if ('customQuestions' in updates) {
+      if (room.active) setRoomCustoms(updates.customQuestions);
+      else setCustomQuestions(updates.customQuestions);
+    }
+    if (room.active) {
+      room.pushState({
+        usedIds,
+        currentCardId,
+        imageIndex,
+        selectedCategories,
+        allowRepeat,
+        customQuestions: roomCustoms,
+        ...updates,
+      });
+    }
+  };
 
   // --- actions ---
   const handleDraw = () => {
@@ -156,26 +224,27 @@ function App() {
         : allQuestions.filter((q) => selectedCategories[q.category]);
       const card = drawRandomCard(source);
       if (card) {
-        setCurrentCardId(card.id);
-        if (!allowRepeat) setUsedIds((prev) => [...prev, card.id]);
-        setImageIndex(Math.floor(Math.random() * CARD_IMAGES.length));
+        commit({
+          currentCardId: card.id,
+          usedIds: allowRepeat ? usedIds : [...usedIds, card.id],
+          imageIndex: Math.floor(Math.random() * CARD_IMAGES.length),
+        });
       }
       setIsDrawing(false);
     }, 280);
   };
 
   const handleChooseCard = (question) => {
-    setCurrentCardId(question.id);
-    if (!usedSet.has(question.id)) setUsedIds((prev) => [...prev, question.id]);
-    setImageIndex(Math.floor(Math.random() * CARD_IMAGES.length));
+    commit({
+      currentCardId: question.id,
+      usedIds: usedSet.has(question.id) ? usedIds : [...usedIds, question.id],
+      imageIndex: Math.floor(Math.random() * CARD_IMAGES.length),
+    });
   };
 
-  const handleReturnCard = (id) => setUsedIds((prev) => prev.filter((x) => x !== id));
+  const handleReturnCard = (id) => commit({ usedIds: usedIds.filter((x) => x !== id) });
 
-  const resetDeck = () => {
-    setUsedIds([]);
-    setCurrentCardId(null);
-  };
+  const resetDeck = () => commit({ usedIds: [], currentCardId: null });
 
   const confirmResetDeck = () => {
     if (
@@ -189,9 +258,33 @@ function App() {
   };
 
   const handleAddCustomQuestion = ({ en, zh, category }) => {
-    const question = { id: `custom${customIdCounter}`, en, zh, category, isCustom: true };
-    setCustomQuestions((prev) => [...prev, question]);
-    setCustomIdCounter((c) => c + 1);
+    const question = { id: newQuestionId(), en, zh, category, isCustom: true };
+    commit({ customQuestions: [...activeCustoms, question] });
+  };
+
+  const handleCreateRoom = async () => {
+    const initial = {
+      usedIds: [],
+      currentCardId: null,
+      imageIndex: Math.floor(Math.random() * CARD_IMAGES.length),
+      selectedCategories,
+      allowRepeat,
+      customQuestions: [],
+    };
+    const res = await room.createRoom(initial);
+    if (!res.error) applyRemoteState(initial);
+  };
+
+  const handleLeaveRoom = () => {
+    room.leaveRoom();
+    // restore the personal game from before joining
+    const s = loadState() || {};
+    setUsedIds(s.usedIds || []);
+    setCurrentCardId(s.currentCardId ?? null);
+    setImageIndex(s.imageIndex ?? 0);
+    setSelectedCategories({ ...defaultCategories, ...(s.selectedCategories || {}) });
+    setAllowRepeat(!!s.allowRepeat);
+    setRoomCustoms([]);
   };
 
   const closeSheet = () => setOpenSheet(null);
@@ -201,7 +294,7 @@ function App() {
       <div className="min-h-dvh bg-ivory flex flex-col">
         {/* Header: compact on mobile, full controls on desktop */}
         <header className="bg-white/95 backdrop-blur border-b-2 border-pale-pink/30 md:sticky md:top-0 z-30">
-          <div className="max-w-6xl mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-3">
+          <div className="max-w-6xl mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-2">
             <div className="flex items-baseline gap-2 min-w-0">
               <h1 className="font-hand text-2xl md:text-3xl text-ink whitespace-nowrap">
                 Truth Cards
@@ -249,6 +342,26 @@ function App() {
                   <PlusIcon className="w-5 h-5" strokeWidth={2.2} />
                 </HeaderIconButton>
               </div>
+
+              {room.active ? (
+                <button
+                  onClick={() => setOpenSheet('room')}
+                  title={pick(lang, 'Room', '房间')}
+                  className="h-11 px-3 rounded-full bg-blue-primary/10 border-2 border-blue-primary/30 text-blue-primary flex items-center gap-1.5 shrink-0"
+                >
+                  <UsersIcon className="w-4 h-4" />
+                  <span className="font-hand text-sm tracking-[0.2em]">{room.code}</span>
+                  <span className="text-xs opacity-70">{room.members}</span>
+                </button>
+              ) : (
+                <HeaderIconButton
+                  onClick={() => setOpenSheet('room')}
+                  label={pick(lang, 'Play together', '联机同玩')}
+                >
+                  <UsersIcon className="w-5 h-5" />
+                </HeaderIconButton>
+              )}
+
               <LangToggle lang={lang} onChange={setLang} />
             </div>
           </div>
@@ -306,12 +419,14 @@ function App() {
           <FilterPanel
             selectedCategories={selectedCategories}
             onToggleCategory={(cat) =>
-              setSelectedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }))
+              commit({
+                selectedCategories: { ...selectedCategories, [cat]: !selectedCategories[cat] },
+              })
             }
-            onSelectAll={() => setSelectedCategories(defaultCategories)}
+            onSelectAll={() => commit({ selectedCategories: defaultCategories })}
             remaining={remaining}
             allowRepeat={allowRepeat}
-            onToggleRepeat={() => setAllowRepeat((v) => !v)}
+            onToggleRepeat={() => commit({ allowRepeat: !allowRepeat })}
           />
         </Sheet>
 
@@ -341,6 +456,15 @@ function App() {
           titleZh="添加问题"
         >
           <CustomQuestionForm onAdd={handleAddCustomQuestion} onClose={closeSheet} />
+        </Sheet>
+
+        <Sheet
+          open={openSheet === 'room'}
+          onClose={closeSheet}
+          titleEn="Play Together"
+          titleZh="联机同玩"
+        >
+          <RoomPanel room={room} onCreate={handleCreateRoom} onLeave={handleLeaveRoom} />
         </Sheet>
       </div>
     </LanguageProvider>

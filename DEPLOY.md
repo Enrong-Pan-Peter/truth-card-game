@@ -22,10 +22,22 @@ The app builds with base path `/` by default (for Vercel), and `/truth-card-game
 
 That's it — from now on **every `git push` to `main` auto-deploys** to cards.enrongpan.com. Vercel also gives every PR/branch a preview URL.
 
-## Optional: keep or retire GitHub Pages
+## GitHub Pages now redirects to the new home
 
-- The old flow still works: `npm run deploy` publishes to the GitHub Pages URL (it builds with the `/truth-card-game/` base automatically).
-- To retire it, delete the `gh-pages` branch on GitHub and remove the `predeploy`/`deploy` scripts, or leave it as a backup.
+`npm run deploy` publishes the `redirect/` folder to GitHub Pages, so anyone
+visiting the old `enrong-pan-peter.github.io/truth-card-game` URL is sent to
+`cards.enrongpan.com` automatically. Run it once after the domain is live:
+
+```bash
+npm run deploy
+```
+
+## Supabase (live rooms + admin)
+
+Rooms and the cloud question bank need two environment variables — see
+[SETUP-SUPABASE.md](SETUP-SUPABASE.md). Locally they go in `.env.local`; on
+Vercel add them under Project → Settings → Environment Variables, then redeploy.
+Without them the site still works fully in local/offline mode.
 
 ## Local development
 

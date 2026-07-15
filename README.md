@@ -24,11 +24,13 @@ Browse questions by category before selecting one to discuss.
 ## Features
 
 - Questions in both English and Chinese, with a language toggle (EN / 中文 / 双语)
+- **Play together (live rooms):** create a room, share a 4-letter code or QR, and every phone shows the same card in real time
 - Filter categories and allow-repeat option
 - Track which questions have been used, return cards to the deck
-- Add your own custom questions
+- Add your own custom questions (synced to the whole room when playing together)
 - Everything is saved on your device — locking your phone or refreshing never loses the game
 - Installable as an app (Add to Home Screen) and works fully offline
+- Cloud question bank editable at `/#/admin` — no redeploy needed (see SETUP-SUPABASE.md)
 - Mobile-first design with a bottom action bar; full layout on desktop
 
 ## Development & Deployment
