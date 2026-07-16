@@ -24,7 +24,9 @@ Browse questions by category before selecting one to discuss.
 ## Features
 
 - Questions in both English and Chinese, with a language toggle (EN / 中文 / 双语)
-- **Play together (live rooms):** create a room, share a 4-letter code or QR, and every phone shows the same card in real time
+- **Play together (live rooms):** create a room, share a 4-letter code or QR, and every phone shows the same card in real time — with player names, "drawn by" labels, and an optional take-turns mode
+- **Share cards as images:** one tap turns the current question + artwork into a PNG for WeChat or any chat
+- **Skip a card** ("换一张") without using the question up
 - Filter categories and allow-repeat option
 - Track which questions have been used, return cards to the deck
 - Add your own custom questions (synced to the whole room when playing together)

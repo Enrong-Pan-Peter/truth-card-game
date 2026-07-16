@@ -74,27 +74,36 @@ const CategoryDropdown = ({ category, questions, onQuestionSelect, usedIdSet }) 
  * Browse questions by category (IDs stay masked to keep the mystery),
  * then reveal the chosen one as a card.
  */
-const ChooseMode = ({ questionsByCategory, onCardSelected, usedIds, image }) => {
+const ChooseMode = ({ questionsByCategory, onCardSelected, usedIds, image, onShare, blockedByName }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const usedIdSet = new Set(usedIds);
 
   const handleQuestionSelect = (question) => {
+    if (blockedByName) return;
     setSelectedCard(question);
     onCardSelected(question);
   };
 
   if (selectedCard) {
     return (
-      <div className="flex flex-col items-center gap-6 pt-2 md:pt-6">
+      <div className="flex flex-col items-center gap-5 pt-2 md:pt-6">
         <div className="w-full min-h-[48dvh] md:min-h-[420px] flex items-center justify-center">
           <Card question={selectedCard} image={image} />
         </div>
-        <button
-          onClick={() => setSelectedCard(null)}
-          className="px-7 py-2.5 min-h-[48px] rounded-full bg-orange-primary/15 text-gray-secondary text-lg active:scale-95 transition-transform"
-        >
-          <Bi en="Back to list" zh="返回列表" />
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={onShare}
+            className="px-5 py-2.5 min-h-[48px] rounded-full bg-blue-primary/10 text-blue-primary active:scale-95 transition-transform"
+          >
+            <Bi en="Share" zh="分享" />
+          </button>
+          <button
+            onClick={() => setSelectedCard(null)}
+            className="px-7 py-2.5 min-h-[48px] rounded-full bg-orange-primary/15 text-gray-secondary text-lg active:scale-95 transition-transform"
+          >
+            <Bi en="Back to list" zh="返回列表" />
+          </button>
+        </div>
       </div>
     );
   }
@@ -108,6 +117,11 @@ const ChooseMode = ({ questionsByCategory, onCardSelected, usedIds, image }) => 
         <p className="text-xs text-gray-secondary">
           <Bi en="Questions stay hidden until you pick one" zh="问题在选中前保持神秘" />
         </p>
+        {blockedByName && (
+          <p className="text-sm text-orange-primary pt-1">
+            <Bi en={`${blockedByName}'s turn — picking is paused`} zh={`轮到 ${blockedByName}——暂时不能选卡`} />
+          </p>
+        )}
       </div>
 
       {Object.keys(questionsByCategory).map((category) => (

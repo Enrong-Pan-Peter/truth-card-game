@@ -3,11 +3,12 @@ import QRCode from 'qrcode';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { Bi, pick, useLang } from '../i18n';
 import { CopyIcon, LeaveIcon, UsersIcon } from './Icons';
+import { Toggle } from './FilterPanel';
 
 const roomUrl = (code) => `${window.location.origin}${window.location.pathname}?room=${code}`;
 
 /** Create / join / manage a live shared room. Lives in a Sheet. */
-const RoomPanel = ({ room, onCreate, onLeave }) => {
+const RoomPanel = ({ room, playerName, onNameChange, onCreate, onLeave, turns, isHost, onToggleTurns }) => {
   const lang = useLang();
   const [joinCode, setJoinCode] = useState('');
   const [qr, setQr] = useState(null);
@@ -64,10 +65,48 @@ const RoomPanel = ({ room, onCreate, onLeave }) => {
           />
         )}
 
-        <p className="text-sm text-blue-primary flex items-center gap-1.5">
-          <UsersIcon className="w-4 h-4" />
-          {room.members} <Bi en={room.members === 1 ? 'person here' : 'people here'} zh="人在房间里" />
-        </p>
+        {/* Members */}
+        <div className="w-full">
+          <p className="text-xs text-gray-secondary mb-2 flex items-center justify-center gap-1.5">
+            <UsersIcon className="w-4 h-4" />
+            {room.members.length} <Bi en={room.members.length === 1 ? 'person here' : 'people here'} zh="人在房间里" />
+          </p>
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {room.members.map((m) => (
+              <span
+                key={m.id}
+                className={`px-3 py-1 rounded-full text-xs border-2 ${
+                  m.id === room.myId
+                    ? 'bg-blue-primary/10 border-blue-primary/40 text-blue-primary'
+                    : 'bg-ivory border-pale-pink/30 text-gray-secondary'
+                } ${turns?.enabled && turns.current === m.id ? 'ring-2 ring-orange-primary/60' : ''}`}
+              >
+                {m.name}
+                {m.id === room.myId && <Bi en=" (you)" zh="（你）" />}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Take-turns (host only) */}
+        {isHost && (
+          <div className="w-full flex items-center justify-between gap-3 p-3 rounded-xl bg-ivory/70 border-2 border-pale-pink/25 text-left">
+            <div className="min-w-0">
+              <p className="text-[15px] text-ink">
+                <Bi en="Take turns" zh="轮流抽卡" />
+              </p>
+              <p className="text-xs text-gray-secondary mt-0.5">
+                <Bi en="Only the current player can draw" zh="只有轮到的人可以抽卡" />
+              </p>
+            </div>
+            <Toggle on={!!turns?.enabled} onChange={onToggleTurns} label="Take turns" />
+          </div>
+        )}
+        {!isHost && turns?.enabled && (
+          <p className="text-xs text-gray-secondary">
+            <Bi en="Take-turns mode is on" zh="轮流模式已开启" />
+          </p>
+        )}
 
         <div className="flex gap-3">
           <button
@@ -87,7 +126,7 @@ const RoomPanel = ({ room, onCreate, onLeave }) => {
         </div>
 
         <p className="text-xs text-gray-secondary opacity-80">
-          <Bi en="Anyone in the room can draw · rooms last 24h" zh="房间里任何人都可以抽卡 · 房间保留24小时" />
+          <Bi en="Rooms last 24h" zh="房间保留24小时" />
         </p>
       </div>
     );
@@ -95,6 +134,19 @@ const RoomPanel = ({ room, onCreate, onLeave }) => {
 
   return (
     <div className="space-y-6 pb-2">
+      {/* Name */}
+      <div>
+        <label className="block text-sm text-ink mb-2">
+          <Bi en="Your name" zh="你的名字" />
+        </label>
+        <input
+          value={playerName}
+          onChange={(e) => onNameChange(e.target.value.slice(0, 16))}
+          placeholder={pick(lang, 'e.g. Peter', '例如：小明')}
+          className="w-full px-4 py-3 min-h-[48px] rounded-xl border-2 border-pale-pink/40 bg-white text-ink focus:border-blue-primary/60 focus:outline-none"
+        />
+      </div>
+
       <div className="text-center space-y-3">
         <p className="text-sm text-gray-secondary">
           <Bi
@@ -130,7 +182,7 @@ const RoomPanel = ({ room, onCreate, onLeave }) => {
         onSubmit={(e) => {
           e.preventDefault();
           if (joinCode.trim().length === 4) {
-            room.joinRoom(joinCode);
+            room.joinRoom(joinCode, { name: playerName || 'Guest' });
             setJoinCode('');
           }
         }}

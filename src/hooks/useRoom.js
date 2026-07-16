@@ -25,11 +25,13 @@ function getClientId() {
  * Live shared room over Supabase Realtime.
  * The whole game state lives in one jsonb row; every action pushes the full
  * state (last-write-wins), and every member applies updates that aren't their
- * own echo (guarded by clientId). Presence tracks how many phones are in.
+ * own echo (guarded by clientId). Presence tracks who is in the room by name,
+ * ordered deterministically (join time) so take-turns works identically on
+ * every device.
  */
 export function useRoom({ onRemoteState }) {
   const [code, setCode] = useState(null);
-  const [members, setMembers] = useState(1);
+  const [members, setMembers] = useState([]); // [{ id, name, joined }]
   const [status, setStatus] = useState('idle'); // 'idle' | 'connecting' | 'in'
   const [error, setError] = useState(null);
 
@@ -48,7 +50,7 @@ export function useRoom({ onRemoteState }) {
   }, []);
 
   const subscribeToRoom = useCallback(
-    (roomCode) => {
+    (roomCode, name) => {
       teardown();
       const ch = supabase.channel(`room:${roomCode}`, {
         config: { presence: { key: clientIdRef.current } },
@@ -65,10 +67,18 @@ export function useRoom({ onRemoteState }) {
         }
       );
       ch.on('presence', { event: 'sync' }, () => {
-        setMembers(Math.max(1, Object.keys(ch.presenceState()).length));
+        const state = ch.presenceState();
+        const list = Object.entries(state)
+          .map(([id, metas]) => ({
+            id,
+            name: metas[0]?.name || 'Guest',
+            joined: metas[0]?.joined || 0,
+          }))
+          .sort((a, b) => a.joined - b.joined || a.id.localeCompare(b.id));
+        setMembers(list);
       });
       ch.subscribe((s) => {
-        if (s === 'SUBSCRIBED') ch.track({ joined: Date.now() });
+        if (s === 'SUBSCRIBED') ch.track({ name: name || 'Guest', joined: Date.now() });
       });
       channelRef.current = ch;
     },
@@ -76,8 +86,8 @@ export function useRoom({ onRemoteState }) {
   );
 
   const enterRoom = useCallback(
-    (roomCode) => {
-      subscribeToRoom(roomCode);
+    (roomCode, name) => {
+      subscribeToRoom(roomCode, name);
       codeRef.current = roomCode;
       setCode(roomCode);
       setStatus('in');
@@ -88,7 +98,7 @@ export function useRoom({ onRemoteState }) {
 
   /** Create a fresh room seeded with `initialState`. */
   const createRoom = useCallback(
-    async (initialState) => {
+    async (initialState, name) => {
       if (!supabase) return { error: 'not-configured' };
       setStatus('connecting');
       setError(null);
@@ -99,7 +109,7 @@ export function useRoom({ onRemoteState }) {
           .from('rooms')
           .insert({ code: newCode, state: { ...initialState, clientId: clientIdRef.current, rev: 1 } });
         if (!err) {
-          enterRoom(newCode);
+          enterRoom(newCode, name);
           return { code: newCode };
         }
         if (err.code !== '23505') {
@@ -118,7 +128,7 @@ export function useRoom({ onRemoteState }) {
 
   /** Join an existing room by code; applies its current state. */
   const joinRoom = useCallback(
-    async (rawCode, { silent = false } = {}) => {
+    async (rawCode, { silent = false, name } = {}) => {
       if (!supabase) return { error: 'not-configured' };
       const roomCode = String(rawCode || '').trim().toUpperCase();
       if (roomCode.length !== 4) {
@@ -140,7 +150,7 @@ export function useRoom({ onRemoteState }) {
       }
       revRef.current = data.state?.rev || 0;
       if (data.state && Object.keys(data.state).length) onRemoteRef.current?.(data.state);
-      enterRoom(roomCode);
+      enterRoom(roomCode, name);
       return { code: roomCode };
     },
     [enterRoom]
@@ -166,7 +176,7 @@ export function useRoom({ onRemoteState }) {
     teardown();
     codeRef.current = null;
     setCode(null);
-    setMembers(1);
+    setMembers([]);
     setStatus('idle');
     setError(null);
   }, [teardown]);
@@ -178,6 +188,7 @@ export function useRoom({ onRemoteState }) {
     connecting: status === 'connecting',
     code,
     members,
+    myId: clientIdRef.current,
     error,
     clearError: () => setError(null),
     createRoom,

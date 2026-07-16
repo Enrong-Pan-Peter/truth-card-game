@@ -14,7 +14,7 @@ const CategoryLabel = ({ en, zh }) => {
   );
 };
 
-const Toggle = ({ on, onChange, label }) => (
+export const Toggle = ({ on, onChange, label }) => (
   <button
     onClick={onChange}
     role="switch"
