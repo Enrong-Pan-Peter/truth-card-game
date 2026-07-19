@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
+import { inject } from '@vercel/analytics'
 import App from './App.jsx'
 import AdminPage from './components/AdminPage.jsx'
 import './index.css'
+
+if (import.meta.env.PROD) inject()
 
 // Tiny hash router: /#/admin → question-bank admin, everything else → the game.
 function Root() {

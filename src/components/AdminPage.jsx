@@ -24,10 +24,11 @@ const nextId = (category, questions) => {
 const input =
   'w-full px-3 py-2 rounded-lg border-2 border-pale-pink/40 bg-white text-ink text-sm focus:border-blue-primary/60 focus:outline-none';
 
-const QuestionRow = ({ q, onSave, onToggle, onDelete }) => {
+const QuestionRow = ({ q, stat, onSave, onToggle, onDelete }) => {
   const [editing, setEditing] = useState(false);
   const [en, setEn] = useState(q.en);
   const [zh, setZh] = useState(q.zh);
+  const [pack, setPack] = useState(q.pack || '');
 
   if (editing) {
     return (
@@ -35,11 +36,18 @@ const QuestionRow = ({ q, onSave, onToggle, onDelete }) => {
         <p className="text-xs text-gray-secondary">{q.id}</p>
         <textarea value={en} onChange={(e) => setEn(e.target.value)} rows={2} className={input} />
         <textarea value={zh} onChange={(e) => setZh(e.target.value)} rows={2} className={`${input} font-zh`} />
+        <input
+          value={pack}
+          onChange={(e) => setPack(e.target.value)}
+          placeholder="Pack (optional, e.g. Christmas)"
+          className={input}
+        />
         <div className="flex gap-2 justify-end">
           <button
             onClick={() => {
               setEn(q.en);
               setZh(q.zh);
+              setPack(q.pack || '');
               setEditing(false);
             }}
             className="px-4 py-1.5 rounded-full text-sm bg-pale-pink/20 text-gray-secondary"
@@ -48,7 +56,7 @@ const QuestionRow = ({ q, onSave, onToggle, onDelete }) => {
           </button>
           <button
             onClick={async () => {
-              await onSave(q.id, { en: en.trim(), zh: zh.trim() });
+              await onSave(q.id, { en: en.trim(), zh: zh.trim(), pack: pack.trim() || null });
               setEditing(false);
             }}
             className="px-4 py-1.5 rounded-full text-sm bg-blue-primary text-white"
@@ -69,6 +77,14 @@ const QuestionRow = ({ q, onSave, onToggle, onDelete }) => {
       <div className="flex-1 min-w-0">
         <p className="text-xs text-gray-secondary">
           {q.id}
+          {q.pack && (
+            <span className="ml-2 px-1.5 rounded bg-orange-primary/15 text-orange-primary">{q.pack}</span>
+          )}
+          {stat && (
+            <span className="ml-2 opacity-80">
+              {stat.draws} draws · {stat.skips} skips
+            </span>
+          )}
           {!q.enabled && <span className="ml-2 text-orange-primary">disabled</span>}
         </p>
         <p className="text-sm text-ink font-hand mt-0.5">{q.en}</p>
@@ -111,8 +127,10 @@ const AdminPage = () => {
   const [email, setEmail] = useState('');
   const [linkSent, setLinkSent] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [stats, setStats] = useState({});
   const [status, setStatus] = useState(null);
-  const [newQ, setNewQ] = useState({ category: 'getting_to_know', en: '', zh: '' });
+  const [newQ, setNewQ] = useState({ category: 'getting_to_know', en: '', zh: '', pack: '' });
 
   useEffect(() => {
     if (!supabase) return;
@@ -129,6 +147,15 @@ const AdminPage = () => {
       .order('sort');
     if (error) setStatus(error.message);
     else setQuestions(data || []);
+    // These two need migration-1.sql — ignore errors if it hasn't run yet
+    const { data: sug } = await supabase
+      .from('suggestions')
+      .select('*')
+      .eq('status', 'pending')
+      .order('created_at');
+    setSuggestions(sug || []);
+    const { data: st } = await supabase.from('question_stats').select('*');
+    setStats(Object.fromEntries((st || []).map((s) => [s.question_id, s])));
   };
 
   useEffect(() => {
@@ -230,6 +257,55 @@ const AdminPage = () => {
           everyone on their next visit — no redeploy needed.
         </p>
 
+        {/* Pending suggestions from players */}
+        {suggestions.length > 0 && (
+          <section className="p-4 rounded-2xl bg-blue-primary/5 border-2 border-blue-primary/30 space-y-2">
+            <p className="text-sm text-ink">
+              Player suggestions <span className="text-gray-secondary">({suggestions.length} pending)</span>
+            </p>
+            {suggestions.map((s) => (
+              <div key={s.id} className="p-3 rounded-xl bg-white border-2 border-pale-pink/25 flex items-start gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-gray-secondary">
+                    {getCategoryDisplay(s.category).en}
+                    {s.name && <span className="ml-2">from {s.name}</span>}
+                  </p>
+                  <p className="text-sm text-ink font-hand mt-0.5">{s.en}</p>
+                  <p className="text-sm text-gray-secondary font-zh">{s.zh}</p>
+                </div>
+                <div className="flex flex-col gap-1.5 shrink-0">
+                  <button
+                    onClick={async () => {
+                      const sort =
+                        Math.max(0, ...questions.filter((q) => q.category === s.category).map((q) => q.sort)) + 1;
+                      const ok = await run(
+                        supabase.from('questions').insert({
+                          id: nextId(s.category, questions),
+                          category: s.category,
+                          en: s.en,
+                          zh: s.zh,
+                          sort,
+                        }),
+                        false
+                      );
+                      if (ok) await run(supabase.from('suggestions').update({ status: 'approved' }).eq('id', s.id));
+                    }}
+                    className="px-3 py-1.5 rounded-full text-xs bg-blue-primary text-white"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() => run(supabase.from('suggestions').update({ status: 'rejected' }).eq('id', s.id))}
+                    className="px-3 py-1.5 rounded-full text-xs bg-pale-pink/20 text-gray-secondary"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
+
         {/* Add new question */}
         <form
           onSubmit={async (e) => {
@@ -240,9 +316,14 @@ const AdminPage = () => {
             const sort =
               Math.max(0, ...questions.filter((q) => q.category === newQ.category).map((q) => q.sort)) + 1;
             const ok = await run(
-              supabase
-                .from('questions')
-                .insert({ id: nextId(newQ.category, questions), category: newQ.category, en, zh, sort })
+              supabase.from('questions').insert({
+                id: nextId(newQ.category, questions),
+                category: newQ.category,
+                en,
+                zh,
+                sort,
+                pack: newQ.pack.trim() || null,
+              })
             );
             if (ok) setNewQ({ ...newQ, en: '', zh: '' });
           }}
@@ -276,6 +357,12 @@ const AdminPage = () => {
             rows={2}
             className={`${input} font-zh`}
           />
+          <input
+            value={newQ.pack}
+            onChange={(e) => setNewQ({ ...newQ, pack: e.target.value })}
+            placeholder="Pack (optional, e.g. Christmas) — groups questions into a toggleable theme"
+            className={input}
+          />
           <button
             type="submit"
             disabled={!newQ.en.trim() && !newQ.zh.trim()}
@@ -303,6 +390,7 @@ const AdminPage = () => {
                 <QuestionRow
                   key={q.id}
                   q={q}
+                  stat={stats[q.id]}
                   onSave={(id, patch) => run(supabase.from('questions').update(patch).eq('id', id))}
                   onToggle={(id, enabled) =>
                     run(supabase.from('questions').update({ enabled }).eq('id', id))

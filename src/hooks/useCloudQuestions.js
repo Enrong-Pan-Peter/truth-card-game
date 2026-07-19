@@ -25,21 +25,21 @@ export function useCloudQuestions() {
   useEffect(() => {
     if (!supabase) return;
     let cancelled = false;
-    supabase
-      .from('questions')
-      .select('id, category, en, zh, sort')
-      .eq('enabled', true)
-      .order('category')
-      .order('sort')
-      .then(({ data, error }) => {
-        if (cancelled || error || !data?.length) return;
-        setCloud(data);
-        try {
-          localStorage.setItem(CACHE_KEY, JSON.stringify({ questions: data, at: Date.now() }));
-        } catch {
-          /* cache is best-effort */
-        }
-      });
+    const fetchQuestions = async () => {
+      const query = (cols) =>
+        supabase.from('questions').select(cols).eq('enabled', true).order('category').order('sort');
+      // `pack` only exists after migration-1 — fall back gracefully
+      let { data, error } = await query('id, category, en, zh, sort, pack');
+      if (error) ({ data, error } = await query('id, category, en, zh, sort'));
+      if (cancelled || error || !data?.length) return;
+      setCloud(data);
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ questions: data, at: Date.now() }));
+      } catch {
+        /* cache is best-effort */
+      }
+    };
+    fetchQuestions();
     return () => {
       cancelled = true;
     };

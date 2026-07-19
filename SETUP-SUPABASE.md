@@ -13,7 +13,12 @@ One-time, ~10 minutes, free tier. Until this is done the app simply runs in loca
 1. Left sidebar → **SQL Editor** → **New query**.
 2. Paste the contents of [`supabase/schema.sql`](supabase/schema.sql) → **Run**.
    - Note: it makes `22bm65@queensu.ca` the admin login. Edit that line first if you want a different email.
-3. New query → paste [`supabase/seed_questions.sql`](supabase/seed_questions.sql) → **Run**. This loads all 252 questions.
+3. New query → paste [`supabase/seed_questions.sql`](supabase/seed_questions.sql) → **Run**. This loads all 252 questions (proofread — see QUESTION-EDITS.md).
+4. New query → paste [`supabase/migration-1.sql`](supabase/migration-1.sql) → **Run**. This adds question packs, the player suggestion box, and draw statistics.
+
+> Already ran schema + seed earlier? Just run `migration-1.sql`, and optionally re-run
+> `seed_questions.sql` to pick up the proofread question text (do this before making
+> admin edits — it overwrites the original 252 ids).
 
 ## 3. Configure auth redirects (for the admin magic link)
 

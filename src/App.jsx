@@ -12,6 +12,7 @@ import { Bi, LanguageProvider, pick } from './i18n';
 import { supabase } from './lib/supabase';
 import { useCloudQuestions } from './hooks/useCloudQuestions';
 import { useRoom } from './hooks/useRoom';
+import { usePWAUpdate } from './hooks/usePWAUpdate';
 import ShuffleMode from './components/ShuffleMode';
 import ChooseMode from './components/ChooseMode';
 import Sheet from './components/Sheet';
@@ -20,7 +21,8 @@ import FilterPanel from './components/FilterPanel';
 import UsedPanel from './components/UsedPanel';
 import CustomQuestionForm from './components/CustomQuestionForm';
 import RoomPanel from './components/RoomPanel';
-import { FilterIcon, PlusIcon, UsedIcon, UsersIcon } from './components/Icons';
+import InstallHint from './components/InstallHint';
+import { CloseIcon, FilterIcon, PlusIcon, UsedIcon, UsersIcon } from './components/Icons';
 
 const saved = loadState() || {};
 const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, true]));
@@ -74,27 +76,39 @@ function App() {
   const [lang, setLang] = useState(saved.lang || 'both');
   const [mode, setMode] = useState(saved.mode || 'shuffle');
   const [playerName, setPlayerName] = useState(saved.playerName || '');
+  const [timerMin, setTimerMin] = useState(saved.timerMin || 0);
   const [customQuestions, setCustomQuestions] = useState(saved.customQuestions || []);
   const [usedIds, setUsedIds] = useState(saved.usedIds || []);
   const [selectedCategories, setSelectedCategories] = useState({
     ...defaultCategories,
     ...(saved.selectedCategories || {}),
   });
+  const [selectedPacks, setSelectedPacks] = useState(saved.selectedPacks || {});
   const [allowRepeat, setAllowRepeat] = useState(saved.allowRepeat || false);
+  const [sessionLimit, setSessionLimit] = useState(saved.sessionLimit ?? null);
+  const [sessionStart, setSessionStart] = useState(saved.sessionStart || 0);
   const [currentCardId, setCurrentCardId] = useState(saved.currentCardId || null);
   const [imageIndex, setImageIndex] = useState(
     saved.imageIndex ?? Math.floor(Math.random() * CARD_IMAGES.length)
   );
 
   // --- transient state ---
-  const [openSheet, setOpenSheet] = useState(null); // 'filter' | 'used' | 'add' | 'room' | 'share' | null
+  const [openSheet, setOpenSheet] = useState(null); // filter|used|add|room|share|null
   const [isDrawing, setIsDrawing] = useState(false);
-  const [roomCustoms, setRoomCustoms] = useState([]); // room-scoped custom questions
+  const [roomCustoms, setRoomCustoms] = useState([]);
   const [roomMeta, setRoomMeta] = useState({ hostId: null, drawnBy: null, turns: defaultTurns });
   const [shareImage, setShareImage] = useState(null);
+  const [reactions, setReactions] = useState([]);
 
-  // --- cloud question bank (falls back to cache, then bundled JSON) ---
+  const { needRefresh, applyUpdate, dismiss } = usePWAUpdate();
   const baseQuestions = useCloudQuestions();
+
+  // --- reactions (rooms) ---
+  const addReaction = useCallback((emoji, name) => {
+    const id = Math.random().toString(36).slice(2);
+    setReactions((prev) => [...prev.slice(-14), { id, emoji, name, x: 8 + Math.random() * 80 }]);
+    setTimeout(() => setReactions((prev) => prev.filter((r) => r.id !== id)), 2600);
+  }, []);
 
   // --- live room ---
   const applyRemoteState = useCallback((st) => {
@@ -103,7 +117,10 @@ function App() {
     if (typeof st.imageIndex === 'number') setImageIndex(st.imageIndex);
     if (st.selectedCategories)
       setSelectedCategories({ ...defaultCategories, ...st.selectedCategories });
+    if (st.selectedPacks) setSelectedPacks(st.selectedPacks);
     if (typeof st.allowRepeat === 'boolean') setAllowRepeat(st.allowRepeat);
+    if ('sessionLimit' in st) setSessionLimit(st.sessionLimit ?? null);
+    if (typeof st.sessionStart === 'number') setSessionStart(st.sessionStart);
     if (Array.isArray(st.customQuestions)) setRoomCustoms(st.customQuestions);
     setRoomMeta({
       hostId: st.hostId ?? null,
@@ -111,7 +128,10 @@ function App() {
       turns: st.turns && typeof st.turns === 'object' ? st.turns : defaultTurns,
     });
   }, []);
-  const room = useRoom({ onRemoteState: applyRemoteState });
+  const room = useRoom({
+    onRemoteState: applyRemoteState,
+    onReaction: (p) => addReaction(p.emoji, p.name),
+  });
 
   // Join from ?room=CODE link (QR) or silently rejoin the last room
   const bootRef = useRef(false);
@@ -137,18 +157,26 @@ function App() {
     () => [...baseQuestions, ...activeCustoms],
     [baseQuestions, activeCustoms]
   );
+  const packs = useMemo(
+    () => [...new Set(baseQuestions.map((q) => q.pack).filter(Boolean))],
+    [baseQuestions]
+  );
+  const packOn = useCallback(
+    (q) => !q.pack || selectedPacks[q.pack] !== false,
+    [selectedPacks]
+  );
   const usedSet = useMemo(() => new Set(usedIds), [usedIds]);
   const activeDeck = useMemo(
     () => allQuestions.filter((q) => !usedSet.has(q.id)),
     [allQuestions, usedSet]
   );
   const filteredDeck = useMemo(
-    () => activeDeck.filter((q) => selectedCategories[q.category]),
-    [activeDeck, selectedCategories]
+    () => activeDeck.filter((q) => selectedCategories[q.category] && packOn(q)),
+    [activeDeck, selectedCategories, packOn]
   );
   const totalInSelected = useMemo(
-    () => allQuestions.filter((q) => selectedCategories[q.category]).length,
-    [allQuestions, selectedCategories]
+    () => allQuestions.filter((q) => selectedCategories[q.category] && packOn(q)).length,
+    [allQuestions, selectedCategories, packOn]
   );
   const usedCards = useMemo(() => {
     const byId = new Map(allQuestions.map((q) => [q.id, q]));
@@ -159,13 +187,35 @@ function App() {
     [allQuestions, currentCardId]
   );
   const remaining = useMemo(() => {
-    const grouped = groupByCategory(activeDeck);
+    const grouped = groupByCategory(activeDeck.filter(packOn));
     return Object.fromEntries(CATEGORIES.map((c) => [c, grouped[c].length]));
-  }, [activeDeck]);
+  }, [activeDeck, packOn]);
   const selectedCount = CATEGORIES.filter((c) => selectedCategories[c]).length;
-  const canDraw = (allowRepeat ? totalInSelected : filteredDeck.length) > 0;
   const questionsByCategory = useMemo(() => groupByCategory(allQuestions), [allQuestions]);
   const currentImage = CARD_IMAGES[imageIndex % CARD_IMAGES.length];
+
+  // --- session presets ---
+  const sessionDrawn = Math.max(0, usedIds.length - sessionStart);
+  const sessionDone = !!sessionLimit && sessionDrawn >= sessionLimit;
+  const sessionRecap = useMemo(() => {
+    if (!sessionLimit) return null;
+    const byId = new Map(allQuestions.map((q) => [q.id, q]));
+    const counts = {};
+    usedIds.slice(sessionStart).forEach((id) => {
+      const q = byId.get(id);
+      if (q) counts[q.category] = (counts[q.category] || 0) + 1;
+    });
+    return {
+      total: sessionDrawn,
+      byCategory: CATEGORIES.filter((c) => counts[c]).map((c) => ({
+        key: c,
+        ...getCategoryDisplay(c),
+        count: counts[c],
+      })),
+    };
+  }, [sessionLimit, sessionStart, usedIds, allQuestions, sessionDrawn]);
+
+  const canDraw = (allowRepeat ? totalInSelected : filteredDeck.length) > 0 && !sessionDone;
 
   // --- turns ---
   const turnsEnabled = room.active && roomMeta.turns.enabled;
@@ -182,21 +232,30 @@ function App() {
   };
 
   // --- persistence ---
-  // In a room the server owns gameplay state; only personal prefs are saved,
-  // and the personal snapshot from before joining stays untouched for later.
   useEffect(() => {
     if (room.active) {
-      saveState({ ...(loadState() || {}), lang, mode, playerName, roomCode: room.code });
+      saveState({
+        ...(loadState() || {}),
+        lang,
+        mode,
+        playerName,
+        timerMin,
+        roomCode: room.code,
+      });
     } else {
       saveState({
         lang,
         mode,
         playerName,
+        timerMin,
         roomCode: null,
         customQuestions,
         usedIds,
         selectedCategories,
+        selectedPacks,
         allowRepeat,
+        sessionLimit,
+        sessionStart,
         currentCardId,
         imageIndex,
       });
@@ -205,12 +264,16 @@ function App() {
     lang,
     mode,
     playerName,
+    timerMin,
     room.active,
     room.code,
     customQuestions,
     usedIds,
     selectedCategories,
+    selectedPacks,
     allowRepeat,
+    sessionLimit,
+    sessionStart,
     currentCardId,
     imageIndex,
   ]);
@@ -221,7 +284,10 @@ function App() {
     if ('currentCardId' in updates) setCurrentCardId(updates.currentCardId);
     if ('imageIndex' in updates) setImageIndex(updates.imageIndex);
     if ('selectedCategories' in updates) setSelectedCategories(updates.selectedCategories);
+    if ('selectedPacks' in updates) setSelectedPacks(updates.selectedPacks);
     if ('allowRepeat' in updates) setAllowRepeat(updates.allowRepeat);
+    if ('sessionLimit' in updates) setSessionLimit(updates.sessionLimit);
+    if ('sessionStart' in updates) setSessionStart(updates.sessionStart);
     if ('customQuestions' in updates) {
       if (room.active) setRoomCustoms(updates.customQuestions);
       else setCustomQuestions(updates.customQuestions);
@@ -239,7 +305,10 @@ function App() {
         currentCardId,
         imageIndex,
         selectedCategories,
+        selectedPacks,
         allowRepeat,
+        sessionLimit,
+        sessionStart,
         customQuestions: roomCustoms,
         hostId: roomMeta.hostId,
         drawnBy: roomMeta.drawnBy,
@@ -251,17 +320,28 @@ function App() {
 
   const myName = playerName.trim() || 'Guest';
 
+  // Anonymous draw/skip counters for admin curation (best-effort)
+  const bumpStat = (id, kind) => {
+    if (!supabase || String(id).startsWith('c')) return;
+    supabase.rpc('bump_stat', { qid: id, kind }).then(
+      () => {},
+      () => {}
+    );
+  };
+
   // --- actions ---
   const handleDraw = () => {
     if (isDrawing || !canDraw || (turnsEnabled && !myTurn)) return;
     setIsDrawing(true);
     setTimeout(() => {
       const pool = allowRepeat
-        ? allQuestions.filter((q) => selectedCategories[q.category] && q.id !== currentCardId)
+        ? allQuestions.filter(
+            (q) => selectedCategories[q.category] && packOn(q) && q.id !== currentCardId
+          )
         : filteredDeck;
       const source = pool.length
         ? pool
-        : allQuestions.filter((q) => selectedCategories[q.category]);
+        : allQuestions.filter((q) => selectedCategories[q.category] && packOn(q));
       const card = drawRandomCard(source);
       if (card) {
         commit({
@@ -277,6 +357,7 @@ function App() {
               }
             : {}),
         });
+        bumpStat(card.id, 'draw');
       }
       setIsDrawing(false);
     }, 280);
@@ -285,14 +366,16 @@ function App() {
   // "Not this one" — draw another without using the skipped question up
   const handleSkipCard = () => {
     if (isDrawing || !currentCardId || (turnsEnabled && !myTurn)) return;
+    const skippedId = currentCardId;
     setIsDrawing(true);
     setTimeout(() => {
-      const usedWithout = usedIds.filter((id) => id !== currentCardId);
+      const usedWithout = usedIds.filter((id) => id !== skippedId);
       const usedWithoutSet = new Set(usedWithout);
       const pool = allQuestions.filter(
         (q) =>
           selectedCategories[q.category] &&
-          q.id !== currentCardId &&
+          packOn(q) &&
+          q.id !== skippedId &&
           (allowRepeat || !usedWithoutSet.has(q.id))
       );
       const card = drawRandomCard(pool);
@@ -303,6 +386,8 @@ function App() {
           imageIndex: Math.floor(Math.random() * CARD_IMAGES.length),
           ...(room.active ? { drawnBy: myName } : {}),
         });
+        bumpStat(skippedId, 'skip');
+        bumpStat(card.id, 'draw');
       }
       setIsDrawing(false);
     }, 280);
@@ -323,11 +408,12 @@ function App() {
           }
         : {}),
     });
+    bumpStat(question.id, 'draw');
   };
 
   const handleReturnCard = (id) => commit({ usedIds: usedIds.filter((x) => x !== id) });
 
-  const resetDeck = () => commit({ usedIds: [], currentCardId: null });
+  const resetDeck = () => commit({ usedIds: [], currentCardId: null, sessionStart: 0 });
 
   const confirmResetDeck = () => {
     if (
@@ -345,6 +431,14 @@ function App() {
     commit({ customQuestions: [...activeCustoms, question] });
   };
 
+  const handleSuggest = async ({ en, zh, category }) => {
+    if (!supabase) return false;
+    const { error } = await supabase
+      .from('suggestions')
+      .insert({ en, zh, category, name: myName });
+    return !error;
+  };
+
   const handleToggleTurns = () => {
     const enabled = !roomMeta.turns.enabled;
     commit({
@@ -356,6 +450,11 @@ function App() {
 
   const handleSkipTurn = () =>
     commit({ turns: { enabled: true, current: nextTurnId(roomMeta.turns.current) } });
+
+  const handleReact = (emoji) => {
+    addReaction(emoji, myName);
+    room.sendReaction(emoji, myName);
+  };
 
   const handleShare = async () => {
     if (!currentCard) return;
@@ -377,7 +476,10 @@ function App() {
       currentCardId: null,
       imageIndex: Math.floor(Math.random() * CARD_IMAGES.length),
       selectedCategories,
+      selectedPacks,
       allowRepeat,
+      sessionLimit,
+      sessionStart: 0,
       customQuestions: [],
       hostId: room.myId,
       drawnBy: null,
@@ -389,13 +491,15 @@ function App() {
 
   const handleLeaveRoom = () => {
     room.leaveRoom();
-    // restore the personal game from before joining
     const s = loadState() || {};
     setUsedIds(s.usedIds || []);
     setCurrentCardId(s.currentCardId ?? null);
     setImageIndex(s.imageIndex ?? 0);
     setSelectedCategories({ ...defaultCategories, ...(s.selectedCategories || {}) });
+    setSelectedPacks(s.selectedPacks || {});
     setAllowRepeat(!!s.allowRepeat);
+    setSessionLimit(s.sessionLimit ?? null);
+    setSessionStart(s.sessionStart || 0);
     setRoomCustoms([]);
     setRoomMeta({ hostId: null, drawnBy: null, turns: defaultTurns });
   };
@@ -405,7 +509,6 @@ function App() {
   return (
     <LanguageProvider lang={lang}>
       <div className="min-h-dvh bg-ivory flex flex-col">
-        {/* Header: compact on mobile, full controls on desktop */}
         <header className="bg-white/95 backdrop-blur border-b-2 border-pale-pink/30 md:sticky md:top-0 z-30">
           <div className="max-w-6xl mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-2">
             <div className="flex items-baseline gap-2 min-w-0">
@@ -495,12 +598,17 @@ function App() {
               onOpenFilter={() => setOpenSheet('filter')}
               onSkipCard={handleSkipCard}
               onShare={handleShare}
+              timerMin={timerMin}
+              sessionDone={sessionDone}
+              sessionRecap={sessionRecap}
+              onContinueSession={() => commit({ sessionLimit: null, sessionStart: 0 })}
               inRoom={room.active}
               drawnBy={roomMeta.drawnBy}
               turns={
                 turnsEnabled ? { enabled: true, myTurn, currentName: currentTurnName } : null
               }
               onSkipTurn={handleSkipTurn}
+              onReact={handleReact}
             />
           ) : (
             <ChooseMode
@@ -536,8 +644,8 @@ function App() {
         <Sheet
           open={openSheet === 'filter'}
           onClose={closeSheet}
-          titleEn="Filter Categories"
-          titleZh="筛选类别"
+          titleEn="Deck Settings"
+          titleZh="卡组设置"
         >
           <FilterPanel
             selectedCategories={selectedCategories}
@@ -550,6 +658,19 @@ function App() {
             remaining={remaining}
             allowRepeat={allowRepeat}
             onToggleRepeat={() => commit({ allowRepeat: !allowRepeat })}
+            packs={packs}
+            selectedPacks={selectedPacks}
+            onTogglePack={(p) =>
+              commit({
+                selectedPacks: { ...selectedPacks, [p]: selectedPacks[p] === false },
+              })
+            }
+            sessionLimit={sessionLimit}
+            onSetSession={(n) =>
+              commit({ sessionLimit: n, sessionStart: n ? usedIds.length : 0 })
+            }
+            timerMin={timerMin}
+            onSetTimer={setTimerMin}
           />
         </Sheet>
 
@@ -578,7 +699,12 @@ function App() {
           titleEn="Add a Question"
           titleZh="添加问题"
         >
-          <CustomQuestionForm onAdd={handleAddCustomQuestion} onClose={closeSheet} />
+          <CustomQuestionForm
+            onAdd={handleAddCustomQuestion}
+            onClose={closeSheet}
+            canSuggest={Boolean(supabase)}
+            onSuggest={handleSuggest}
+          />
         </Sheet>
 
         <Sheet
@@ -628,6 +754,50 @@ function App() {
             </div>
           )}
         </Sheet>
+
+        {/* Floating reactions */}
+        {reactions.length > 0 && (
+          <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden" aria-hidden="true">
+            {reactions.map((r) => (
+              <span
+                key={r.id}
+                className="reaction-float absolute bottom-28 flex flex-col items-center"
+                style={{ left: `${r.x}%` }}
+              >
+                <span className="text-3xl">{r.emoji}</span>
+                <span className="text-[10px] text-gray-secondary bg-white/80 rounded-full px-1.5 mt-0.5">
+                  {r.name}
+                </span>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* New version toast */}
+        {needRefresh && (
+          <div className="fixed top-3 inset-x-3 md:inset-x-auto md:right-6 md:top-20 md:max-w-xs z-[70]">
+            <div className="bg-ink text-white rounded-2xl p-3.5 flex items-center gap-3 shadow-card">
+              <p className="flex-1 text-sm">
+                <Bi en="A new version is ready" zh="有新版本啦" />
+              </p>
+              <button
+                onClick={applyUpdate}
+                className="px-4 py-2 rounded-full bg-white text-ink text-sm shrink-0"
+              >
+                <Bi en="Update" zh="更新" />
+              </button>
+              <button
+                onClick={dismiss}
+                aria-label="Dismiss"
+                className="w-8 h-8 shrink-0 flex items-center justify-center text-white/70"
+              >
+                <CloseIcon className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        <InstallHint />
       </div>
     </LanguageProvider>
   );

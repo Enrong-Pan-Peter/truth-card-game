@@ -8,7 +8,7 @@
     {
       "id": "gk002",
       "en": "Are you satisfied with your own appearance?",
-      "zh": "你对自己的容貌满意吗？？"
+      "zh": "你对自己的容貌满意吗？"
     },
     {
       "id": "gk003",
@@ -27,8 +27,8 @@
     },
     {
       "id": "gk006",
-      "en": "Do you think you are real and honest?",
-      "zh": "你觉得自己是一个真实的人吗？？"
+      "en": "Do you consider yourself an authentic person?",
+      "zh": "你觉得自己是一个真实的人吗？"
     },
     {
       "id": "gk007",
@@ -37,12 +37,12 @@
     },
     {
       "id": "gk008",
-      "en": "What kind of people do you hold bias to?",
+      "en": "What kind of people do you unconsciously hold biases against?",
       "zh": "你对哪类人会有潜意识的偏见？"
     },
     {
       "id": "gk009",
-      "en": "When will you feel embarrassed?",
+      "en": "What situations make you feel embarrassed?",
       "zh": "什么场景会让你感到尴尬？"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "id": "gk013",
-      "en": "When people praise you, what would you like to hear?",
+      "en": "What do you most like being praised for?",
       "zh": "你最喜欢别人夸奖你什么？"
     },
     {
@@ -72,7 +72,7 @@
     },
     {
       "id": "gk015",
-      "en": "How would you rank love, career, hobbies, family?",
+      "en": "How would you rank love, career, hobbies, and family?",
       "zh": "你会怎么排序爱情，事业，爱好，家人？"
     },
     {
@@ -82,7 +82,7 @@
     },
     {
       "id": "gk017",
-      "en": "Speak out your three shortcomings bravely.",
+      "en": "Can you bravely name three of your shortcomings?",
       "zh": "你能勇敢地说出自己三个缺点吗？"
     },
     {
@@ -162,12 +162,12 @@
     },
     {
       "id": "gk033",
-      "en": "What is the the first thing you want to do as you retire?",
+      "en": "What is the first thing you want to do when you retire?",
       "zh": "你退休后第一件事想做什么？"
     },
     {
       "id": "gk034",
-      "en": "If you have to give up one of chopsticks, spoons or forks, which would you choose to give up?",
+      "en": "If you had to give up chopsticks, spoons, or forks, which would you give up?",
       "zh": "如果必须放弃筷子、勺子或叉子中的一个，你会选择放弃哪一个？"
     },
     {
@@ -202,7 +202,7 @@
     },
     {
       "id": "gk041",
-      "en": "I am the only one in this room ___________?",
+      "en": "I am the only one in this room who ___________.",
       "zh": "我是这个屋子里唯一 __________。"
     },
     {
@@ -217,7 +217,7 @@
     },
     {
       "id": "gk044",
-      "en": "What is the most ridiculous thing you have ever done to procrastinate on a ddl?",
+      "en": "What is the most ridiculous thing you have ever done to procrastinate on a deadline?",
       "zh": "你为了拖延DDL做过的最荒谬的事情是什么？"
     },
     {
@@ -244,7 +244,7 @@
     },
     {
       "id": "ir003",
-      "en": "What makes you studying/working here?",
+      "en": "What brought you to study/work here?",
       "zh": "你为什么会来到这里上学/工作？"
     },
     {
@@ -264,12 +264,12 @@
     },
     {
       "id": "ir007",
-      "en": "What do you plan to study recently?",
+      "en": "What have you been wanting to learn lately?",
       "zh": "你最近有打算学些什么呢？"
     },
     {
       "id": "ir008",
-      "en": "What is it like when you are 70 years old?",
+      "en": "What will your life be like when you are 70?",
       "zh": "你70岁的时会是怎么样的？"
     },
     {
@@ -384,7 +384,7 @@
     },
     {
       "id": "ir031",
-      "en": "What is your never accomplished health plan?",
+      "en": "What health plan do you keep making but never accomplish?",
       "zh": "你最常做但从没成功的健康计划是什么？"
     },
     {
@@ -408,9 +408,9 @@
       "zh": "如果你可以和任何人交换一天的生活，你会选择谁？为什么？"
     },
     {
-        "id": "ir036",
-        "en": "If you have to get stuck in an island with someone in the fellowship, who would it be and why?",
-        "zh": "如果你必须和团契中的某个人被困在一个岛上，你会选择谁？为什么？"
+      "id": "ir036",
+      "en": "If you had to be stuck on an island with someone in the fellowship, who would it be and why?",
+      "zh": "如果你必须和团契中的某个人被困在一个岛上，你会选择谁？为什么？"
     },
     {
       "id": "ir037",
@@ -441,7 +441,7 @@
     },
     {
       "id": "hh003",
-      "en": "Between you and your (future) partner, whom can you accept to die first?",
+      "en": "Between you and your (future) partner, who could you accept passing away first?",
       "zh": "你和你的（未来）伴侣，你能接受谁先去世？"
     },
     {
@@ -486,7 +486,7 @@
     },
     {
       "id": "hh012",
-      "en": "Do you have siblings? How does it make who you are?",
+      "en": "Do you have siblings? How has that shaped who you are?",
       "zh": "你有兄弟姐妹吗？这对你有什么影响？"
     },
     {
@@ -531,7 +531,7 @@
     },
     {
       "id": "hh021",
-      "en": "Can you live with long-distance relationship?",
+      "en": "Could you handle a long-distance relationship?",
       "zh": "你能接受异地恋吗？"
     },
     {
@@ -621,13 +621,13 @@
     },
     {
       "id": "hh039",
-      "en": "Do you feel pressued when blending in a new group of people? Why?",
+      "en": "Do you feel pressured when blending into a new group of people? Why?",
       "zh": "你觉得融入一个新群体有压力吗？为什么？"
     },
     {
       "id": "hh040",
-      "en": "What was the worst joke you have ever told",
-      "zh": "你将过最失败的笑话是什么？"
+      "en": "What is the worst joke you have ever told?",
+      "zh": "你讲过最失败的笑话是什么？"
     },
     {
       "id": "hh041",
@@ -651,7 +651,7 @@
     },
     {
       "id": "hh045",
-      "en": "Name one thing other feel envious about you, but you actually dislike?",
+      "en": "Name one thing others envy you for that you actually dislike.",
       "zh": "有没有一件别人很羡慕，但你其实不喜欢的事情？"
     },
     {
@@ -682,7 +682,7 @@
     {
       "id": "hh051",
       "en": "What do you think is the boundary between 'getting along' and 'pretending nothing is wrong'?",
-      "zh": "你觉得’和睦‘和’假装没事‘之间的界限在哪里？"
+      "zh": "你觉得‘和睦’和‘假装没事’之间的界限在哪里？"
     },
     {
       "id": "hh052",
@@ -717,7 +717,7 @@
     {
       "id": "hh058",
       "en": "When you pray 'Lord, please grant us unity', who do you actually hope to be changed first in your heart?",
-      "zh": "当你祷告’主啊求你赐下合一‘时，你内心其实最希望谁先被改变？"
+      "zh": "当你祷告‘主啊求你赐下合一’时，你内心其实最希望谁先被改变？"
     },
     {
       "id": "hh059",
@@ -742,7 +742,7 @@
     {
       "id": "hh063",
       "en": "What is the most painful part of growing up?",
-      "zh": "你觉得’成长‘中最痛的部分是什么？"
+      "zh": "你觉得‘成长’中最痛的部分是什么？"
     }
   ],
   "memories": [
@@ -809,11 +809,11 @@
     {
       "id": "mem013",
       "en": "If you can reset for just one thing, what do you hope to change?",
-      "zh": "如果有一件事可以重来，你最想要改变什么？？"
+      "zh": "如果有一件事可以重来，你最想要改变什么？"
     },
     {
       "id": "mem014",
-      "en": "What had made your week?",
+      "en": "What has made your week?",
       "zh": "这个星期有什么令你开心的事情？"
     },
     {
@@ -838,7 +838,7 @@
     },
     {
       "id": "mem019",
-      "en": "What is the most rebellious experience you have ever had",
+      "en": "What is the most rebellious experience you have ever had?",
       "zh": "你做过最叛逆的事情是什么？"
     },
     {
@@ -868,8 +868,8 @@
     },
     {
       "id": "mem025",
-      "en": "Name one experience you think is unique to you.",
-      "zh": "说出一个你认为只有自己经历过的童年经历？"
+      "en": "Name one childhood experience you think only you have had.",
+      "zh": "说出一个你认为只有自己经历过的童年经历。"
     },
     {
       "id": "mem026",
@@ -1045,7 +1045,7 @@
     },
     {
       "id": "ms026",
-      "en": "If there is fellowship in heaven, what would you most like to do with your brothers and sisters?",
+      "en": "If there is fellowship in heaven, what kind of activities do you think there would be?",
       "zh": "如果天堂里有团契，你觉得会有什么样的活动？"
     },
     {
@@ -1100,7 +1100,7 @@
     },
     {
       "id": "ms037",
-      "en": "Do you think prayer change the world or change people? Why?",
+      "en": "Do you think prayer changes the world or changes people? Why?",
       "zh": "你认为祷告是改变世界还是改变人？为什么？"
     },
     {
@@ -1120,12 +1120,12 @@
     },
     {
       "id": "ms041",
-      "en": "What is your least believing biblical promise?",
+      "en": "Which biblical promise do you find hardest to believe right now?",
       "zh": "你现在最难相信的圣经应许是哪一个？"
     },
     {
       "id": "ms042",
-      "en": "What is your most believing biblical promise?",
+      "en": "Which biblical promise do you believe most firmly right now?",
       "zh": "你现在最相信的圣经应许是哪一个？"
     },
     {
@@ -1160,12 +1160,12 @@
     },
     {
       "id": "ms049",
-      "en": "Have you met any fake Christians, when?",
+      "en": "Have you ever encountered 'fake Christians'? What happened?",
       "zh": "你体会过‘虚假的基督徒’吗，具体什么事情？"
     },
     {
       "id": "ms050",
-      "en": "What is the difference between 'forgiveness' and 'forgotteness' in your life?",
+      "en": "What is the difference between 'forgiving' and 'forgetting' in your life?",
       "zh": "在你的生命中，‘原谅’和‘遗忘’有什么区别？"
     },
     {
@@ -1190,7 +1190,7 @@
     },
     {
       "id": "ms055",
-      "en": "What has 'fellowship in Christ' changed in your view of socialing?",
+      "en": "How has 'fellowship in Christ' changed the way you view socializing?",
       "zh": "你觉得‘在基督里的团契’最打破你以往社交观念的地方是什么？"
     },
     {
@@ -1205,7 +1205,7 @@
     },
     {
       "id": "ms058",
-      "en": "What is your biggest flip after believing in Jesus?",
+      "en": "What is the biggest change in you since believing in Jesus?",
       "zh": "你信主后最大的转变是什么？"
     },
     {
@@ -1215,7 +1215,7 @@
     },
     {
       "id": "ms060",
-      "en": "Have Christians around you ever been a pressure to you?",
+      "en": "Have the Christians around you ever felt like a source of pressure? In what way?",
       "zh": "你身边的基督徒有成为过你的压力吗？在什么方面上？"
     },
     {
@@ -1246,7 +1246,7 @@
     {
       "id": "ms066",
       "en": "Which Bible verse has made you feel like being 'slapped in the face'?",
-      "zh": "有没有哪节经文让你觉得’被打脸‘？"
+      "zh": "有没有哪节经文让你觉得‘被打脸’？"
     },
     {
       "id": "ms067",

@@ -32,7 +32,31 @@ export const Toggle = ({ on, onChange, label }) => (
   </button>
 );
 
-/** Category filter + game options. Lives in a Sheet. */
+const Segments = ({ options, value, onChange }) => (
+  <div className="flex flex-wrap gap-1.5">
+    {options.map(([v, label]) => (
+      <button
+        key={String(v)}
+        onClick={() => onChange(v)}
+        className={`px-3 py-1.5 min-h-[36px] rounded-full text-xs border-2 transition-colors ${
+          value === v
+            ? 'bg-blue-primary border-blue-primary text-white'
+            : 'bg-white border-pale-pink/40 text-gray-secondary'
+        }`}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+);
+
+const SectionTitle = ({ en, zh }) => (
+  <p className="text-sm text-ink pt-4 mt-3 border-t-2 border-pale-pink/20">
+    <Bi en={en} zh={zh} />
+  </p>
+);
+
+/** Deck settings: categories, packs, session length, timer, repeats. Lives in a Sheet. */
 const FilterPanel = ({
   selectedCategories,
   onToggleCategory,
@@ -40,11 +64,20 @@ const FilterPanel = ({
   remaining,
   allowRepeat,
   onToggleRepeat,
+  packs,
+  selectedPacks,
+  onTogglePack,
+  sessionLimit,
+  onSetSession,
+  timerMin,
+  onSetTimer,
 }) => {
+  const lang = useLang();
   const allSelected = CATEGORIES.every((c) => selectedCategories[c]);
+  const t = (en, zh) => (lang === 'en' ? en : zh);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 pb-2">
       {CATEGORIES.map((cat) => {
         const d = getCategoryDisplay(cat);
         const on = !!selectedCategories[cat];
@@ -74,6 +107,53 @@ const FilterPanel = ({
           <Bi en="Select all" zh="全选" />
         </button>
       )}
+
+      {packs.length > 0 && (
+        <>
+          <SectionTitle en="Theme packs" zh="主题包" />
+          <div className="flex flex-wrap gap-1.5">
+            {packs.map((p) => {
+              const on = selectedPacks[p] !== false;
+              return (
+                <button
+                  key={p}
+                  onClick={() => onTogglePack(p)}
+                  className={`px-3 py-1.5 min-h-[36px] rounded-full text-xs border-2 transition-colors ${
+                    on
+                      ? 'bg-orange-primary/15 border-orange-primary/50 text-ink'
+                      : 'bg-white border-pale-pink/40 text-gray-secondary line-through'
+                  }`}
+                >
+                  {p}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
+
+      <SectionTitle en="Session length" zh="本场长度" />
+      <Segments
+        value={sessionLimit}
+        onChange={onSetSession}
+        options={[
+          [null, t('Free play', '自由')],
+          [5, t('5 cards · ~15 min', '5张 · 约15分钟')],
+          [10, t('10 cards · ~30 min', '10张 · 约30分钟')],
+          [20, t('20 cards · ~1 hr', '20张 · 约1小时')],
+        ]}
+      />
+
+      <SectionTitle en="Timer per card" zh="每张限时" />
+      <Segments
+        value={timerMin}
+        onChange={onSetTimer}
+        options={[
+          [0, t('Off', '关闭')],
+          [2, t('2 min', '2分钟')],
+          [3, t('3 min', '3分钟')],
+        ]}
+      />
 
       <div className="flex items-center justify-between gap-3 pt-4 mt-3 border-t-2 border-pale-pink/20">
         <div className="min-w-0">

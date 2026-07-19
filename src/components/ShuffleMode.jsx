@@ -1,7 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Card from './Card';
 import { Bi } from '../i18n';
 import { CardStackIcon, RedrawIcon, ShareIcon } from './Icons';
+
+const REACTION_EMOJI = ['❤️', '🙏', '😂', '👏'];
+
+const TimerChip = ({ minutes, resetKey }) => {
+  const [left, setLeft] = useState(minutes * 60);
+  useEffect(() => {
+    setLeft(minutes * 60);
+    if (!minutes) return undefined;
+    const iv = setInterval(() => setLeft((l) => Math.max(0, l - 1)), 1000);
+    return () => clearInterval(iv);
+  }, [minutes, resetKey]);
+  if (!minutes) return null;
+  const mm = Math.floor(left / 60);
+  const ss = String(left % 60).padStart(2, '0');
+  return (
+    <span
+      className={`px-3 py-1.5 rounded-full text-xs tabular-nums ${
+        left === 0 ? 'bg-orange-primary text-white' : 'bg-blue-primary/10 text-blue-primary'
+      }`}
+    >
+      {left === 0 ? <Bi en="Time's up!" zh="时间到！" /> : `${mm}:${ss}`}
+    </span>
+  );
+};
 
 /**
  * Draw-a-random-card screen. Tap or swipe the card for the next question.
@@ -20,11 +44,17 @@ const ShuffleMode = ({
   onOpenFilter,
   onSkipCard,
   onShare,
+  timerMin,
+  // session presets
+  sessionDone,
+  sessionRecap,
+  onContinueSession,
   // room extras
   inRoom,
   drawnBy,
   turns, // { enabled, myTurn, currentName } | null
   onSkipTurn,
+  onReact,
 }) => {
   const touchRef = useRef(null);
   const swiped = useRef(false);
@@ -61,7 +91,41 @@ const ShuffleMode = ({
     <div className="flex flex-col items-center gap-6 pt-1 md:pt-4">
       {/* Card stage */}
       <div className="w-full min-h-[48dvh] md:min-h-[420px] flex flex-col items-center justify-center">
-        {currentCard ? (
+        {sessionDone ? (
+          <div className="text-center space-y-5 px-4">
+            <p className="text-3xl">🎉</p>
+            <p className="text-2xl text-ink">
+              <Bi en="Session complete!" zh="本场结束啦！" />
+            </p>
+            {sessionRecap && (
+              <div className="inline-block text-left bg-white rounded-2xl border-2 border-pale-pink/30 px-5 py-4 space-y-1">
+                <p className="text-sm text-gray-secondary pb-1">
+                  <Bi en={`${sessionRecap.total} cards drawn`} zh={`共抽了 ${sessionRecap.total} 张`} />
+                </p>
+                {sessionRecap.byCategory.map((c) => (
+                  <p key={c.key} className="text-sm text-ink flex justify-between gap-6">
+                    <Bi en={c.en} zh={c.zh} />
+                    <span className="text-gray-secondary">{c.count}</span>
+                  </p>
+                ))}
+              </div>
+            )}
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={onContinueSession}
+                className="px-6 py-3 min-h-[48px] rounded-full bg-blue-primary text-white shadow-btn active:scale-95 transition-transform"
+              >
+                <Bi en="Keep going" zh="继续玩" />
+              </button>
+              <button
+                onClick={onReset}
+                className="px-6 py-3 min-h-[48px] rounded-full bg-orange-primary/15 text-gray-secondary active:scale-95 transition-transform"
+              >
+                <Bi en="Reset deck" zh="重置卡组" />
+              </button>
+            </div>
+          </div>
+        ) : currentCard ? (
           <div className="w-full">
             <div
               role="button"
@@ -81,13 +145,16 @@ const ShuffleMode = ({
               <Card question={currentCard} image={image} />
             </div>
 
-            {inRoom && drawnBy && (
-              <p className="text-center mt-4 text-sm text-blue-primary">
-                <Bi en={`Drawn by ${drawnBy}`} zh={`${drawnBy} 抽的`} />
-              </p>
-            )}
+            <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
+              {inRoom && drawnBy && (
+                <span className="text-sm text-blue-primary">
+                  <Bi en={`Drawn by ${drawnBy}`} zh={`${drawnBy} 抽的`} />
+                </span>
+              )}
+              <TimerChip minutes={timerMin} resetKey={currentCard.id} />
+            </div>
             {canDraw && !blocked && (
-              <p className={`text-center text-sm text-gray-secondary ${inRoom && drawnBy ? 'mt-1' : 'mt-4'}`}>
+              <p className="text-center text-sm text-gray-secondary mt-1.5">
                 <Bi en="Tap or swipe the card for the next one" zh="点击或滑动卡片抽下一张" />
               </p>
             )}
@@ -113,6 +180,22 @@ const ShuffleMode = ({
                 </button>
               )}
             </div>
+
+            {/* Reactions (rooms) */}
+            {inRoom && onReact && (
+              <div className="flex justify-center gap-2 mt-3">
+                {REACTION_EMOJI.map((emoji) => (
+                  <button
+                    key={emoji}
+                    onClick={() => onReact(emoji)}
+                    className="w-11 h-11 rounded-full bg-white border-2 border-pale-pink/30 text-lg active:scale-90 transition-transform"
+                    aria-label={`React ${emoji}`}
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="text-center space-y-5 px-4 text-gray-secondary">
@@ -153,7 +236,7 @@ const ShuffleMode = ({
       </div>
 
       {/* Turn banner */}
-      {turnsOn && (
+      {turnsOn && !sessionDone && (
         <div
           className={`-mb-2 px-5 py-2 rounded-full text-sm flex items-center gap-2 ${
             turns.myTurn
@@ -175,43 +258,47 @@ const ShuffleMode = ({
       )}
 
       {/* Draw button + deck count */}
-      <button
-        onClick={onDraw}
-        disabled={!canDraw || isDrawing || blocked}
-        className={`px-12 py-3.5 min-h-[52px] rounded-full text-xl text-white transition-all duration-200 ${
-          !canDraw || isDrawing || blocked
-            ? 'bg-pale-pink cursor-not-allowed'
-            : 'bg-blue-primary shadow-btn hover:scale-[1.03] active:scale-95'
-        }`}
-      >
-        {isDrawing ? (
-          <span className="flex items-center gap-2.5 justify-center">
-            <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            <Bi en="Drawing..." zh="抽卡中..." />
-          </span>
-        ) : blocked ? (
-          <Bi en={`${turns.currentName}'s turn`} zh={`轮到 ${turns.currentName}`} />
-        ) : !canDraw && currentCard ? (
-          <Bi en="No cards left" zh="没有卡片了" />
-        ) : (
-          <Bi en="Draw a Card" zh="抽卡" />
-        )}
-      </button>
-
-      <div className="text-sm text-gray-secondary -mt-2 flex items-center gap-3">
-        <span>
-          {allowRepeat ? (
-            <Bi en={`${totalInSelected} cards · repeats on`} zh={`${totalInSelected} 张 · 可重复`} />
-          ) : (
-            <Bi en={`${filteredCount} cards left`} zh={`剩余 ${filteredCount} 张`} />
-          )}
-        </span>
-        {allUsed && currentCard && (
-          <button onClick={onReset} className="text-blue-primary underline underline-offset-2">
-            <Bi en="Reset" zh="重置" />
+      {!sessionDone && (
+        <>
+          <button
+            onClick={onDraw}
+            disabled={!canDraw || isDrawing || blocked}
+            className={`px-12 py-3.5 min-h-[52px] rounded-full text-xl text-white transition-all duration-200 ${
+              !canDraw || isDrawing || blocked
+                ? 'bg-pale-pink cursor-not-allowed'
+                : 'bg-blue-primary shadow-btn hover:scale-[1.03] active:scale-95'
+            }`}
+          >
+            {isDrawing ? (
+              <span className="flex items-center gap-2.5 justify-center">
+                <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <Bi en="Drawing..." zh="抽卡中..." />
+              </span>
+            ) : blocked ? (
+              <Bi en={`${turns.currentName}'s turn`} zh={`轮到 ${turns.currentName}`} />
+            ) : !canDraw && currentCard ? (
+              <Bi en="No cards left" zh="没有卡片了" />
+            ) : (
+              <Bi en="Draw a Card" zh="抽卡" />
+            )}
           </button>
-        )}
-      </div>
+
+          <div className="text-sm text-gray-secondary -mt-2 flex items-center gap-3">
+            <span>
+              {allowRepeat ? (
+                <Bi en={`${totalInSelected} cards · repeats on`} zh={`${totalInSelected} 张 · 可重复`} />
+              ) : (
+                <Bi en={`${filteredCount} cards left`} zh={`剩余 ${filteredCount} 张`} />
+              )}
+            </span>
+            {allUsed && currentCard && (
+              <button onClick={onReset} className="text-blue-primary underline underline-offset-2">
+                <Bi en="Reset" zh="重置" />
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

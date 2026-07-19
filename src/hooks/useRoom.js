@@ -29,7 +29,7 @@ function getClientId() {
  * ordered deterministically (join time) so take-turns works identically on
  * every device.
  */
-export function useRoom({ onRemoteState }) {
+export function useRoom({ onRemoteState, onReaction }) {
   const [code, setCode] = useState(null);
   const [members, setMembers] = useState([]); // [{ id, name, joined }]
   const [status, setStatus] = useState('idle'); // 'idle' | 'connecting' | 'in'
@@ -41,6 +41,8 @@ export function useRoom({ onRemoteState }) {
   const clientIdRef = useRef(getClientId());
   const onRemoteRef = useRef(onRemoteState);
   onRemoteRef.current = onRemoteState;
+  const onReactionRef = useRef(onReaction);
+  onReactionRef.current = onReaction;
 
   const teardown = useCallback(() => {
     if (channelRef.current && supabase) {
@@ -66,6 +68,9 @@ export function useRoom({ onRemoteState }) {
           onRemoteRef.current?.(st);
         }
       );
+      ch.on('broadcast', { event: 'reaction' }, ({ payload }) => {
+        if (payload && payload.from !== clientIdRef.current) onReactionRef.current?.(payload);
+      });
       ch.on('presence', { event: 'sync' }, () => {
         const state = ch.presenceState();
         const list = Object.entries(state)
@@ -172,6 +177,15 @@ export function useRoom({ onRemoteState }) {
       });
   }, []);
 
+  /** Fire an emoji reaction to everyone in the room. */
+  const sendReaction = useCallback((emoji, name) => {
+    channelRef.current?.send({
+      type: 'broadcast',
+      event: 'reaction',
+      payload: { emoji, name, from: clientIdRef.current },
+    });
+  }, []);
+
   const leaveRoom = useCallback(() => {
     teardown();
     codeRef.current = null;
@@ -194,6 +208,7 @@ export function useRoom({ onRemoteState }) {
     createRoom,
     joinRoom,
     pushState,
+    sendReaction,
     leaveRoom,
   };
 }

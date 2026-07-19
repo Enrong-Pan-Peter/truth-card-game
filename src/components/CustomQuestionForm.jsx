@@ -3,22 +3,41 @@ import { CATEGORIES, getCategoryDisplay } from '../utils/gameUtils';
 import { Bi, pick, useLang } from '../i18n';
 
 /** Add-your-own-question form. Lives in a Sheet. */
-const CustomQuestionForm = ({ onAdd, onClose }) => {
+const CustomQuestionForm = ({ onAdd, onClose, canSuggest, onSuggest }) => {
   const lang = useLang();
   const [en, setEn] = useState('');
   const [zh, setZh] = useState('');
   const [category, setCategory] = useState('getting_to_know');
+  const [suggestState, setSuggestState] = useState(null); // null | 'sending' | 'sent' | 'failed'
+
+  const payload = () => {
+    const enT = en.trim();
+    const zhT = zh.trim();
+    if (!enT && !zhT) return null;
+    // Fall back to the filled language so the card never renders empty
+    return { en: enT || zhT, zh: zhT || enT, category };
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const enT = en.trim();
-    const zhT = zh.trim();
-    if (!enT && !zhT) return;
-    // Fall back to the filled language so the card never renders empty
-    onAdd({ en: enT || zhT, zh: zhT || enT, category });
+    const data = payload();
+    if (!data) return;
+    onAdd(data);
     setEn('');
     setZh('');
     onClose();
+  };
+
+  const handleSuggest = async () => {
+    const data = payload();
+    if (!data || suggestState === 'sending') return;
+    setSuggestState('sending');
+    const ok = await onSuggest(data);
+    setSuggestState(ok ? 'sent' : 'failed');
+    if (ok) {
+      setEn('');
+      setZh('');
+    }
   };
 
   const inputClass =
@@ -92,6 +111,40 @@ const CustomQuestionForm = ({ onAdd, onClose }) => {
           <Bi en="Add Question" zh="添加问题" />
         </button>
       </div>
+
+      {canSuggest && (
+        <div className="pt-3 mt-1 border-t-2 border-pale-pink/20 text-center space-y-2">
+          <p className="text-xs text-gray-secondary">
+            <Bi
+              en="Like it? Suggest it for the shared question bank"
+              zh="觉得不错？推荐给公共题库，管理员审核后大家都能抽到"
+              sep=" · "
+            />
+          </p>
+          <button
+            type="button"
+            onClick={handleSuggest}
+            disabled={(!en.trim() && !zh.trim()) || suggestState === 'sending'}
+            className="px-5 py-2.5 min-h-[44px] rounded-full text-sm text-orange-primary border-2 border-orange-primary/50 disabled:opacity-40 active:scale-95 transition-transform"
+          >
+            {suggestState === 'sending' ? (
+              <Bi en="Sending..." zh="提交中..." />
+            ) : (
+              <Bi en="Suggest to the bank" zh="推荐到题库" />
+            )}
+          </button>
+          {suggestState === 'sent' && (
+            <p className="text-xs text-blue-primary">
+              <Bi en="Sent! It will appear once approved." zh="已提交！审核通过后就会出现。" />
+            </p>
+          )}
+          {suggestState === 'failed' && (
+            <p className="text-xs text-orange-primary">
+              <Bi en="Couldn't send — check your connection" zh="提交失败——请检查网络" />
+            </p>
+          )}
+        </div>
+      )}
     </form>
   );
 };

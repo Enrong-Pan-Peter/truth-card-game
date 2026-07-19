@@ -89,3 +89,23 @@ input[type='checkbox']:focus-visible {
 .card-shuffle-animation {
   animation: cardShuffle 0.5s ease-in-out;
 }
+
+/* Floating emoji reactions (rooms) */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.7);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+    transform: translateY(-4vh) scale(1.15);
+  }
+  100% {
+    transform: translateY(-42vh) scale(1);
+    opacity: 0;
+  }
+}
+.reaction-float {
+  animation: floatUp 2.5s ease-out forwards;
+}
+
