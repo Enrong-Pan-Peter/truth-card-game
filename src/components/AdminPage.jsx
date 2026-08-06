@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { CATEGORIES, getCategoryDisplay } from '../utils/gameUtils';
+import { CATEGORIES, DARE_LEVELS, getCategoryDisplay, getDareLevelDisplay } from '../utils/gameUtils';
 import { CloseIcon, PencilIcon, PlusIcon, TrashIcon } from './Icons';
 
 const PREFIX = {
@@ -9,6 +9,14 @@ const PREFIX = {
   heart_to_heart: 'hh',
   memories: 'mem',
   matters_of_soul: 'ms',
+  spicy: 'sp',
+};
+
+const nextDareId = (dares) => {
+  const nums = dares
+    .map((d) => parseInt(String(d.id).replace(/\D/g, ''), 10))
+    .filter((n) => !Number.isNaN(n));
+  return `dr${String((nums.length ? Math.max(...nums) : 0) + 1).padStart(3, '0')}`;
 };
 
 const nextId = (category, questions) => {
@@ -127,10 +135,12 @@ const AdminPage = () => {
   const [email, setEmail] = useState('');
   const [linkSent, setLinkSent] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [dares, setDares] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [stats, setStats] = useState({});
   const [status, setStatus] = useState(null);
   const [newQ, setNewQ] = useState({ category: 'getting_to_know', en: '', zh: '', pack: '' });
+  const [newDare, setNewDare] = useState({ level: 'mild', en: '', zh: '' });
 
   useEffect(() => {
     if (!supabase) return;
@@ -156,6 +166,9 @@ const AdminPage = () => {
     setSuggestions(sug || []);
     const { data: st } = await supabase.from('question_stats').select('*');
     setStats(Object.fromEntries((st || []).map((s) => [s.question_id, s])));
+    // Needs migration-2.sql — ignore errors if it hasn't run yet
+    const { data: dr } = await supabase.from('dares').select('*').order('sort');
+    setDares(dr || []);
   };
 
   useEffect(() => {
@@ -375,6 +388,118 @@ const AdminPage = () => {
         {status && (
           <p className="text-sm text-orange-primary p-3 rounded-xl bg-orange-primary/10">{status}</p>
         )}
+
+        {/* Dare deck management */}
+        <section className="space-y-2">
+          <h3 className="text-lg text-ink pt-2">
+            Dares <span className="font-zh text-gray-secondary text-sm">大冒险</span>{' '}
+            <span className="text-xs text-gray-secondary">({dares.length})</span>
+          </h3>
+          {dares.length === 0 && (
+            <p className="text-xs text-gray-secondary">
+              No dares yet — run supabase/migration-2.sql to create and seed the dare deck.
+            </p>
+          )}
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (!newDare.en.trim() && !newDare.zh.trim()) return;
+              const en = newDare.en.trim() || newDare.zh.trim();
+              const zh = newDare.zh.trim() || newDare.en.trim();
+              const sort = Math.max(0, ...dares.map((d) => d.sort)) + 1;
+              const ok = await run(
+                supabase
+                  .from('dares')
+                  .insert({ id: nextDareId(dares), level: newDare.level, en, zh, sort })
+              );
+              if (ok) setNewDare({ ...newDare, en: '', zh: '' });
+            }}
+            className="p-4 rounded-2xl bg-white border-2 border-blue-primary/30 space-y-2"
+          >
+            <p className="text-sm text-ink flex items-center gap-1.5">
+              <PlusIcon className="w-4 h-4 text-blue-primary" /> Add a dare
+            </p>
+            <select
+              value={newDare.level}
+              onChange={(e) => setNewDare({ ...newDare, level: e.target.value })}
+              className={input}
+            >
+              {DARE_LEVELS.map((l) => (
+                <option key={l} value={l}>
+                  {getDareLevelDisplay(l).en} / {getDareLevelDisplay(l).zh}
+                </option>
+              ))}
+            </select>
+            <textarea
+              value={newDare.en}
+              onChange={(e) => setNewDare({ ...newDare, en: e.target.value })}
+              placeholder="English…"
+              rows={2}
+              className={input}
+            />
+            <textarea
+              value={newDare.zh}
+              onChange={(e) => setNewDare({ ...newDare, zh: e.target.value })}
+              placeholder="中文…"
+              rows={2}
+              className={`${input} font-zh`}
+            />
+            <button
+              type="submit"
+              disabled={!newDare.en.trim() && !newDare.zh.trim()}
+              className="px-6 py-2.5 rounded-full bg-blue-primary text-white text-sm shadow-btn disabled:opacity-40"
+            >
+              Add dare
+            </button>
+          </form>
+          {dares.map((d) => (
+            <div
+              key={d.id}
+              className={`p-3 rounded-xl border-2 flex items-start gap-3 ${
+                d.enabled ? 'bg-white border-pale-pink/25' : 'bg-pale-pink/10 border-pale-pink/20 opacity-60'
+              }`}
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-secondary">
+                  {d.id}
+                  <span className="ml-2 px-1.5 rounded bg-blue-primary/10 text-blue-primary">
+                    {getDareLevelDisplay(d.level).zh}
+                  </span>
+                  {stats[d.id] && (
+                    <span className="ml-2 opacity-80">
+                      {stats[d.id].draws} draws · {stats[d.id].skips} skips
+                    </span>
+                  )}
+                  {!d.enabled && <span className="ml-2 text-orange-primary">disabled</span>}
+                </p>
+                <p className="text-sm text-ink font-hand mt-0.5">{d.en}</p>
+                <p className="text-sm text-gray-secondary font-zh">{d.zh}</p>
+              </div>
+              <div className="flex flex-col gap-1.5 shrink-0">
+                <button
+                  onClick={() =>
+                    run(supabase.from('dares').update({ enabled: !d.enabled }).eq('id', d.id))
+                  }
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold ${
+                    d.enabled ? 'bg-orange-primary/15 text-orange-primary' : 'bg-blue-primary/10 text-blue-primary'
+                  }`}
+                >
+                  {d.enabled ? 'OFF' : 'ON'}
+                </button>
+                <button
+                  onClick={() => {
+                    if (window.confirm(`Delete dare ${d.id}?`)) {
+                      run(supabase.from('dares').delete().eq('id', d.id));
+                    }
+                  }}
+                  className="w-9 h-9 rounded-lg bg-pale-pink/20 text-gray-secondary flex items-center justify-center"
+                >
+                  <TrashIcon className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </section>
 
         {/* Question list grouped by category */}
         {CATEGORIES.map((cat) => {

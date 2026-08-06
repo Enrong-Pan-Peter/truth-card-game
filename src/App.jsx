@@ -11,6 +11,7 @@ import { shareCardImage } from './utils/shareCard';
 import { Bi, LanguageProvider, pick } from './i18n';
 import { supabase } from './lib/supabase';
 import { useCloudQuestions } from './hooks/useCloudQuestions';
+import { useCloudDares } from './hooks/useCloudDares';
 import { useRoom } from './hooks/useRoom';
 import { usePWAUpdate } from './hooks/usePWAUpdate';
 import ShuffleMode from './components/ShuffleMode';
@@ -25,7 +26,9 @@ import InstallHint from './components/InstallHint';
 import { CloseIcon, FilterIcon, PlusIcon, UsedIcon, UsersIcon } from './components/Icons';
 
 const saved = loadState() || {};
-const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, true]));
+// 劲爆 (spicy) is opt-in: off unless the host turns it on
+const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, c !== 'spicy']));
+const defaultDareLevels = { mild: true, medium: true, bold: false };
 const defaultTurns = { enabled: false, current: null };
 const newQuestionId = () =>
   `c-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
@@ -84,6 +87,10 @@ function App() {
     ...(saved.selectedCategories || {}),
   });
   const [selectedPacks, setSelectedPacks] = useState(saved.selectedPacks || {});
+  const [dareLevels, setDareLevels] = useState({
+    ...defaultDareLevels,
+    ...(saved.dareLevels || {}),
+  });
   const [allowRepeat, setAllowRepeat] = useState(saved.allowRepeat || false);
   const [sessionLimit, setSessionLimit] = useState(saved.sessionLimit ?? null);
   const [sessionStart, setSessionStart] = useState(saved.sessionStart || 0);
@@ -102,6 +109,7 @@ function App() {
 
   const { needRefresh, applyUpdate, dismiss } = usePWAUpdate();
   const baseQuestions = useCloudQuestions();
+  const dares = useCloudDares();
 
   // --- reactions (rooms) ---
   const addReaction = useCallback((emoji, name) => {
@@ -118,6 +126,7 @@ function App() {
     if (st.selectedCategories)
       setSelectedCategories({ ...defaultCategories, ...st.selectedCategories });
     if (st.selectedPacks) setSelectedPacks(st.selectedPacks);
+    if (st.dareLevels) setDareLevels({ ...defaultDareLevels, ...st.dareLevels });
     if (typeof st.allowRepeat === 'boolean') setAllowRepeat(st.allowRepeat);
     if ('sessionLimit' in st) setSessionLimit(st.sessionLimit ?? null);
     if (typeof st.sessionStart === 'number') setSessionStart(st.sessionStart);
@@ -165,11 +174,24 @@ function App() {
     (q) => !q.pack || selectedPacks[q.pack] !== false,
     [selectedPacks]
   );
+  // Truth questions + dares combined, for id lookups (current card, used pile, recap)
+  const allCards = useMemo(() => [...allQuestions, ...dares], [allQuestions, dares]);
   const usedSet = useMemo(() => new Set(usedIds), [usedIds]);
   const activeDeck = useMemo(
     () => allQuestions.filter((q) => !usedSet.has(q.id)),
     [allQuestions, usedSet]
   );
+  const dareDeck = useMemo(
+    () => dares.filter((d) => dareLevels[d.level] !== false && (allowRepeat || !usedSet.has(d.id))),
+    [dares, dareLevels, allowRepeat, usedSet]
+  );
+  const dareRemaining = useMemo(() => {
+    const counts = { mild: 0, medium: 0, bold: 0 };
+    dares.forEach((d) => {
+      if (!usedSet.has(d.id)) counts[d.level] = (counts[d.level] || 0) + 1;
+    });
+    return counts;
+  }, [dares, usedSet]);
   const filteredDeck = useMemo(
     () => activeDeck.filter((q) => selectedCategories[q.category] && packOn(q)),
     [activeDeck, selectedCategories, packOn]
@@ -179,19 +201,25 @@ function App() {
     [allQuestions, selectedCategories, packOn]
   );
   const usedCards = useMemo(() => {
-    const byId = new Map(allQuestions.map((q) => [q.id, q]));
+    const byId = new Map(allCards.map((q) => [q.id, q]));
     return usedIds.map((id) => byId.get(id)).filter(Boolean);
-  }, [allQuestions, usedIds]);
+  }, [allCards, usedIds]);
   const currentCard = useMemo(
-    () => allQuestions.find((q) => q.id === currentCardId) || null,
-    [allQuestions, currentCardId]
+    () => allCards.find((q) => q.id === currentCardId) || null,
+    [allCards, currentCardId]
   );
   const remaining = useMemo(() => {
     const grouped = groupByCategory(activeDeck.filter(packOn));
     return Object.fromEntries(CATEGORIES.map((c) => [c, grouped[c].length]));
   }, [activeDeck, packOn]);
   const selectedCount = CATEGORIES.filter((c) => selectedCategories[c]).length;
-  const questionsByCategory = useMemo(() => groupByCategory(allQuestions), [allQuestions]);
+  // Choose mode only shows categories that are enabled in the filter (keeps 劲爆 opt-in)
+  const questionsByCategory = useMemo(() => {
+    const grouped = groupByCategory(allQuestions);
+    return Object.fromEntries(
+      Object.entries(grouped).filter(([cat]) => selectedCategories[cat])
+    );
+  }, [allQuestions, selectedCategories]);
   const currentImage = CARD_IMAGES[imageIndex % CARD_IMAGES.length];
 
   // --- session presets ---
@@ -199,7 +227,7 @@ function App() {
   const sessionDone = !!sessionLimit && sessionDrawn >= sessionLimit;
   const sessionRecap = useMemo(() => {
     if (!sessionLimit) return null;
-    const byId = new Map(allQuestions.map((q) => [q.id, q]));
+    const byId = new Map(allCards.map((q) => [q.id, q]));
     const counts = {};
     usedIds.slice(sessionStart).forEach((id) => {
       const q = byId.get(id);
@@ -207,15 +235,15 @@ function App() {
     });
     return {
       total: sessionDrawn,
-      byCategory: CATEGORIES.filter((c) => counts[c]).map((c) => ({
-        key: c,
-        ...getCategoryDisplay(c),
-        count: counts[c],
-      })),
+      byCategory: [...CATEGORIES, 'dare']
+        .filter((c) => counts[c])
+        .map((c) => ({ key: c, ...getCategoryDisplay(c), count: counts[c] })),
     };
-  }, [sessionLimit, sessionStart, usedIds, allQuestions, sessionDrawn]);
+  }, [sessionLimit, sessionStart, usedIds, allCards, sessionDrawn]);
 
-  const canDraw = (allowRepeat ? totalInSelected : filteredDeck.length) > 0 && !sessionDone;
+  const canDrawTruth =
+    (allowRepeat ? totalInSelected : filteredDeck.length) > 0 && !sessionDone;
+  const canDrawDare = dareDeck.length > 0 && !sessionDone;
 
   // --- turns ---
   const turnsEnabled = room.active && roomMeta.turns.enabled;
@@ -253,6 +281,7 @@ function App() {
         usedIds,
         selectedCategories,
         selectedPacks,
+        dareLevels,
         allowRepeat,
         sessionLimit,
         sessionStart,
@@ -271,6 +300,7 @@ function App() {
     usedIds,
     selectedCategories,
     selectedPacks,
+    dareLevels,
     allowRepeat,
     sessionLimit,
     sessionStart,
@@ -285,6 +315,7 @@ function App() {
     if ('imageIndex' in updates) setImageIndex(updates.imageIndex);
     if ('selectedCategories' in updates) setSelectedCategories(updates.selectedCategories);
     if ('selectedPacks' in updates) setSelectedPacks(updates.selectedPacks);
+    if ('dareLevels' in updates) setDareLevels(updates.dareLevels);
     if ('allowRepeat' in updates) setAllowRepeat(updates.allowRepeat);
     if ('sessionLimit' in updates) setSessionLimit(updates.sessionLimit);
     if ('sessionStart' in updates) setSessionStart(updates.sessionStart);
@@ -306,6 +337,7 @@ function App() {
         imageIndex,
         selectedCategories,
         selectedPacks,
+        dareLevels,
         allowRepeat,
         sessionLimit,
         sessionStart,
@@ -330,18 +362,25 @@ function App() {
   };
 
   // --- actions ---
-  const handleDraw = () => {
-    if (isDrawing || !canDraw || (turnsEnabled && !myTurn)) return;
+  const handleDraw = (kind = 'truth') => {
+    const canDrawKind = kind === 'dare' ? canDrawDare : canDrawTruth;
+    if (isDrawing || !canDrawKind || (turnsEnabled && !myTurn)) return;
     setIsDrawing(true);
     setTimeout(() => {
-      const pool = allowRepeat
-        ? allQuestions.filter(
-            (q) => selectedCategories[q.category] && packOn(q) && q.id !== currentCardId
-          )
-        : filteredDeck;
-      const source = pool.length
-        ? pool
-        : allQuestions.filter((q) => selectedCategories[q.category] && packOn(q));
+      let source;
+      if (kind === 'dare') {
+        const pool = dareDeck.filter((d) => d.id !== currentCardId);
+        source = pool.length ? pool : dareDeck;
+      } else {
+        const pool = allowRepeat
+          ? allQuestions.filter(
+              (q) => selectedCategories[q.category] && packOn(q) && q.id !== currentCardId
+            )
+          : filteredDeck;
+        source = pool.length
+          ? pool
+          : allQuestions.filter((q) => selectedCategories[q.category] && packOn(q));
+      }
       const card = drawRandomCard(source);
       if (card) {
         commit({
@@ -363,21 +402,29 @@ function App() {
     }, 280);
   };
 
-  // "Not this one" — draw another without using the skipped question up
+  // "Not this one" — draw another of the same kind without using the skipped card up
   const handleSkipCard = () => {
     if (isDrawing || !currentCardId || (turnsEnabled && !myTurn)) return;
     const skippedId = currentCardId;
+    const wasDare = !!currentCard?.isDare;
     setIsDrawing(true);
     setTimeout(() => {
       const usedWithout = usedIds.filter((id) => id !== skippedId);
       const usedWithoutSet = new Set(usedWithout);
-      const pool = allQuestions.filter(
-        (q) =>
-          selectedCategories[q.category] &&
-          packOn(q) &&
-          q.id !== skippedId &&
-          (allowRepeat || !usedWithoutSet.has(q.id))
-      );
+      const pool = wasDare
+        ? dares.filter(
+            (d) =>
+              dareLevels[d.level] !== false &&
+              d.id !== skippedId &&
+              (allowRepeat || !usedWithoutSet.has(d.id))
+          )
+        : allQuestions.filter(
+            (q) =>
+              selectedCategories[q.category] &&
+              packOn(q) &&
+              q.id !== skippedId &&
+              (allowRepeat || !usedWithoutSet.has(q.id))
+          );
       const card = drawRandomCard(pool);
       if (card) {
         commit({
@@ -477,6 +524,7 @@ function App() {
       imageIndex: Math.floor(Math.random() * CARD_IMAGES.length),
       selectedCategories,
       selectedPacks,
+      dareLevels,
       allowRepeat,
       sessionLimit,
       sessionStart: 0,
@@ -497,6 +545,7 @@ function App() {
     setImageIndex(s.imageIndex ?? 0);
     setSelectedCategories({ ...defaultCategories, ...(s.selectedCategories || {}) });
     setSelectedPacks(s.selectedPacks || {});
+    setDareLevels({ ...defaultDareLevels, ...(s.dareLevels || {}) });
     setAllowRepeat(!!s.allowRepeat);
     setSessionLimit(s.sessionLimit ?? null);
     setSessionStart(s.sessionStart || 0);
@@ -589,8 +638,10 @@ function App() {
               currentCard={currentCard}
               image={currentImage}
               isDrawing={isDrawing}
-              canDraw={canDraw}
+              canDrawTruth={canDrawTruth}
+              canDrawDare={canDrawDare}
               filteredCount={filteredDeck.length}
+              dareCount={dareDeck.length}
               totalInSelected={totalInSelected}
               allowRepeat={allowRepeat}
               onDraw={handleDraw}
@@ -665,6 +716,11 @@ function App() {
                 selectedPacks: { ...selectedPacks, [p]: selectedPacks[p] === false },
               })
             }
+            dareLevels={dareLevels}
+            onToggleDareLevel={(level) =>
+              commit({ dareLevels: { ...dareLevels, [level]: dareLevels[level] === false } })
+            }
+            dareRemaining={dareRemaining}
             sessionLimit={sessionLimit}
             onSetSession={(n) =>
               commit({ sessionLimit: n, sessionStart: n ? usedIds.length : 0 })

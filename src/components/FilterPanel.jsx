@@ -1,5 +1,5 @@
 import React from 'react';
-import { CATEGORIES, getCategoryDisplay } from '../utils/gameUtils';
+import { CATEGORIES, DARE_LEVELS, getCategoryDisplay, getDareLevelDisplay } from '../utils/gameUtils';
 import { Bi, useLang } from '../i18n';
 
 const CategoryLabel = ({ en, zh }) => {
@@ -67,13 +67,16 @@ const FilterPanel = ({
   packs,
   selectedPacks,
   onTogglePack,
+  dareLevels,
+  onToggleDareLevel,
+  dareRemaining,
   sessionLimit,
   onSetSession,
   timerMin,
   onSetTimer,
 }) => {
   const lang = useLang();
-  const allSelected = CATEGORIES.every((c) => selectedCategories[c]);
+  const allSelected = CATEGORIES.filter((c) => c !== 'spicy').every((c) => selectedCategories[c]);
   const t = (en, zh) => (lang === 'en' ? en : zh);
 
   return (
@@ -81,6 +84,7 @@ const FilterPanel = ({
       {CATEGORIES.map((cat) => {
         const d = getCategoryDisplay(cat);
         const on = !!selectedCategories[cat];
+        const spicy = cat === 'spicy';
         return (
           <label
             key={cat}
@@ -90,7 +94,7 @@ const FilterPanel = ({
           >
             <input type="checkbox" checked={on} onChange={() => onToggleCategory(cat)} />
             <span className="flex-1 min-w-0">
-              <CategoryLabel en={d.en} zh={d.zh} />
+              <CategoryLabel en={spicy ? `${d.en} 🌶️` : d.en} zh={spicy ? `${d.zh} 🌶️` : d.zh} />
             </span>
             <span className="text-xs text-gray-secondary shrink-0">
               {remaining[cat] ?? 0} <Bi en="left" zh="剩" />
@@ -104,9 +108,30 @@ const FilterPanel = ({
           onClick={onSelectAll}
           className="w-full py-2.5 min-h-[44px] rounded-xl text-sm text-blue-primary border-2 border-dashed border-blue-primary/40"
         >
-          <Bi en="Select all" zh="全选" />
+          <Bi en="Select all (except Spicy)" zh="全选（劲爆除外）" />
         </button>
       )}
+
+      <SectionTitle en="Dare levels 大冒险" zh="大冒险难度" />
+      <div className="flex flex-wrap gap-1.5">
+        {DARE_LEVELS.map((level) => {
+          const d = getDareLevelDisplay(level);
+          const on = dareLevels[level] !== false;
+          return (
+            <button
+              key={level}
+              onClick={() => onToggleDareLevel(level)}
+              className={`px-3 py-1.5 min-h-[36px] rounded-full text-xs border-2 transition-colors ${
+                on
+                  ? 'bg-blue-primary/10 border-blue-primary/50 text-blue-primary'
+                  : 'bg-white border-pale-pink/40 text-gray-secondary line-through'
+              }`}
+            >
+              {t(d.en, d.zh)} · {dareRemaining[level] ?? 0}
+            </button>
+          );
+        })}
+      </div>
 
       {packs.length > 0 && (
         <>

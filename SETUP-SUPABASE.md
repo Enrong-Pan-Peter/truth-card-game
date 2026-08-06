@@ -15,6 +15,7 @@ One-time, ~10 minutes, free tier. Until this is done the app simply runs in loca
    - Note: it makes `22bm65@queensu.ca` the admin login. Edit that line first if you want a different email.
 3. New query → paste [`supabase/seed_questions.sql`](supabase/seed_questions.sql) → **Run**. This loads all 252 questions (proofread — see QUESTION-EDITS.md).
 4. New query → paste [`supabase/migration-1.sql`](supabase/migration-1.sql) → **Run**. This adds question packs, the player suggestion box, and draw statistics.
+5. New query → paste [`supabase/migration-2.sql`](supabase/migration-2.sql) → **Run**. This adds the 劲爆 (spicy) category with 84 questions and the 大冒险 dare deck with 30 dares.
 
 > Already ran schema + seed earlier? Just run `migration-1.sql`, and optionally re-run
 > `seed_questions.sql` to pick up the proofread question text (do this before making

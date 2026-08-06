@@ -35,11 +35,13 @@ const ShuffleMode = ({
   currentCard,
   image,
   isDrawing,
-  canDraw,
+  canDrawTruth,
+  canDrawDare,
   filteredCount,
+  dareCount,
   totalInSelected,
   allowRepeat,
-  onDraw,
+  onDraw, // onDraw('truth' | 'dare')
   onReset,
   onOpenFilter,
   onSkipCard,
@@ -61,6 +63,14 @@ const ShuffleMode = ({
 
   const turnsOn = !!turns?.enabled;
   const blocked = turnsOn && !turns.myTurn;
+  const canDraw = canDrawTruth || canDrawDare;
+  // Tapping/swiping the card draws the same kind again
+  const currentKind = currentCard?.isDare ? 'dare' : 'truth';
+  const canDrawCurrentKind = currentKind === 'dare' ? canDrawDare : canDrawTruth;
+  const drawSameKind = () => {
+    if (canDrawCurrentKind) onDraw(currentKind);
+    else if (canDraw) onDraw(currentKind === 'dare' ? 'truth' : 'dare');
+  };
 
   const handleTouchStart = (e) => {
     touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -73,7 +83,7 @@ const ShuffleMode = ({
     touchRef.current = null;
     if (Math.abs(dx) > 56 && Math.abs(dy) < 64) {
       swiped.current = true;
-      onDraw();
+      drawSameKind();
     }
   };
   const handleClick = () => {
@@ -81,7 +91,7 @@ const ShuffleMode = ({
       swiped.current = false;
       return;
     }
-    onDraw();
+    drawSameKind();
   };
 
   const noCategories = totalInSelected === 0;
@@ -138,7 +148,7 @@ const ShuffleMode = ({
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  onDraw();
+                  drawSameKind();
                 }
               }}
             >
@@ -199,19 +209,19 @@ const ShuffleMode = ({
           </div>
         ) : (
           <div className="text-center space-y-5 px-4 text-gray-secondary">
-            {noCategories ? (
+            {noCategories && !canDrawDare ? (
               <>
                 <p className="text-xl">
-                  <Bi en="No categories selected" zh="还没有选择类别" />
+                  <Bi en="Nothing selected to draw from" zh="还没有选择可抽的内容" />
                 </p>
                 <button
                   onClick={onOpenFilter}
                   className="px-7 py-3 min-h-[48px] rounded-full bg-orange-primary text-white text-lg shadow-btn-orange active:scale-95 transition-transform"
                 >
-                  <Bi en="Open Filter" zh="打开筛选" />
+                  <Bi en="Open Deck Settings" zh="打开卡组设置" />
                 </button>
               </>
-            ) : allUsed ? (
+            ) : allUsed && !canDrawDare ? (
               <>
                 <p className="text-2xl text-ink">
                   <Bi en="All cards have been used!" zh="所有卡片都用过啦！" />
@@ -257,38 +267,60 @@ const ShuffleMode = ({
         </div>
       )}
 
-      {/* Draw button + deck count */}
+      {/* Draw buttons + deck count */}
       {!sessionDone && (
         <>
-          <button
-            onClick={onDraw}
-            disabled={!canDraw || isDrawing || blocked}
-            className={`px-12 py-3.5 min-h-[52px] rounded-full text-xl text-white transition-all duration-200 ${
-              !canDraw || isDrawing || blocked
-                ? 'bg-pale-pink cursor-not-allowed'
-                : 'bg-blue-primary shadow-btn hover:scale-[1.03] active:scale-95'
-            }`}
-          >
-            {isDrawing ? (
-              <span className="flex items-center gap-2.5 justify-center">
-                <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <Bi en="Drawing..." zh="抽卡中..." />
-              </span>
-            ) : blocked ? (
+          <div className="flex gap-3 items-center justify-center flex-wrap">
+            <button
+              onClick={() => onDraw('truth')}
+              disabled={!canDrawTruth || isDrawing || blocked}
+              className={`px-7 md:px-10 py-3.5 min-h-[52px] rounded-full text-lg md:text-xl text-white transition-all duration-200 ${
+                !canDrawTruth || isDrawing || blocked
+                  ? 'bg-pale-pink cursor-not-allowed'
+                  : 'bg-blue-primary shadow-btn hover:scale-[1.03] active:scale-95'
+              }`}
+            >
+              {isDrawing ? (
+                <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin align-middle" />
+              ) : (
+                <Bi en="Truth" zh="真心话" />
+              )}
+            </button>
+            <button
+              onClick={() => onDraw('dare')}
+              disabled={!canDrawDare || isDrawing || blocked}
+              className={`px-7 md:px-10 py-3.5 min-h-[52px] rounded-full text-lg md:text-xl text-white transition-all duration-200 ${
+                !canDrawDare || isDrawing || blocked
+                  ? 'bg-pale-pink cursor-not-allowed'
+                  : 'bg-orange-primary shadow-btn-orange hover:scale-[1.03] active:scale-95'
+              }`}
+            >
+              {isDrawing ? (
+                <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin align-middle" />
+              ) : (
+                <Bi en="Dare" zh="大冒险" />
+              )}
+            </button>
+          </div>
+
+          {blocked && (
+            <p className="text-sm text-gray-secondary -mt-3">
               <Bi en={`${turns.currentName}'s turn`} zh={`轮到 ${turns.currentName}`} />
-            ) : !canDraw && currentCard ? (
-              <Bi en="No cards left" zh="没有卡片了" />
-            ) : (
-              <Bi en="Draw a Card" zh="抽卡" />
-            )}
-          </button>
+            </p>
+          )}
 
           <div className="text-sm text-gray-secondary -mt-2 flex items-center gap-3">
             <span>
               {allowRepeat ? (
-                <Bi en={`${totalInSelected} cards · repeats on`} zh={`${totalInSelected} 张 · 可重复`} />
+                <Bi
+                  en={`${totalInSelected} truth · ${dareCount} dares · repeats on`}
+                  zh={`真心话 ${totalInSelected} · 大冒险 ${dareCount} · 可重复`}
+                />
               ) : (
-                <Bi en={`${filteredCount} cards left`} zh={`剩余 ${filteredCount} 张`} />
+                <Bi
+                  en={`${filteredCount} truth · ${dareCount} dares left`}
+                  zh={`真心话剩 ${filteredCount} · 大冒险剩 ${dareCount}`}
+                />
               )}
             </span>
             {allUsed && currentCard && (

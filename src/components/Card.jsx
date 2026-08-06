@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCategoryDisplay } from '../utils/gameUtils';
+import { getCategoryDisplay, getDareLevelDisplay } from '../utils/gameUtils';
 import { Bi, useLang } from '../i18n';
 
 /** The question card: compact on mobile, text + illustration side by side on desktop. */
@@ -29,14 +29,29 @@ const Card = ({ question, image }) => {
           aria-hidden="true"
         />
         <div
-          className={`relative bg-white rounded-3xl border-2 border-pale-pink/20 shadow-card -rotate-1 ${
-            shuffling ? 'card-shuffle-animation' : ''
-          }`}
+          className={`relative bg-white rounded-3xl border-2 shadow-card ${
+            question.isDare ? 'border-orange-primary/50 rotate-1' : 'border-pale-pink/20 -rotate-1'
+          } ${shuffling ? 'card-shuffle-animation' : ''}`}
         >
           <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-4 md:gap-8 min-h-[280px] md:min-h-[340px]">
             <div className="flex-1 flex flex-col justify-center gap-4 md:gap-5">
-              <span className="self-start text-xs md:text-sm px-3.5 py-1.5 rounded-full bg-orange-primary text-white shadow-btn-orange">
+              <span
+                className={`self-start text-xs md:text-sm px-3.5 py-1.5 rounded-full text-white ${
+                  question.isDare ? 'bg-blue-primary shadow-btn' : 'bg-orange-primary shadow-btn-orange'
+                }`}
+              >
                 <Bi en={cat.en} zh={cat.zh} enClass="font-hand" zhClass="font-zh" />
+                {question.isDare && question.level && (
+                  <span className="opacity-80">
+                    {' · '}
+                    <Bi
+                      en={getDareLevelDisplay(question.level).en}
+                      zh={getDareLevelDisplay(question.level).zh}
+                      enClass="font-hand"
+                      zhClass="font-zh"
+                    />
+                  </span>
+                )}
               </span>
 
               {showEn && (

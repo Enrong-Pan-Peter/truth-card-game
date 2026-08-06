@@ -1,0 +1,182 @@
+[
+  {
+    "id": "dr001",
+    "en": "Hold hands with someone here and run a lap around the room while singing \"你还要我怎样\".",
+    "zh": "找一个在场的人和你手拉手绕场跑一圈，边跑边唱《你还要我怎样》。",
+    "level": "medium"
+  },
+  {
+    "id": "dr002",
+    "en": "Face-to-face with a same-gender player, hold a pen between your faces for 10 seconds.",
+    "zh": "找一个在场的同性，脸对脸夹着一支笔坚持10秒。",
+    "level": "medium"
+  },
+  {
+    "id": "dr003",
+    "en": "Sing one verse of a worship song, solo.",
+    "zh": "独唱一段敬拜诗歌。",
+    "level": "mild"
+  },
+  {
+    "id": "dr004",
+    "en": "Show the group the most recent photo in your camera roll (skip if truly private).",
+    "zh": "给大家看你相册里最新的一张照片（太私密可跳过）。",
+    "level": "mild"
+  },
+  {
+    "id": "dr005",
+    "en": "Imitate how your fellowship leader opens the meeting.",
+    "zh": "模仿团契带领人开场的样子。",
+    "level": "mild"
+  },
+  {
+    "id": "dr006",
+    "en": "Speak only in your hometown dialect or accent for the next two rounds.",
+    "zh": "接下来两轮只能用家乡话说话。",
+    "level": "mild"
+  },
+  {
+    "id": "dr007",
+    "en": "Do an animal impression until someone guesses the animal.",
+    "zh": "模仿一种动物，直到有人猜出来。",
+    "level": "mild"
+  },
+  {
+    "id": "dr008",
+    "en": "You may only sing, not speak, until your next turn.",
+    "zh": "到你下一轮之前，只能用唱的说话。",
+    "level": "mild"
+  },
+  {
+    "id": "dr009",
+    "en": "Read your most recent sent message in the most dramatic, romantic voice.",
+    "zh": "用最深情的语气朗读你最近发出的一条消息。",
+    "level": "mild"
+  },
+  {
+    "id": "dr010",
+    "en": "Imitate someone in this room — mannerisms and catchphrases — until people guess who.",
+    "zh": "模仿在场一个人的标志性动作和口头禅，直到大家猜出是谁。",
+    "level": "mild"
+  },
+  {
+    "id": "dr011",
+    "en": "Voice-message a friend you haven't talked to in a month: \"I'm thankful for you.\"",
+    "zh": "给一个月没联系的朋友发语音：“我很感恩认识你。”",
+    "level": "medium"
+  },
+  {
+    "id": "dr012",
+    "en": "Recite any Bible verse from memory within 10 seconds — fail and you draw another dare.",
+    "zh": "10秒内背出一节圣经经文，失败就再抽一张大冒险。",
+    "level": "medium"
+  },
+  {
+    "id": "dr013",
+    "en": "Let the group look at your most-used emojis and analyze your personality.",
+    "zh": "让大家看你最常用的表情符号，并解读你的性格。",
+    "level": "medium"
+  },
+  {
+    "id": "dr014",
+    "en": "Give every person in the room a one-sentence compliment.",
+    "zh": "用一句话夸奖在场的每一个人。",
+    "level": "medium"
+  },
+  {
+    "id": "dr015",
+    "en": "Do 10 push-ups; before each one, name something you're thankful for.",
+    "zh": "做10个俯卧撑，每做一个之前说一件感恩的事。",
+    "level": "medium"
+  },
+  {
+    "id": "dr016",
+    "en": "Call a parent on speaker and tell them you love them.",
+    "zh": "给爸妈打电话（开免提）说“我爱你”。",
+    "level": "medium"
+  },
+  {
+    "id": "dr017",
+    "en": "Sit back-to-back with someone and stand up together without using your hands.",
+    "zh": "和在场一个人背靠背坐下，不用手一起站起来。",
+    "level": "medium"
+  },
+  {
+    "id": "dr018",
+    "en": "Stare into someone's eyes for 30 seconds — whoever laughs first draws another dare.",
+    "zh": "和一个人对视30秒，谁先笑谁再抽一张大冒险。",
+    "level": "medium"
+  },
+  {
+    "id": "dr019",
+    "en": "Spell your name with your hips.",
+    "zh": "用屁股扭出你的名字。",
+    "level": "medium"
+  },
+  {
+    "id": "dr020",
+    "en": "Let the person on your left pose you for a photo — they keep it.",
+    "zh": "让你左边的人给你摆一个拍照姿势，照片归ta保存。",
+    "level": "medium"
+  },
+  {
+    "id": "dr021",
+    "en": "Arm-wrestle anyone here; the loser does 5 squats.",
+    "zh": "和在场任何一人比腕力，输的做5个深蹲。",
+    "level": "medium"
+  },
+  {
+    "id": "dr022",
+    "en": "Close your eyes and let another player feed you a snack — guess what it is.",
+    "zh": "闭上眼睛，让一个人喂你吃一样零食，猜出是什么。",
+    "level": "medium"
+  },
+  {
+    "id": "dr023",
+    "en": "Draw a portrait of someone here with your non-dominant hand in 30 seconds — they keep it.",
+    "zh": "用非惯用手30秒画出在场一个人的肖像，本人保留。",
+    "level": "medium"
+  },
+  {
+    "id": "dr024",
+    "en": "Hold hands with a same-gender friend, gaze into their eyes, and say \"认识你真好\" without laughing.",
+    "zh": "和一位同性十指相扣深情对望，说“认识你真好”，不许笑。",
+    "level": "medium"
+  },
+  {
+    "id": "dr025",
+    "en": "Pray out loud for the person across from you, right now, by name.",
+    "zh": "现在就为你对面的人开口祷告，要提名。",
+    "level": "bold"
+  },
+  {
+    "id": "dr026",
+    "en": "Ask the group \"what's one thing I could grow in?\" — listen without defending yourself.",
+    "zh": "问大家：“你觉得我有什么可以成长的地方？”只能听，不能辩解。",
+    "level": "bold"
+  },
+  {
+    "id": "dr027",
+    "en": "Text a friend who doesn't come to church: \"Thought of you at fellowship tonight — want to come with me Sunday?\"",
+    "zh": "给一位不来教会的朋友发：“今晚在团契想到你了，周日要不要一起来？”",
+    "level": "bold"
+  },
+  {
+    "id": "dr028",
+    "en": "Give a 30-second improvised sermon on a random object the group picks.",
+    "zh": "用大家随手指定的一个物品，即兴讲道30秒。",
+    "level": "bold"
+  },
+  {
+    "id": "dr029",
+    "en": "Call the 5th contact in your phone and say: \"I drew a dare card and it says I must thank you for being in my life.\"",
+    "zh": "打给通讯录里第5个人说：“我抽到大冒险，要谢谢你出现在我的生命里。”",
+    "level": "bold"
+  },
+  {
+    "id": "dr030",
+    "en": "Let the group pick a pose; hold it until the next card is drawn.",
+    "zh": "让大家给你指定一个姿势，保持不动直到下一张卡被抽出。",
+    "level": "bold"
+  }
+]
