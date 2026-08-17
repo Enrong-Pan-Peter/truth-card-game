@@ -148,6 +148,58 @@ Working list for review. EN | 中文. 🔥 = boldest — host should know these 
 29. Call the 5th contact in your phone and say: "I drew a dare card and it says I must thank you for being in my life." | 打给通讯录里第5个人说：“我抽到大冒险，要谢谢你出现在我的生命里。”
 30. Let the group pick a pose; hold it until the next card is drawn. | 让大家给你指定一个姿势，保持不动直到下一张卡被抽出。
 
+## ROUND 3 — proposed additions (pending your approval)
+
+Will be seeded as sp085–sp104 and dr031–dr044 once approved.
+
+### 20 new 劲爆 questions
+
+1. Have you ever secretly looked up someone here on social media? | 你有没有偷偷搜索过在场某个人的社交账号？
+2. Whose WeChat here have you wanted, but never dared to ask for? | 在场谁的微信你最想要，但一直没好意思要？
+3. Who here would be most sought-after at a matchmaking corner? | 如果在场的人都站到相亲角，你觉得谁会最抢手？
+4. If you had to pair up with someone here for a dating show, who? | 如果必须和在场一个人组队上恋综，你选谁？
+5. Do you group-hide your WeChat Moments? Who gets hidden the most? | 你朋友圈有没有分组屏蔽？谁被屏蔽得最多？
+6. What's the most times you've edited a post before publishing it? | 你发朋友圈之前，最多修改过多少次？
+7. Have you ever posted a Moment visible only to yourself? What kind? | 你有没有发过“仅自己可见”的朋友圈？是什么类型的内容？
+8. Have you ever posted something just so one specific person would see it? | 你有没有为了让某个人看到而故意发朋友圈？
+9. When did you last tell a lie, and what was it? | 你最近一次说谎是什么时候？说了什么？
+10. Have you ever gone through a partner's or ex's phone? Find anything? | 你有没有翻过现任/前任的手机？发现了什么？
+11. What was your most brutal rejection like? | 你被拒绝过最惨的一次是什么样的？
+12. How many times have you confessed feelings — and what's your success rate? | 你表白过几次？成功率是多少？
+13. Have you ever been "talking" to two people at the same time? | 你有没有同时暧昧过两个人？
+14. How many close opposite-gender friends can your partner have? Where's the line? | 你能接受对象有几个异性好友？界限在哪里？
+15. What's the one dating criterion you never say out loud but matters most? | 你的择偶标准里，哪一条你嘴上不说但其实最重要？
+16. Have you ever felt sour at someone's wedding or relationship announcement? | 你有没有在别人官宣恋爱/婚礼时酸过？
+17. If your longtime crush confessed to you right now, would you actually hesitate? | 如果你暗恋的人现在向你表白，你其实会犹豫吗？为什么？
+18. Are you a hopeless romantic ("恋爱脑")? What's your worst episode? | 你觉得自己是恋爱脑吗？最恋爱脑的一次是什么？
+19. What's the most embarrassing thing you did after a breakup or rejection? | 你分手或被拒后，做过最丢脸的事是什么？
+20. Have you ever acted busy or popular in front of someone you liked? | 你有没有在喜欢的人面前故意装忙、装抢手？
+
+### 14 new dares
+
+**轻松 Mild**
+
+1. Act out a Bible character's entrance until people guess who. | 模仿一位圣经人物出场，直到大家猜出是谁。
+2. Show the group your best party trick — anything counts. | 给大家表演你最拿手的看家本领，什么都行。
+3. Re-enter the room in slow motion, with your own sound effects. | 用慢动作重现你今天进门的样子，自己配音效。
+4. Serenade a pillow with the chorus of any love song. | 抱着一个抱枕，深情演唱一首歌的副歌。
+5. Play rock-paper-scissors with anyone — the loser performs an animal sound chosen by the winner. | 和在场一人玩石头剪刀布，输的人学赢家指定的动物叫。
+
+**适中 Medium**
+
+6. Let the group give you three random words; improvise a 30-second story using all of them. | 让大家出三个词，用它们即兴编一段30秒的小故事。
+7. Broadcast "tonight's fellowship news" in a formal news-anchor voice. | 用新闻主播腔播报“今晚团契大事件”。
+8. Let the person on your right restyle your hair for 10 seconds; keep it for 30 minutes. | 让右边的人给你抓10秒头发，造型保持30分钟。
+9. Swap one wearable item (jacket, glasses, watch) with someone until the game ends. | 和在场一人交换一件随身物品（外套、眼镜、手表），直到游戏结束。
+10. Answer the next question while holding a squat. | 深蹲姿势保持不动，回答下一个问题。
+11. Give a formal 30-second welcome speech honoring the newest member of the fellowship. | 给最新加入团契的人做一个正式的30秒欢迎致辞。
+
+**大胆 Bold**
+
+12. Let someone write one sentence on your arm in washable pen — keep it until tonight ends. | 让在场一人用水性笔在你手臂上写一句话，保留到今晚结束。
+13. Post a single "。" in the fellowship group chat and don't explain for 10 minutes. | 在团契群里只发一个“。”，十分钟内不许解释。
+14. For your next two turns, everything you say must rhyme. | 接下来两轮，你说的每句话都必须押韵。
+
 ## Implementation notes (agreed)
 
 - New category `spicy` = **劲爆**, masked code **[劲爆]**, OFF by default in filter.

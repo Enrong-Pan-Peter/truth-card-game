@@ -26,9 +26,9 @@ import InstallHint from './components/InstallHint';
 import { CloseIcon, FilterIcon, PlusIcon, UsedIcon, UsersIcon } from './components/Icons';
 
 const saved = loadState() || {};
-// 劲爆 (spicy) is opt-in: off unless the host turns it on
-const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, c !== 'spicy']));
-const defaultDareLevels = { mild: true, medium: true, bold: false };
+// Everything on by default — groups that don't want 劲爆 or 大胆 dares turn them off themselves
+const defaultCategories = Object.fromEntries(CATEGORIES.map((c) => [c, true]));
+const defaultDareLevels = { mild: true, medium: true, bold: true };
 const defaultTurns = { enabled: false, current: null };
 const newQuestionId = () =>
   `c-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;

@@ -76,7 +76,7 @@ const FilterPanel = ({
   onSetTimer,
 }) => {
   const lang = useLang();
-  const allSelected = CATEGORIES.filter((c) => c !== 'spicy').every((c) => selectedCategories[c]);
+  const allSelected = CATEGORIES.every((c) => selectedCategories[c]);
   const t = (en, zh) => (lang === 'en' ? en : zh);
 
   return (
@@ -108,7 +108,7 @@ const FilterPanel = ({
           onClick={onSelectAll}
           className="w-full py-2.5 min-h-[44px] rounded-xl text-sm text-blue-primary border-2 border-dashed border-blue-primary/40"
         >
-          <Bi en="Select all (except Spicy)" zh="全选（劲爆除外）" />
+          <Bi en="Select all" zh="全选" />
         </button>
       )}
 
