@@ -84,8 +84,18 @@ export const groupByCategory = (questions) => {
   return grouped;
 };
 
+// Cryptographically-seeded random index (falls back to Math.random)
+const randomIndex = (n) => {
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    const buf = new Uint32Array(1);
+    crypto.getRandomValues(buf);
+    return buf[0] % n;
+  }
+  return Math.floor(Math.random() * n);
+};
+
 // Random card from a deck
 export const drawRandomCard = (deck) => {
   if (deck.length === 0) return null;
-  return deck[Math.floor(Math.random() * deck.length)];
+  return deck[randomIndex(deck.length)];
 };

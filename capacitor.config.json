@@ -1,0 +1,9 @@
+{
+  "appId": "com.enrongpan.truthcards",
+  "appName": "Truth Cards",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "automatic",
+    "backgroundColor": "#FFF8EB"
+  }
+}

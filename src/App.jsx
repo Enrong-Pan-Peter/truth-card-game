@@ -106,6 +106,7 @@ function App() {
   const [roomMeta, setRoomMeta] = useState({ hostId: null, drawnBy: null, turns: defaultTurns });
   const [shareImage, setShareImage] = useState(null);
   const [reactions, setReactions] = useState([]);
+  const [rejoinedCode, setRejoinedCode] = useState(null); // silent-rejoin notice
 
   const { needRefresh, applyUpdate, dismiss } = usePWAUpdate();
   const baseQuestions = useCloudQuestions();
@@ -155,7 +156,12 @@ function App() {
         if (!res.error) setOpenSheet('room');
       });
     } else if (saved.roomCode) {
-      room.joinRoom(saved.roomCode, { silent: true, name });
+      room.joinRoom(saved.roomCode, { silent: true, name }).then((res) => {
+        if (!res.error) {
+          setRejoinedCode(saved.roomCode);
+          setTimeout(() => setRejoinedCode(null), 10000);
+        }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -846,6 +852,37 @@ function App() {
                 onClick={dismiss}
                 aria-label="Dismiss"
                 className="w-8 h-8 shrink-0 flex items-center justify-center text-white/70"
+              >
+                <CloseIcon className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Silent room-rejoin notice */}
+        {rejoinedCode && room.active && (
+          <div className="fixed inset-x-3 bottom-[calc(5rem+env(safe-area-inset-bottom))] md:bottom-6 md:left-auto md:right-6 md:max-w-sm z-40">
+            <div className="bg-white rounded-2xl border-2 border-blue-primary/40 shadow-card p-3.5 flex items-center gap-3">
+              <UsersIcon className="w-5 h-5 text-blue-primary shrink-0" />
+              <p className="flex-1 text-sm text-ink leading-snug">
+                <Bi
+                  en={`Reconnected to room ${rejoinedCode} — draws are shared`}
+                  zh={`已自动重连房间 ${rejoinedCode}，抽卡是全员同步的`}
+                />
+              </p>
+              <button
+                onClick={() => {
+                  handleLeaveRoom();
+                  setRejoinedCode(null);
+                }}
+                className="text-sm text-orange-primary underline underline-offset-2 shrink-0"
+              >
+                <Bi en="Leave" zh="离开" />
+              </button>
+              <button
+                onClick={() => setRejoinedCode(null)}
+                aria-label="Dismiss"
+                className="w-8 h-8 -mr-1 shrink-0 flex items-center justify-center text-gray-secondary"
               >
                 <CloseIcon className="w-5 h-5" />
               </button>
