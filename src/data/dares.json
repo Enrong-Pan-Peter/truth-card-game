@@ -580,5 +580,47 @@
     "en": "Send the person on your right a real 60-second voice message of elder-style life advice — no pausing allowed.",
     "zh": "给右边的人发一条真的60秒语音，内容是长辈风格的“人生建议”，中途不能停顿。",
     "level": "medium"
+  },
+  {
+    "id": "dr098",
+    "en": "Pick an opposite-gender player and hold deep, soulful eye contact for 15 seconds.",
+    "zh": "选一位在场的异性，深情对视15秒。",
+    "level": "medium"
+  },
+  {
+    "id": "dr099",
+    "en": "Do 10 push-ups, saying “我好菜” (“I'm so weak”) out loud with each one.",
+    "zh": "做10个俯卧撑，边做边说“我好菜”。",
+    "level": "mild"
+  },
+  {
+    "id": "dr100",
+    "en": "Let the person on your right braid or style your hair.",
+    "zh": "让右边的人给你编一个辫子，或者整理发型。",
+    "level": "medium"
+  },
+  {
+    "id": "dr101",
+    "en": "Rest your head on a same-gender player's lap for 10 seconds while acting like you're thoroughly enjoying it.",
+    "zh": "头枕在一位同性的腿上10秒，同时演出你很享受的样子。",
+    "level": "bold"
+  },
+  {
+    "id": "dr102",
+    "en": "Pick an opposite-gender player and whisper a secret in their ear.",
+    "zh": "选在场一位异性，跟ta说一句悄悄话。",
+    "level": "medium"
+  },
+  {
+    "id": "dr103",
+    "en": "Have a same-gender player carry you princess-style and take a selfie together.",
+    "zh": "找在场一位同性公主抱你，并自拍一张。",
+    "level": "bold"
+  },
+  {
+    "id": "dr104",
+    "en": "Pick a same-gender player and say “你保护世界，而我，保护你～” in three different tones.",
+    "zh": "选在场一位同性，用三种不同的语气对ta说“你保护世界，而我，保护你～”。",
+    "level": "medium"
   }
 ]

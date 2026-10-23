@@ -229,6 +229,91 @@
       "id": "gk046",
       "en": "What is the most ridiculous thing you have ever done to get out of a social event?",
       "zh": "你为了逃避社交活动做过的最荒谬的事情是什么？"
+    },
+    {
+      "id": "gk047",
+      "en": "If your lifetime search history went public, which year would scare you most?",
+      "zh": "假如你这一生的搜索记录被公开，你最怕哪一年？"
+    },
+    {
+      "id": "gk048",
+      "en": "What standard do you often demand of others but can't meet yourself?",
+      "zh": "你有没有一个自己根本做不到，却经常要求别人的标准？"
+    },
+    {
+      "id": "gk049",
+      "en": "Have you ever quit early with an excuse because you were afraid to lose?",
+      "zh": "你有没有因为怕输，提前找借口退出？"
+    },
+    {
+      "id": "gk050",
+      "en": "Have you ever deliberately exploited a loophole?",
+      "zh": "你有没有故意利用规则漏洞？"
+    },
+    {
+      "id": "gk051",
+      "en": "In what kind of atmosphere do you most easily lose your head?",
+      "zh": "你最容易在哪一种氛围下失去理智？"
+    },
+    {
+      "id": "gk052",
+      "en": "In what area can you least accept losing?",
+      "zh": "你最无法接受自己输在哪个方面？"
+    },
+    {
+      "id": "gk053",
+      "en": "Have you ever added up how much money you've wasted on saving face?",
+      "zh": "你有没有算过自己为了面子浪费了多少钱？"
+    },
+    {
+      "id": "gk054",
+      "en": "What is your biggest impulse purchase ever?",
+      "zh": "你最大的一笔冲动消费是什么？"
+    },
+    {
+      "id": "gk055",
+      "en": "Have you ever spent more in the end because you were too cheap at first?",
+      "zh": "你有没有因为舍不得花钱，最后反而花得更多？"
+    },
+    {
+      "id": "gk056",
+      "en": "What's the most ridiculous thing you've done to save money?",
+      "zh": "你为了省钱做过最离谱的事情是什么？"
+    },
+    {
+      "id": "gk057",
+      "en": "What's the most inexplicable picture in your camera roll?",
+      "zh": "你手机相册里最莫名其妙的一张图是什么？"
+    },
+    {
+      "id": "gk058",
+      "en": "Have you ever dressed totally out of character and taken selfies?",
+      "zh": "你有没有穿过不符合自己平时形象的衣服，然后自拍？"
+    },
+    {
+      "id": "gk059",
+      "en": "What's the most times you've edited a post before publishing it?",
+      "zh": "你发朋友圈之前，最多修改过多少次？"
+    },
+    {
+      "id": "gk060",
+      "en": "When is your birthday?",
+      "zh": "你的生日是什么时候？"
+    },
+    {
+      "id": "gk061",
+      "en": "The water cuts out halfway through your shower — what do you do?",
+      "zh": "洗澡洗到一半没水了，你会怎么办？"
+    },
+    {
+      "id": "gk062",
+      "en": "What do you usually look at on your phone in the bathroom?",
+      "zh": "上厕所的时候一般用手机看什么？"
+    },
+    {
+      "id": "gk063",
+      "en": "Describe your own looks in three words.",
+      "zh": "如果让你形容自己的长相，你会用哪三个词语？"
     }
   ],
   "ideals_reals": [
@@ -426,6 +511,21 @@
       "id": "ir039",
       "en": "If you can have an extra hour everyday, what would you do with that extra hour?",
       "zh": "如果你可以每天多出一个小时，你会用这多出来的时间做什么？"
+    },
+    {
+      "id": "ir040",
+      "en": "What kind of person are you most afraid of eventually becoming?",
+      "zh": "你最怕自己最终变成什么样的人？"
+    },
+    {
+      "id": "ir041",
+      "en": "What do you have right now that you feel you least deserve?",
+      "zh": "你认为自己最配不上现在拥有的什么？"
+    },
+    {
+      "id": "ir042",
+      "en": "Which material comfort could you least stand to suddenly lose?",
+      "zh": "你最不能接受自己突然失去哪种物质享受？"
     }
   ],
   "heart_to_heart": [
@@ -531,8 +631,8 @@
     },
     {
       "id": "hh021",
-      "en": "Could you handle a long-distance relationship?",
-      "zh": "你能接受异地恋吗？"
+      "en": "Could you handle a long-distance relationship? How far is too far?",
+      "zh": "你能接受异地恋吗？最远能接受多远？"
     },
     {
       "id": "hh022",
@@ -743,6 +843,101 @@
       "id": "hh063",
       "en": "What is the most painful part of growing up?",
       "zh": "你觉得‘成长’中最痛的部分是什么？"
+    },
+    {
+      "id": "hh064",
+      "en": "Do you secretly compare your income or spending with your friends'?",
+      "zh": "你有没有偷偷比较过自己和朋友的收入或消费？"
+    },
+    {
+      "id": "hh065",
+      "en": "Do you prefer being in control, or being led?",
+      "zh": "你比较喜欢掌控，还是被掌控？"
+    },
+    {
+      "id": "hh066",
+      "en": "Do you prefer making the moves, or letting the other person set the pace?",
+      "zh": "你更喜欢主动，还是被对方掌控节奏？"
+    },
+    {
+      "id": "hh067",
+      "en": "How would you rank parents, partner, and children?",
+      "zh": "父母、对象、孩子，你会怎么排序？"
+    },
+    {
+      "id": "hh068",
+      "en": "Under what circumstances would you agree if your ex asked to get back together?",
+      "zh": "如果前任找你复合，什么情况下你会同意？"
+    },
+    {
+      "id": "hh069",
+      "en": "What are your requirements for a partner?",
+      "zh": "你对另一半的要求有哪些？"
+    },
+    {
+      "id": "hh070",
+      "en": "An opposite-gender friend you haven't talked to in ages suddenly says they like you — how do you react?",
+      "zh": "好久没联系的异性突然说喜欢你，你会是什么反应？"
+    },
+    {
+      "id": "hh071",
+      "en": "Do you believe in pure friendship between men and women? Why?",
+      "zh": "你觉得男女之间有纯友谊吗？为什么？"
+    },
+    {
+      "id": "hh072",
+      "en": "Who do you trust the most?",
+      "zh": "在你心中谁最可信？"
+    },
+    {
+      "id": "hh073",
+      "en": "Could you date someone noticeably older or younger? What age gap is acceptable?",
+      "zh": "接受姐弟恋或者兄妹恋吗？相差多少岁可以接受？"
+    },
+    {
+      "id": "hh074",
+      "en": "You run into your ex while on a date with someone you like — what do you do?",
+      "zh": "如果跟你喜欢的人约会时遇到前任，你会怎么做？"
+    },
+    {
+      "id": "hh075",
+      "en": "What gift would you most like to receive on Valentine's Day?",
+      "zh": "情人节最想收到什么礼物？"
+    },
+    {
+      "id": "hh076",
+      "en": "If you found out a close friend was cheating on their partner, what would you do?",
+      "zh": "如果发现好朋友有外遇，你会怎么做？"
+    },
+    {
+      "id": "hh077",
+      "en": "In love, what's your biggest edge over others of your gender?",
+      "zh": "你觉得在爱情方面，你和其他同性相比最有竞争力的是什么？"
+    },
+    {
+      "id": "hh078",
+      "en": "Share a moment when someone here left a deep impression on you.",
+      "zh": "说出在场某个人让你印象深刻的一件事情。"
+    },
+    {
+      "id": "hh079",
+      "en": "What does a perfect relationship look like to you?",
+      "zh": "你对完美恋爱关系的认知是怎样的？"
+    },
+    {
+      "id": "hh080",
+      "en": "What instantly turns you off about the opposite sex?",
+      "zh": "异性做什么事情会让你瞬间下头？"
+    },
+    {
+      "id": "hh081",
+      "en": "Is there a romantic movie moment you wish would happen to you?",
+      "zh": "有希望发生在自己身上的爱情桥段吗？是什么？"
+    },
+    {
+      "id": "hh082",
+      "en": "Have you ever started a relationship casually just because everyone around you was dating?",
+      "zh": "你曾经有因为别人都在谈恋爱，而随便开始一段关系吗？"
     }
   ],
   "memories": [
@@ -915,6 +1110,26 @@
       "id": "mem034",
       "en": "Have you changed your mind on something important before? What made you change your mind?",
       "zh": "你是否曾在某件重要的事情上改变过想法？是什么促成的？"
+    },
+    {
+      "id": "mem035",
+      "en": "What's the biggest price you've paid to save face?",
+      "zh": "你曾经为了面子付出过最大的代价是什么？"
+    },
+    {
+      "id": "mem036",
+      "en": "What's the most embarrassing state someone has caught you in?",
+      "zh": "你被别人撞见过最狼狈的状态是什么？"
+    },
+    {
+      "id": "mem037",
+      "en": "What's your biggest failed attempt?",
+      "zh": "你最失败的一次尝试是什么？"
+    },
+    {
+      "id": "mem038",
+      "en": "What was your saddest cry ever, and why?",
+      "zh": "哭得最伤心的是哪一次？为什么？"
     }
   ],
   "matters_of_soul": [
@@ -1267,6 +1482,16 @@
       "id": "ms070",
       "en": "Have you ever doubted that God really loves you?",
       "zh": "你曾经怀疑过上帝真的爱你吗？"
+    },
+    {
+      "id": "ms071",
+      "en": "Are you a good person, or have you just never had the chance to be bad?",
+      "zh": "你认为自己是好人，还是只是没有机会做坏事？"
+    },
+    {
+      "id": "ms072",
+      "en": "Have you ever stayed silent knowing someone else would lose out?",
+      "zh": "你有没有明知道别人会吃亏，还是保持沉默？"
     }
   ],
   "spicy": [
@@ -1286,39 +1511,14 @@
       "zh": "你有没有假装已经放下，其实一直耿耿于怀的事？"
     },
     {
-      "id": "sp004",
-      "en": "If your lifetime search history went public, which year would scare you most?",
-      "zh": "假如你这一生的搜索记录被公开，你最怕哪一年？"
-    },
-    {
       "id": "sp005",
       "en": "Have you ever been secretly happy about someone else's failure?",
       "zh": "你有没有因为别人的失败而偷偷开心？"
     },
     {
-      "id": "sp006",
-      "en": "What standard do you often demand of others but can't meet yourself?",
-      "zh": "你有没有一个自己根本做不到，却经常要求别人的标准？"
-    },
-    {
       "id": "sp007",
       "en": "What do you think is the most hypocritical thing about you?",
       "zh": "你觉得自己最虚伪的地方是什么？"
-    },
-    {
-      "id": "sp008",
-      "en": "Are you a good person, or have you just never had the chance to be bad?",
-      "zh": "你认为自己是好人，还是只是没有机会做坏事？"
-    },
-    {
-      "id": "sp009",
-      "en": "What kind of person are you most afraid of eventually becoming?",
-      "zh": "你最怕自己最终变成什么样的人？"
-    },
-    {
-      "id": "sp010",
-      "en": "What do you have right now that you feel you least deserve?",
-      "zh": "你认为自己最配不上现在拥有的什么？"
     },
     {
       "id": "sp011",
@@ -1331,11 +1531,6 @@
       "zh": "你被戳中痛处时，最常用什么方式掩饰？"
     },
     {
-      "id": "sp013",
-      "en": "Have you ever quit early with an excuse because you were afraid to lose?",
-      "zh": "你有没有因为怕输，提前找借口退出？"
-    },
-    {
       "id": "sp014",
       "en": "What topic do you most fear being asked about?",
       "zh": "你最害怕别人问你哪方面的问题？"
@@ -1346,19 +1541,9 @@
       "zh": "你做过最不厚道、但至今不后悔的事情是什么？"
     },
     {
-      "id": "sp016",
-      "en": "Have you ever deliberately exploited a loophole?",
-      "zh": "你有没有故意利用规则漏洞？"
-    },
-    {
       "id": "sp017",
       "en": "What's your most calculated flex?",
       "zh": "你做过最刻意的炫耀是什么？"
-    },
-    {
-      "id": "sp018",
-      "en": "What's the biggest price you've paid to save face?",
-      "zh": "你曾经为了面子付出过最大的代价是什么？"
     },
     {
       "id": "sp019",
@@ -1369,11 +1554,6 @@
       "id": "sp020",
       "en": "What are you most afraid people will find out you're really like?",
       "zh": "你最怕别人发现你其实是个怎样的人？"
-    },
-    {
-      "id": "sp021",
-      "en": "Have you ever stayed silent knowing someone else would lose out?",
-      "zh": "你有没有明知道别人会吃亏，还是保持沉默？"
     },
     {
       "id": "sp022",
@@ -1391,44 +1571,9 @@
       "zh": "你有没有把别人的功劳偷偷算在自己头上？"
     },
     {
-      "id": "sp025",
-      "en": "What's the most embarrassing state someone has caught you in?",
-      "zh": "你被别人撞见过最狼狈的状态是什么？"
-    },
-    {
       "id": "sp026",
       "en": "Has a craving or desire ever interfered with your studies or work?",
       "zh": "你曾经因为某种欲望影响过正常学习或工作吗？"
-    },
-    {
-      "id": "sp027",
-      "en": "In what kind of atmosphere do you most easily lose your head?",
-      "zh": "你最容易在哪一种氛围下失去理智？"
-    },
-    {
-      "id": "sp028",
-      "en": "In what area can you least accept losing?",
-      "zh": "你最无法接受自己输在哪个方面？"
-    },
-    {
-      "id": "sp029",
-      "en": "What's your biggest failed attempt?",
-      "zh": "你最失败的一次尝试是什么？"
-    },
-    {
-      "id": "sp030",
-      "en": "Have you ever added up how much money you've wasted on saving face?",
-      "zh": "你有没有算过自己为了面子浪费了多少钱？"
-    },
-    {
-      "id": "sp031",
-      "en": "Which material comfort could you least stand to suddenly lose?",
-      "zh": "你最不能接受自己突然失去哪种物质享受？"
-    },
-    {
-      "id": "sp032",
-      "en": "What is your biggest impulse purchase ever?",
-      "zh": "你最大的一笔冲动消费是什么？"
     },
     {
       "id": "sp033",
@@ -1441,29 +1586,9 @@
       "zh": "你曾经为了多少钱放弃过原则？"
     },
     {
-      "id": "sp035",
-      "en": "Do you secretly compare your income or spending with your friends'?",
-      "zh": "你有没有偷偷比较过自己和朋友的收入或消费？"
-    },
-    {
-      "id": "sp036",
-      "en": "Have you ever spent more in the end because you were too cheap at first?",
-      "zh": "你有没有因为舍不得花钱，最后反而花得更多？"
-    },
-    {
-      "id": "sp037",
-      "en": "What's the most ridiculous thing you've done to save money?",
-      "zh": "你为了省钱做过最离谱的事情是什么？"
-    },
-    {
       "id": "sp038",
       "en": "What's the weirdest thing you've ever saved or bookmarked?",
       "zh": "你收藏过最奇怪的内容是什么？"
-    },
-    {
-      "id": "sp039",
-      "en": "What's the most inexplicable picture in your camera roll?",
-      "zh": "你手机相册里最莫名其妙的一张图是什么？"
     },
     {
       "id": "sp040",
@@ -1476,19 +1601,9 @@
       "zh": "你有没有发错消息给最不该看到的人？内容是什么？"
     },
     {
-      "id": "sp042",
-      "en": "Have you ever dressed totally out of character and taken selfies?",
-      "zh": "你有没有穿过不符合自己平时形象的衣服，然后自拍？"
-    },
-    {
       "id": "sp043",
       "en": "What's the biggest time you misread the signals and embarrassed yourself?",
       "zh": "你做过最自作多情的一件事是什么？"
-    },
-    {
-      "id": "sp044",
-      "en": "Do you prefer being in control, or being led?",
-      "zh": "你比较喜欢掌控，还是被掌控？"
     },
     {
       "id": "sp045",
@@ -1524,11 +1639,6 @@
       "id": "sp051",
       "en": "What kind of physical touch instantly gets to you?",
       "zh": "什么样的肢体接触最容易让你瞬间上头？"
-    },
-    {
-      "id": "sp052",
-      "en": "Do you prefer making the moves, or letting the other person set the pace?",
-      "zh": "你更喜欢主动，还是被对方掌控节奏？"
     },
     {
       "id": "sp053",
@@ -1716,11 +1826,6 @@
       "zh": "你朋友圈有没有分组屏蔽？谁被屏蔽得最多？"
     },
     {
-      "id": "sp090",
-      "en": "What's the most times you've edited a post before publishing it?",
-      "zh": "你发朋友圈之前，最多修改过多少次？"
-    },
-    {
       "id": "sp091",
       "en": "Have you ever posted a Moment visible only to yourself? What kind?",
       "zh": "你有没有发过“仅自己可见”的朋友圈？是什么类型的内容？"
@@ -1789,6 +1894,156 @@
       "id": "sp104",
       "en": "Have you ever acted busy or popular in front of someone you liked?",
       "zh": "你有没有在喜欢的人面前故意装忙、装抢手？"
+    },
+    {
+      "id": "sp105",
+      "en": "Is there someone you fancy right now? What are they like?",
+      "zh": "现在有没有钟意的人？ta是怎么样的人？"
+    },
+    {
+      "id": "sp106",
+      "en": "What type of the opposite sex do you dislike the most?",
+      "zh": "你最讨厌的异性是哪种类型？"
+    },
+    {
+      "id": "sp107",
+      "en": "Do you say “I love you” often? How many times have you said it?",
+      "zh": "你经常说我爱你吗？说了多少次了？"
+    },
+    {
+      "id": "sp108",
+      "en": "Would you confess to your crush? How would you usually do it?",
+      "zh": "会不会向暗恋的人表白？通常会怎样表白？"
+    },
+    {
+      "id": "sp109",
+      "en": "How is your first love doing these days?",
+      "zh": "初恋对方现在过得怎么样？"
+    },
+    {
+      "id": "sp110",
+      "en": "If a robber broke in and you could only protect one opposite-gender person here, who and why?",
+      "zh": "如果现在有人入室抢劫，你只能保护在场的一个异性，你会保护谁？为什么？"
+    },
+    {
+      "id": "sp111",
+      "en": "When was your last kiss?",
+      "zh": "上次接吻是什么时候？"
+    },
+    {
+      "id": "sp112",
+      "en": "When did you last hold hands with someone of the opposite sex?",
+      "zh": "上次和异性牵手是什么时候？"
+    },
+    {
+      "id": "sp113",
+      "en": "What's the worst thing you've ever done to a friend?",
+      "zh": "过去做过最对不起朋友的事情是什么？"
+    },
+    {
+      "id": "sp114",
+      "en": "What's the biggest lie you've ever told?",
+      "zh": "撒过最大的一个谎是什么？"
+    },
+    {
+      "id": "sp115",
+      "en": "Who here do you most want to tell off, and why?",
+      "zh": "最想骂在座的谁？为什么？"
+    },
+    {
+      "id": "sp116",
+      "en": "Pick an opposite-gender person here and roast three things about them.",
+      "zh": "选一位在场的异性，吐槽ta三点。"
+    },
+    {
+      "id": "sp117",
+      "en": "If someone new pursued you while in a relationship, would you tell your partner?",
+      "zh": "恋爱中有新的追求者，你会向对象坦白吗？"
+    },
+    {
+      "id": "sp118",
+      "en": "Should a blind date split the bill? What about after you're together?",
+      "zh": "你觉得相亲要不要AA？在一起之后呢？"
+    },
+    {
+      "id": "sp119",
+      "en": "Who changes their heart more easily — men or women?",
+      "zh": "你觉得男人善变还是女人善变？"
+    },
+    {
+      "id": "sp120",
+      "en": "When do you plan to get married?",
+      "zh": "你打算什么时候结婚？"
+    },
+    {
+      "id": "sp121",
+      "en": "Does your best friend's current partner deserve them?",
+      "zh": "你觉得好朋友现在的另一半配得上ta吗？"
+    },
+    {
+      "id": "sp122",
+      "en": "Is a confession fighting for love, or just a formality?",
+      "zh": "你觉得表白应该是一种争取，还是走流程？"
+    },
+    {
+      "id": "sp123",
+      "en": "At what stage of a relationship would you reveal your dating history?",
+      "zh": "会在恋爱的什么阶段跟对方坦白自己的恋爱史？"
+    },
+    {
+      "id": "sp124",
+      "en": "Which app on your phone do you most fear others browsing, and why?",
+      "zh": "手机里最怕别人浏览的App是哪个？为什么？"
+    },
+    {
+      "id": "sp125",
+      "en": "What's the most selfish thing you've done in a relationship?",
+      "zh": "感情中，你做过最自私的一件事情是什么？"
+    },
+    {
+      "id": "sp126",
+      "en": "Have you ever been secretly admired? How did it feel?",
+      "zh": "有被暗恋过吗？心情如何？"
+    },
+    {
+      "id": "sp127",
+      "en": "Who is the best-looking opposite-gender person here?",
+      "zh": "你觉得在座的异性里，谁最好看？"
+    },
+    {
+      "id": "sp128",
+      "en": "Plastic-surgery looks or plain looks — which is easier for you to accept?",
+      "zh": "整容脸和长相一般，哪个你更容易接受？"
+    },
+    {
+      "id": "sp129",
+      "en": "Handsome but short, or average-looking — which is easier to accept?",
+      "zh": "帅但矮和长相一般，哪个你更容易接受？"
+    },
+    {
+      "id": "sp130",
+      "en": "Have you ever deliberately excluded someone? Why?",
+      "zh": "你有没有孤立过任何人？为什么？"
+    },
+    {
+      "id": "sp131",
+      "en": "What's the most undignified thing you've done for someone you liked?",
+      "zh": "你为喜欢的人做过最卑微的事情是什么？"
+    },
+    {
+      "id": "sp132",
+      "en": "What's the most two-faced thing you've ever done?",
+      "zh": "你做过最双面人的事情是什么？"
+    },
+    {
+      "id": "sp133",
+      "en": "Have you ever felt more than friendship for a friend? What sparked it?",
+      "zh": "你有没有曾经对朋友产生过超越友谊的感觉？因为什么事情？"
+    },
+    {
+      "id": "sp134",
+      "en": "Do you like someone right now? Which city are they in?",
+      "zh": "你现在有喜欢的人吗？ta目前在哪个城市？"
     }
   ]
 }
